@@ -1,0 +1,18 @@
+[gd_scene load_steps=7 format=3 uid="uid://m5u74rphpivx"]
+
+[ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/Inventory_UI.tscn" id="1_v08iy"]
+[ext_resource type="PackedScene" uid="uid://cevqvlshxo84w" path="res://Scenes/Map.tscn" id="2_be0ya"]
+[ext_resource type="Script" path="res://Scripts/Inventory/Inventory.cs" id="3_fklsy"]
+[ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="4_0xli7"]
+[ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="5_oslo0"]
+[ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="6_q4s5x"]
+
+[node name="MainGame" type="Node"]
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("3_fklsy")
+itemsToAdd = Array[Object]([ExtResource("4_0xli7"), ExtResource("5_oslo0"), ExtResource("6_q4s5x")])
+
+[node name="Map" parent="." instance=ExtResource("2_be0ya")]
+
+[node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]

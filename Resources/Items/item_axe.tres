@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://ydg6emtaeg1f"]
+
+[ext_resource type="Texture2D" uid="uid://u31y5of46e5c" path="res://Art/Characters/Holdables/Holdable_Axe.png" id="1_c6sbb"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="1_dp16n"]
+
+[resource]
+script = ExtResource("1_dp16n")
+itemType = 1
+itemSprite = ExtResource("1_c6sbb")
+stackSize = 1

@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=3 uid="uid://ctkvevyma6uqu"]
+
+[ext_resource type="Script" path="res://Scripts/CharacterBase.cs" id="1_dppcc"]
+[ext_resource type="Texture2D" uid="uid://jbp5g67jxlaa" path="res://Art/Characters/Player.png" id="1_gmury"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerAttachment.cs" id="2_jybix"]
+[ext_resource type="Texture2D" uid="uid://bqdga4yal185g" path="res://Art/Characters/Holdables/Holdable_Spade.png" id="4_jejjs"]
+[ext_resource type="Texture2D" uid="uid://dfk6lxokl6wex" path="res://Art/Characters/Backpacks/Backpack_Chest.png" id="4_ruhf7"]
+
+[sub_resource type="Animation" id="Animation_axdxj"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_g5dc1"]
+resource_name = "Walk"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0.1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_50ce0"]
+_data = {
+"RESET": SubResource("Animation_axdxj"),
+"Walk": SubResource("Animation_g5dc1")
+}
+
+[node name="CharacterBase" type="Node2D" node_paths=PackedStringArray("animationPlayer", "holdableSprite")]
+script = ExtResource("1_dppcc")
+animationPlayer = NodePath("AnimationPlayer")
+holdableSprite = NodePath("CharacterSprite/Holdable/HoldableSprite")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../CharacterSprite")
+libraries = {
+"": SubResource("AnimationLibrary_50ce0")
+}
+speed_scale = 2.0
+
+[node name="CharacterSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_gmury")
+
+[node name="Holdable" type="Node2D" parent="CharacterSprite" node_paths=PackedStringArray("targetNode", "attachmentNode")]
+z_index = 10
+position = Vector2(7, 4)
+rotation = 0.702786
+script = ExtResource("2_jybix")
+targetNode = NodePath("..")
+attachmentNode = NodePath("HoldableSprite")
+followSpeed = 50.0
+rotationSpeed = 8.0
+rotationMultiplier = 6.0
+
+[node name="HoldableSprite" type="Sprite2D" parent="CharacterSprite/Holdable"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_jejjs")
+
+[node name="Backpack" type="Node2D" parent="CharacterSprite" node_paths=PackedStringArray("targetNode", "attachmentNode")]
+z_index = -10
+position = Vector2(-5, 3)
+script = ExtResource("2_jybix")
+targetNode = NodePath("..")
+attachmentNode = NodePath("BackpackSprite")
+followSpeed = 35.0
+rotationSpeed = 3.0
+rotationMultiplier = 5.0
+
+[node name="BackpackSprite" type="Sprite2D" parent="CharacterSprite/Backpack"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ruhf7")

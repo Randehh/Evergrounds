@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://ckkxt2qndwtsh"]
+
+[ext_resource type="Texture2D" uid="uid://btk2ijugxyldc" path="res://Art/Characters/Holdables/Holdable_Pitchfork.png" id="1_twd3d"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_t6tb7"]
+
+[resource]
+script = ExtResource("2_t6tb7")
+itemType = 2
+itemSprite = ExtResource("1_twd3d")
+stackSize = 1

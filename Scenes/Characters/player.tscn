@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cigl51myg13f6"]
+
+[ext_resource type="Script" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
+[ext_resource type="PackedScene" uid="uid://ctkvevyma6uqu" path="res://Scenes/Characters/character_base.tscn" id="2_ah60g"]
+
+[node name="Player" type="Node2D" node_paths=PackedStringArray("character")]
+script = ExtResource("1_ty55n")
+character = NodePath("CharacterBase")
+maxSpeed = 0.15
+
+[node name="CharacterBase" parent="." instance=ExtResource("2_ah60g")]
