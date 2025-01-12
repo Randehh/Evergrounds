@@ -4,6 +4,8 @@ using Godot;
 public partial class CharacterBase : Node2D
 {
 
+	public InventoryItemDefinition CurrentlyHolding => currentlyHolding;
+
 	[Export]
 	private AnimationPlayer characterAnimator;
 
@@ -63,7 +65,6 @@ public partial class CharacterBase : Node2D
 
 	public void UseHoldable()
 	{
-		GD.Print($"Currently holding: {currentlyHolding?.itemType} - {currentlyHolding?.useAnimation.ToString()}");
 		if(currentlyHolding == null)
 		{
 			return;

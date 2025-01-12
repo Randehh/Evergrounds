@@ -8,3 +8,6 @@ script = ExtResource("2_a1drs")
 itemType = 0
 itemSprite = ExtResource("1_v5m11")
 stackSize = 1
+useAnimation = 0
+interactType = 3
+interactLevel = 1

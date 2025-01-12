@@ -8,3 +8,6 @@ script = ExtResource("2_t6tb7")
 itemType = 2
 itemSprite = ExtResource("1_twd3d")
 stackSize = 1
+useAnimation = 0
+interactType = 4
+interactLevel = 1

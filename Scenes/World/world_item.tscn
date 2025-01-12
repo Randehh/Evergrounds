@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1g02xoni2muk"]
+
+[ext_resource type="Script" path="res://Scripts/World/WorldItem.cs" id="1_syiyw"]
+[ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Characters/Holdables/Holdable_Scythe.png" id="2_ivm82"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ynqdi"]
+radius = 1.0
+
+[node name="WorldItem" type="Area2D" node_paths=PackedStringArray("sprite")]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_syiyw")
+sprite = NodePath("ItemSprite")
+
+[node name="ItemSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ivm82")
+
+[node name="ItemShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ynqdi")

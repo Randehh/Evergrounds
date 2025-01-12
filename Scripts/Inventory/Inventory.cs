@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [GlobalClass]
 public partial class Inventory : Node
@@ -38,6 +39,8 @@ public partial class Inventory : Node
         {
             AddItem(item, item.stackSize);
         }
+
+        EquipSlot(0);
     }
 
     public override void _Process(double delta)
@@ -45,7 +48,7 @@ public partial class Inventory : Node
 
         for (int i = 0; i < QUICK_SELECT_COUNT; i++)
         {
-            if(Input.IsActionJustPressed($"equip_{i}"))
+            if (Input.IsActionJustPressed($"equip_{i}"))
             {
                 int buttonIndex = i - 1;
                 if (buttonIndex == -1)
@@ -56,12 +59,12 @@ public partial class Inventory : Node
             }
         }
 
-        if(Input.IsActionJustPressed("equip_next"))
+        if (Input.IsActionJustPressed("equip_next"))
         {
             EquipSlot(quickSelectEquipped + 1);
         }
 
-        if(Input.IsActionJustPressed("equip_previous"))
+        if (Input.IsActionJustPressed("equip_previous"))
         {
             EquipSlot(quickSelectEquipped - 1);
         }
@@ -99,7 +102,7 @@ public partial class Inventory : Node
             }
         }
 
-        for(int i = 0; i < inventoryItems.Length; i++)
+        for (int i = 0; i < inventoryItems.Length; i++)
         {
             if (inventoryItems[i] == null)
             {
@@ -115,6 +118,16 @@ public partial class Inventory : Node
     public void SetItem(int index, InventoryItemDefinition item, int count)
     {
         inventoryItems[index] = new InventoryItem(item, count);
+
+        if(quickSelectIndexes.Contains(index))
+        {
+            OnSetQuickslot.Invoke(index, quickSelectIndexes[index]);
+
+            if(quickSelectEquipped == index)
+            {
+                OnSelectQuickslot(index);
+            }
+        }
     }
 
     public void RemoveItem(InventoryItemDefinition item)
@@ -129,7 +142,7 @@ public partial class Inventory : Node
 
     public InventoryItem GetItem(int index)
     {
-         return inventoryItems[index];
+        return inventoryItems[index];
     }
 
     public InventoryItem GetItemFromQuickslot(int index)
@@ -159,7 +172,5 @@ public partial class Inventory : Node
 
         int nextButtonIndex = slot;
         OnSelectQuickslot.Invoke(nextButtonIndex);
-
-        GD.Print($"Selected slot: {nextButtonIndex}");
     }
 }

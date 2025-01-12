@@ -16,6 +16,12 @@ public partial class InventoryItemDefinition : Resource
     [Export]
     public HoldableAnimations useAnimation;
 
+    [Export]
+    public InteractType interactType;
+
+    [Export]
+    public int interactLevel = 1;
+
     public bool isStackable => stackSize > 1;
 
     public InventoryItemDefinition() { }

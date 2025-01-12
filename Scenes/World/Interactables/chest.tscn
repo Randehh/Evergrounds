@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://cv78ude3j44mx"]
+
+[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_qaesl"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_3hqba"]
+[ext_resource type="Texture2D" uid="uid://dfk6lxokl6wex" path="res://Art/Characters/Backpacks/Backpack_Chest.png" id="3_si14k"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="4_dwfji"]
+
+[sub_resource type="Resource" id="Resource_88xi3"]
+script = ExtResource("2_3hqba")
+interactType = 0
+minimumLevel = 0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3yfn1"]
+
+[node name="Chest" type="Area2D" node_paths=PackedStringArray("interactPoint", "selectArrowAnchor", "interactEvents")]
+position = Vector2(49, 6)
+script = ExtResource("1_qaesl")
+interactPoint = NodePath("InteractShape")
+selectArrowAnchor = NodePath("ArrowAnchor")
+interactRequirement = SubResource("Resource_88xi3")
+interactEvents = [null]
+
+[node name="InteractShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3yfn1")
+
+[node name="ChestSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_si14k")
+
+[node name="ArrowAnchor" type="Node2D" parent="."]
+position = Vector2(0, -6)
+
+[node name="InteractEventSpawnItem" type="Node2D" parent="."]
+script = ExtResource("4_dwfji")

@@ -1,8 +1,15 @@
-[gd_scene load_steps=6 format=4 uid="uid://cevqvlshxo84w"]
+[gd_scene load_steps=15 format=4 uid="uid://cevqvlshxo84w"]
 
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.cs" id="1_8er03"]
 [ext_resource type="Texture2D" uid="uid://dg3us73hx8jcu" path="res://Art/Tilemaps/Grasslands.png" id="2_78lj4"]
 [ext_resource type="PackedScene" uid="uid://cigl51myg13f6" path="res://Scenes/Characters/player.tscn" id="3_rslf7"]
+[ext_resource type="Texture2D" uid="uid://dfk6lxokl6wex" path="res://Art/Characters/Backpacks/Backpack_Chest.png" id="4_3h36n"]
+[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="4_va0ip"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="5_sx2ya"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="7_7o2gr"]
+[ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="8_hiyed"]
+[ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_mbm2d"]
+[ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="10_3r0m7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mcwci"]
 texture = ExtResource("2_78lj4")
@@ -142,6 +149,13 @@ texture = ExtResource("2_78lj4")
 [sub_resource type="TileSet" id="TileSet_7nfhc"]
 sources/0 = SubResource("TileSetAtlasSource_mcwci")
 
+[sub_resource type="Resource" id="Resource_88xi3"]
+script = ExtResource("5_sx2ya")
+interactType = 0
+minimumLevel = 0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3yfn1"]
+
 [node name="Map" type="Node2D"]
 texture_filter = 1
 
@@ -161,3 +175,24 @@ tile_set = SubResource("TileSet_7nfhc")
 [node name="Player" parent="Characters" instance=ExtResource("3_rslf7")]
 maxSpeed = 0.5
 decceleration = 0.8
+
+[node name="Chest" type="Area2D" parent="." node_paths=PackedStringArray("interactPoint", "selectArrowAnchor", "interactEvents")]
+position = Vector2(49, 6)
+script = ExtResource("4_va0ip")
+interactPoint = NodePath("InteractShape")
+selectArrowAnchor = NodePath("ArrowAnchor")
+interactRequirement = SubResource("Resource_88xi3")
+interactEvents = [NodePath("InteractEventSpawnItem")]
+
+[node name="InteractShape" type="CollisionShape2D" parent="Chest"]
+shape = SubResource("CircleShape2D_3yfn1")
+
+[node name="ChestSprite" type="Sprite2D" parent="Chest"]
+texture = ExtResource("4_3h36n")
+
+[node name="ArrowAnchor" type="Node2D" parent="Chest"]
+position = Vector2(0, -6)
+
+[node name="InteractEventSpawnItem" type="Node2D" parent="Chest"]
+script = ExtResource("7_7o2gr")
+itemsToSpawn = Array[Object]([ExtResource("8_hiyed"), ExtResource("9_mbm2d"), ExtResource("9_mbm2d"), ExtResource("10_3r0m7"), ExtResource("8_hiyed")])
