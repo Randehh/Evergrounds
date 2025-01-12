@@ -18,7 +18,7 @@ script = ExtResource("1_qaesl")
 interactPoint = NodePath("InteractShape")
 selectArrowAnchor = NodePath("ArrowAnchor")
 interactRequirement = SubResource("Resource_88xi3")
-interactEvents = [null]
+interactEvents = [NodePath("InteractEventSpawnItem")]
 
 [node name="InteractShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3yfn1")
