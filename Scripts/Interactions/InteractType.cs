@@ -1,6 +1,6 @@
 public enum InteractType
 {
-    ANY,
+    NONE,
     CHOP_TREE,
     MINE_ORE,
     TILE_LAND,

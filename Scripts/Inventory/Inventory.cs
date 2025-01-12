@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 [GlobalClass]
 public partial class Inventory : Node
@@ -92,12 +93,14 @@ public partial class Inventory : Node
                 if (existingItem.currentStackSize + count <= item.stackSize)
                 {
                     existingItem.currentStackSize += count;
+                    RefreshInventorySlot(existingIndex);
                     return true;
                 }
                 else
                 {
-                    count = item.stackSize - (existingItem.currentStackSize + count);
+                    count = (existingItem.currentStackSize + count) - item.stackSize;
                     existingItem.currentStackSize = item.stackSize;
+                    RefreshInventorySlot(existingIndex);
                 }
             }
         }
@@ -118,12 +121,24 @@ public partial class Inventory : Node
     public void SetItem(int index, InventoryItemDefinition item, int count)
     {
         inventoryItems[index] = new InventoryItem(item, count);
+        List<int> lookupList;
+        if (!itemLookup.TryGetValue(item.itemType, out lookupList))
+        {
+            lookupList = new List<int>();
+            itemLookup.Add(item.itemType, lookupList);
+        }
+        lookupList.Add(index);
 
-        if(quickSelectIndexes.Contains(index))
+        RefreshInventorySlot(index);
+    }
+
+    private void RefreshInventorySlot(int index)
+    {
+        if (quickSelectIndexes.Contains(index))
         {
             OnSetQuickslot.Invoke(index, quickSelectIndexes[index]);
 
-            if(quickSelectEquipped == index)
+            if (quickSelectEquipped == index)
             {
                 OnSelectQuickslot(index);
             }

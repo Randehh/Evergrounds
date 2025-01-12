@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqdga4yal185g"
-path="res://.godot/imported/Holdable_Spade.png-b836354f4f8a8a1eb2c54f30b8a22846.ctex"
+path="res://.godot/imported/Holdable_Spade.png-bdb8d9d7d6ece1d3eeda92916c592817.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Characters/Holdables/Holdable_Spade.png"
-dest_files=["res://.godot/imported/Holdable_Spade.png-b836354f4f8a8a1eb2c54f30b8a22846.ctex"]
+source_file="res://Art/Items/Holdables/Holdable_Spade.png"
+dest_files=["res://.godot/imported/Holdable_Spade.png-bdb8d9d7d6ece1d3eeda92916c592817.ctex"]
 
 [params]
 

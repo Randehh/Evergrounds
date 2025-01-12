@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_qaesl"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_3hqba"]
-[ext_resource type="Texture2D" uid="uid://dfk6lxokl6wex" path="res://Art/Characters/Backpacks/Backpack_Chest.png" id="3_si14k"]
+[ext_resource type="Texture2D" uid="uid://dfk6lxokl6wex" path="res://Art/Items/Backpacks/Backpack_Chest.png" id="3_si14k"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="4_dwfji"]
 
 [sub_resource type="Resource" id="Resource_88xi3"]

@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://cukj0u724ndo3"]
+[gd_scene load_steps=3 format=3 uid="uid://cukj0u724ndo3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ssisn"]
 line_spacing = 1.0
 font_size = 10
+outline_size = 6
+outline_color = Color(0.0430392, 0.0430392, 0.0430392, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5t7nj"]
+line_spacing = 1.0
+font_size = 8
 outline_size = 6
 outline_color = Color(0.0430392, 0.0430392, 0.0430392, 1)
 
@@ -18,13 +24,25 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 2.0
-offset_top = 2.0
 offset_right = 2.0
-offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "1"
 label_settings = SubResource("LabelSettings_ssisn")
+
+[node name="StackCountLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+label_settings = SubResource("LabelSettings_5t7nj")
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="ItemSprite" type="TextureRect" parent="."]
 layout_mode = 1

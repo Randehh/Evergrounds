@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://o4qwppo0jd4v"
-path="res://.godot/imported/Holdable_Scythe.png-cf0094b85f0436e600bf443aec66f909.ctex"
+uid="uid://btk2ijugxyldc"
+path="res://.godot/imported/Holdable_Pitchfork.png-a4ae990280f5d66083217071203b0f0c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Characters/Holdables/Holdable_Scythe.png"
-dest_files=["res://.godot/imported/Holdable_Scythe.png-cf0094b85f0436e600bf443aec66f909.ctex"]
+source_file="res://Art/Items/Holdables/Holdable_Pitchfork.png"
+dest_files=["res://.godot/imported/Holdable_Pitchfork.png-a4ae990280f5d66083217071203b0f0c.ctex"]
 
 [params]
 

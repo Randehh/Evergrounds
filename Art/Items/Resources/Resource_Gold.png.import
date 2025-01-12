@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://u31y5of46e5c"
-path="res://.godot/imported/Holdable_Axe.png-bccf5181907e4f8690703eef18d5dd82.ctex"
+uid="uid://ba5mmy2282scu"
+path="res://.godot/imported/Resource_Gold.png-58e44a4ff4be28553a17621ede68a9a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Characters/Holdables/Holdable_Axe.png"
-dest_files=["res://.godot/imported/Holdable_Axe.png-bccf5181907e4f8690703eef18d5dd82.ctex"]
+source_file="res://Art/Items/Resources/Resource_Gold.png"
+dest_files=["res://.godot/imported/Resource_Gold.png-58e44a4ff4be28553a17621ede68a9a6.ctex"]
 
 [params]
 

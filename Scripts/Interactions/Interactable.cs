@@ -27,12 +27,12 @@ public partial class Interactable : Area2D
 
     public InteractResult GetInteractResult(InventoryItemDefinition inventoryItemDefinition)
     {
-        if(inventoryItemDefinition == null && interactRequirement.interactType != InteractType.ANY)
+        if(inventoryItemDefinition == null && interactRequirement.interactType != InteractType.NONE)
         {
             return InteractResult.FAULTY_TYPE;
         }
 
-        if(interactRequirement.interactType == InteractType.ANY )
+        if(interactRequirement.interactType == InteractType.NONE )
         {
             return InteractResult.OK;
         }

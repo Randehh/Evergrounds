@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btk2ijugxyldc"
-path="res://.godot/imported/Holdable_Pitchfork.png-64a545a91baf139f2de159cb0be6224e.ctex"
+uid="uid://cfumscsxi7gbt"
+path="res://.godot/imported/Backpack_Default.png-efe157c035d831def45121afa82a5848.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Characters/Holdables/Holdable_Pitchfork.png"
-dest_files=["res://.godot/imported/Holdable_Pitchfork.png-64a545a91baf139f2de159cb0be6224e.ctex"]
+source_file="res://Art/Items/Backpacks/Backpack_Default.png"
+dest_files=["res://.godot/imported/Backpack_Default.png-efe157c035d831def45121afa82a5848.ctex"]
 
 [params]
 

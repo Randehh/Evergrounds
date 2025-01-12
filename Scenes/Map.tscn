@@ -4,7 +4,7 @@
 [ext_resource type="TileSet" uid="uid://u1q06kau1m65" path="res://TileSets/Default.tres" id="2_3poui"]
 [ext_resource type="PackedScene" uid="uid://cigl51myg13f6" path="res://Scenes/Characters/player.tscn" id="3_rslf7"]
 [ext_resource type="PackedScene" uid="uid://cv78ude3j44mx" path="res://Scenes/World/Interactables/chest.tscn" id="4_b7prb"]
-[ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_mbm2d"]
+[ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="5_o0df3"]
 
 [node name="Map" type="Node2D"]
 texture_filter = 1
@@ -31,10 +31,10 @@ position = Vector2(62, 5)
 maxSpeed = 0.5
 decceleration = 0.8
 
-[node name="Chest2" parent="." instance=ExtResource("4_b7prb")]
+[node name="Chest" parent="." instance=ExtResource("4_b7prb")]
 position = Vector2(0, 0)
 
-[node name="InteractEventSpawnItem" parent="Chest2" index="3"]
-itemsToSpawn = Array[Object]([ExtResource("9_mbm2d")])
+[node name="InteractEventSpawnItem" parent="Chest" index="3"]
+itemsToSpawn = Array[Object]([ExtResource("5_o0df3"), ExtResource("5_o0df3"), ExtResource("5_o0df3"), ExtResource("5_o0df3"), ExtResource("5_o0df3"), ExtResource("5_o0df3"), ExtResource("5_o0df3"), ExtResource("5_o0df3"), ExtResource("5_o0df3"), ExtResource("5_o0df3")])
 
-[editable path="Chest2"]
+[editable path="Chest"]

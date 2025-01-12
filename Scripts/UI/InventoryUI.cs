@@ -27,6 +27,7 @@ public partial class InventoryUI : Control
             ButtonData buttonData = new ButtonData(inventoryButton);
             inventoryButtons.Add(buttonData);
             buttonData.label.Text = GetEquipmentSlotDisplayIndex(buttonNumber).ToString();
+            buttonData.stackCountLabel.Visible = false;
 
             int slotIndex = buttonNumber;
             inventoryButton.ButtonDown += () => EquipSlot(slotIndex);
@@ -47,6 +48,8 @@ public partial class InventoryUI : Control
         ButtonData buttonData = inventoryButtons[slot];
         InventoryItem inventoryItem = inventory.GetItem(inventoryIndex);
         buttonData.textureRect.Texture = inventoryItem?.definition.itemSprite;
+        buttonData.stackCountLabel.Text = inventoryItem?.currentStackSize.ToString();
+        buttonData.stackCountLabel.Visible = inventoryItem?.definition.isStackable ?? false;
 
         GD.Print($"{slot} = {inventoryIndex} -> {inventoryItem?.definition.itemType}");
     }
@@ -77,12 +80,14 @@ public partial class InventoryUI : Control
         public Button button;
         public TextureRect textureRect;
         public Label label;
+        public Label stackCountLabel;
 
         public ButtonData(Button button)
         {
             this.button = button;
             textureRect = button.GetNode("ItemSprite") as TextureRect;
             label = button.GetNode("NumberLabel") as Label;
+            stackCountLabel = button.GetNode("StackCountLabel") as Label;
         }
     }
 }
