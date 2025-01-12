@@ -1,4 +1,5 @@
 using Godot;
+using static CharacterBase;
 
 [GlobalClass]
 public partial class InventoryItemDefinition : Resource
@@ -11,6 +12,9 @@ public partial class InventoryItemDefinition : Resource
 
     [Export]
     public int stackSize = 1;
+
+    [Export]
+    public HoldableAnimations useAnimation;
 
     public bool isStackable => stackSize > 1;
 

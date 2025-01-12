@@ -5,7 +5,10 @@ public partial class CharacterBase : Node2D
 {
 
 	[Export]
-	private AnimationPlayer animationPlayer;
+	private AnimationPlayer characterAnimator;
+
+	[Export]
+	private AnimationPlayer holdableAnimator;
 
 	[Export]
 	private Sprite2D holdableSprite;
@@ -13,10 +16,17 @@ public partial class CharacterBase : Node2D
 	private Vector2 lastPosition;
 	private bool lookRight = true;
 
-	public enum CharacterAnimations
+	private InventoryItemDefinition currentlyHolding;
+
+    public enum CharacterAnimations
 	{
 		IDLE,
 		WALK
+	}
+
+	public enum HoldableAnimations
+	{
+		SWING,
 	}
 
 	public override void _Process(double delta)
@@ -27,12 +37,12 @@ public partial class CharacterBase : Node2D
 		float moveSpeed = movementDelta.Length();
 		if (moveSpeed > 0.01f)
 		{
-			animationPlayer.Play("Walk");
-			animationPlayer.SpeedScale = Mathf.Clamp(moveSpeed * 3, 0, 2.5f);
+            characterAnimator.Play("Walk");
+            characterAnimator.SpeedScale = Mathf.Clamp(moveSpeed * 3, 0, 2.5f);
 		}
 		else
 		{
-			animationPlayer.Stop();
+            characterAnimator.Stop();
 		}
 
 		lastPosition = GlobalPosition;
@@ -48,5 +58,17 @@ public partial class CharacterBase : Node2D
 	public void SetHoldable(InventoryItemDefinition item)
 	{
 		holdableSprite.Texture = item != null ? item.itemSprite : null;
+		currentlyHolding = item;
+    }
+
+	public void UseHoldable()
+	{
+		GD.Print($"Currently holding: {currentlyHolding?.itemType} - {currentlyHolding?.useAnimation.ToString()}");
+		if(currentlyHolding == null)
+		{
+			return;
+		}
+
+		holdableAnimator.Play(currentlyHolding.useAnimation.ToString());
     }
 }

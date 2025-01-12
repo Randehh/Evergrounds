@@ -49,12 +49,17 @@ public partial class PlayerCharacter : Node2D
 		currentSpeed.Y = Mathf.Clamp(currentSpeed.Y, -maxSpeed, maxSpeed);
 
         Position += currentSpeed;
+
+		if(Input.IsActionJustPressed("use_holdable"))
+		{
+			GD.Print("Use holdable");
+			character.UseHoldable();
+		}
     }
 
 	private void OnItemSelected(int quickslot)
 	{
 		var item = Inventory.Instance.GetItemFromQuickslot(quickslot);
 		character.SetHoldable(item?.definition);
-
     }
 }

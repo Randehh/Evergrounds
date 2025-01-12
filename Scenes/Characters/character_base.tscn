@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctkvevyma6uqu"]
+[gd_scene load_steps=12 format=3 uid="uid://ctkvevyma6uqu"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBase.cs" id="1_dppcc"]
 [ext_resource type="Texture2D" uid="uid://jbp5g67jxlaa" path="res://Art/Characters/Player.png" id="1_gmury"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerAttachment.cs" id="2_jybix"]
 [ext_resource type="Texture2D" uid="uid://bqdga4yal185g" path="res://Art/Characters/Holdables/Holdable_Spade.png" id="4_jejjs"]
-[ext_resource type="Texture2D" uid="uid://dfk6lxokl6wex" path="res://Art/Characters/Backpacks/Backpack_Chest.png" id="4_ruhf7"]
+[ext_resource type="Texture2D" uid="uid://cfumscsxi7gbt" path="res://Art/Characters/Backpacks/Backpack_Default.png" id="5_1i5mm"]
 
 [sub_resource type="Animation" id="Animation_axdxj"]
 length = 0.001
@@ -86,17 +86,133 @@ _data = {
 "Walk": SubResource("Animation_g5dc1")
 }
 
-[node name="CharacterBase" type="Node2D" node_paths=PackedStringArray("animationPlayer", "holdableSprite")]
+[sub_resource type="Animation" id="Animation_tgyr5"]
+resource_name = "SWING"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite/Holdable:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1.86607, 0.233258, 1),
+"update": 0,
+"values": [Vector2(7, 4), Vector2(-7, 5), Vector2(15, 5), Vector2(7, 4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite/Holdable:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.702786, -0.907708, 1.74153, 1.74153, 0.702786]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CharacterSprite/Holdable:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CharacterSprite/Holdable:skew")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, -0.888373, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_pcqkw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite/Holdable:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(7, 4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite/Holdable:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.702786]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CharacterSprite/Holdable:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CharacterSprite/Holdable:skew")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_12kvp"]
+_data = {
+"RESET": SubResource("Animation_pcqkw"),
+"SWING": SubResource("Animation_tgyr5")
+}
+
+[node name="CharacterBase" type="Node2D" node_paths=PackedStringArray("characterAnimator", "holdableAnimator", "holdableSprite")]
 script = ExtResource("1_dppcc")
-animationPlayer = NodePath("AnimationPlayer")
+characterAnimator = NodePath("MovementAnimator")
+holdableAnimator = NodePath("HoldableAnimator")
 holdableSprite = NodePath("CharacterSprite/Holdable/HoldableSprite")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="MovementAnimator" type="AnimationPlayer" parent="."]
 root_node = NodePath("../CharacterSprite")
 libraries = {
 "": SubResource("AnimationLibrary_50ce0")
 }
 speed_scale = 2.0
+
+[node name="HoldableAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_12kvp")
+}
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_gmury")
@@ -110,7 +226,6 @@ targetNode = NodePath("..")
 attachmentNode = NodePath("HoldableSprite")
 followSpeed = 50.0
 rotationSpeed = 8.0
-rotationMultiplier = 6.0
 
 [node name="HoldableSprite" type="Sprite2D" parent="CharacterSprite/Holdable"]
 scale = Vector2(0.5, 0.5)
@@ -118,7 +233,7 @@ texture = ExtResource("4_jejjs")
 
 [node name="Backpack" type="Node2D" parent="CharacterSprite" node_paths=PackedStringArray("targetNode", "attachmentNode")]
 z_index = -10
-position = Vector2(-5, 3)
+position = Vector2(-4, 3)
 script = ExtResource("2_jybix")
 targetNode = NodePath("..")
 attachmentNode = NodePath("BackpackSprite")
@@ -128,4 +243,4 @@ rotationMultiplier = 5.0
 
 [node name="BackpackSprite" type="Sprite2D" parent="CharacterSprite/Backpack"]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_ruhf7")
+texture = ExtResource("5_1i5mm")
