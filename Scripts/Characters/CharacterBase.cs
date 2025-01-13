@@ -4,7 +4,7 @@ using Godot;
 public partial class CharacterBase : Node2D
 {
 
-	public InventoryItemDefinition CurrentlyHolding => currentlyHolding;
+	public InventoryItem CurrentlyHolding => currentlyHolding;
 
 	[Export]
 	private AnimationPlayer characterAnimator;
@@ -18,7 +18,7 @@ public partial class CharacterBase : Node2D
 	private Vector2 lastPosition;
 	private bool lookRight = true;
 
-	private InventoryItemDefinition currentlyHolding;
+	private InventoryItem currentlyHolding;
 
     public enum CharacterAnimations
 	{
@@ -57,9 +57,9 @@ public partial class CharacterBase : Node2D
 		Scale = new Vector2(lookRight ? 1 : -1, 1);
 	}
 
-	public void SetHoldable(InventoryItemDefinition item)
+	public void SetHoldable(InventoryItem item)
 	{
-		holdableSprite.Texture = item != null ? item.itemSprite : null;
+		holdableSprite.Texture = item != null ? item.definition.itemSprite : null;
 		currentlyHolding = item;
     }
 
@@ -70,6 +70,6 @@ public partial class CharacterBase : Node2D
 			return;
 		}
 
-		holdableAnimator.Play(currentlyHolding.useAnimation.ToString());
+		holdableAnimator.Play(currentlyHolding.definition.useAnimation.ToString());
     }
 }

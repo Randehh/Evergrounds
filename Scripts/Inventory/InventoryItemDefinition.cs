@@ -25,6 +25,9 @@ public partial class InventoryItemDefinition : Resource
     [Export]
     public float worldShadowScale = 0.5f;
 
+    [Export(hintString: "Defines what is placed on the grid with grid-based interaction types")]
+    public string gridPlacementScene;
+
     public bool isStackable => stackSize > 1;
 
     public InventoryItemDefinition() { }

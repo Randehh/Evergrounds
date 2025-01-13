@@ -4,19 +4,14 @@ using System.Collections.Generic;
 [GlobalClass]
 public partial class PlayerCharacter : Node2D
 {
-    private readonly Color colorWhite = new Color(1, 1, 1, 1);
-    private readonly Color colorHalfAlpha = new Color(1, 1, 1, 0.5f);
 
     [Export]
 	private CharacterBase character;
 
 	[Export]
-	private Node2D selectArrow;
+	private PlayerInteractHandler interactHandler;
 
-	[Export]
-	private PlayerInteractDetector interactDetector;
-
-	[Export]
+    [Export]
 	private Area2D vacuumArea;
 
 	[Export]
@@ -29,15 +24,12 @@ public partial class PlayerCharacter : Node2D
 	private float decceleration = 0.01f;
 
 	private Vector2 currentSpeed = Vector2.Zero;
-	private Interactable currentInteracable;
-	private InteractResult currentInteractResult;
 
 	private List<WorldItem> vacuumItemsInRadius = new();
 
 	public override void _Ready()
 	{
 		Inventory.Instance.OnSelectQuickslot += OnItemSelected;
-		(selectArrow.FindChild("ArrowAnimator") as AnimationPlayer).Play("Highlight");
 
 		OnItemSelected(0);
     }
@@ -67,20 +59,7 @@ public partial class PlayerCharacter : Node2D
 
 		Position += currentSpeed;
 
-		ProcessSelection();
-
-		if (Input.IsActionJustPressed("use_holdable"))
-		{
-			if (currentInteractResult == InteractResult.OK)
-			{
-				character.UseHoldable();
-				interactDetector.SelectedInteractable.Interact();
-			}
-			else if (currentInteractResult == InteractResult.NO_INTERACTABLE)
-			{
-				character.UseHoldable();
-			}
-		}
+		interactHandler.ProcessInteraction(character.CurrentlyHolding);
 	}
 
     public override void _PhysicsProcess(double delta)
@@ -98,36 +77,10 @@ public partial class PlayerCharacter : Node2D
         }
     }
 
-    private void ProcessSelection()
-	{
-		Interactable currentInteracable = interactDetector.SelectedInteractable;
-
-		if (currentInteracable == null)
-		{
-			selectArrow.Visible = false;
-			currentInteractResult = InteractResult.NO_INTERACTABLE;
-            return;
-		}
-
-		if (interactDetector.IsInRange)
-		{
-			selectArrow.Modulate = colorWhite;
-			currentInteractResult = currentInteracable.GetInteractResult(character.CurrentlyHolding);
-		}
-		else
-		{
-			selectArrow.Modulate = colorHalfAlpha;
-			currentInteractResult = InteractResult.OUT_OF_RANGE;
-		}
-
-		selectArrow.GlobalPosition = currentInteracable.GetArrowAnchor();
-		selectArrow.Visible = true;
-	}
-
 	private void OnItemSelected(int quickslot)
 	{
 		var item = Inventory.Instance.GetItemFromQuickslot(quickslot);
-		character.SetHoldable(item?.definition);
+		character.SetHoldable(item);
 	}
 
     private void OnVacuumAreaEntered(Area2D area)

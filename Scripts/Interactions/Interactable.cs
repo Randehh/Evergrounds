@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class Interactable : Area2D
+public partial class Interactable : Area2D, IWorldGridNode
 {
     [Export]
     private Node2D interactPoint;
@@ -24,7 +24,14 @@ public partial class Interactable : Area2D
     [Export]
     private int interactCount = 1;
 
+    [Export]
+    private Sprite2D mainSprite;
+
     private int interactCountRemaining;
+
+    public Sprite2D gridPlacementPreviewSprite => mainSprite;
+
+    public Vector2 gridPlacementOffset => (gridPlacementPreviewSprite.GlobalPosition - GlobalPosition) + gridPlacementPreviewSprite.Offset;
 
     public override void _Ready()
     {
@@ -58,9 +65,11 @@ public partial class Interactable : Area2D
 
     public Vector2 GetArrowAnchor() => selectArrowAnchor.GlobalPosition;
 
-    public InteractResult GetInteractResult(InventoryItemDefinition inventoryItemDefinition)
+    public InteractResult GetInteractResult(InventoryItem inventoryItem)
     {
-        if(interactCountRemaining <= 0)
+        var inventoryItemDefinition = inventoryItem?.definition;
+
+        if (interactCountRemaining <= 0)
         {
             return InteractResult.NO_INTERACTABLE;
         }

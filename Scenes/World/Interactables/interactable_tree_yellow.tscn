@@ -119,7 +119,7 @@ minimumCount = 1
 maximumCount = 2
 baseChance = 0.25
 
-[node name="TreeYellow" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents")]
+[node name="TreeYellow" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
 y_sort_enabled = true
 script = ExtResource("1_kwlpf")
 interactPoint = NodePath("Shape")
@@ -129,6 +129,7 @@ interactRequirement = SubResource("Resource_cd1ki")
 interactEvents = [NodePath("InteractEventPlayAnimation")]
 interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode")]
 interactCount = 3
+mainSprite = NodePath("TreeSprite")
 
 [node name="TreeAnimator" type="AnimationPlayer" parent="."]
 libraries = {

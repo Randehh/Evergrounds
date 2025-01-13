@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 [GlobalClass]
 public partial class Inventory : Node
@@ -22,6 +23,7 @@ public partial class Inventory : Node
     private int[] quickSelectIndexes = new int[QUICK_SELECT_COUNT];
 
     private Dictionary<InventoryItemType, List<int>> itemLookup = new();
+    private Dictionary<InventoryItem, int> itemInstanceLookup = new();
 
     public override void _EnterTree()
     {
@@ -128,6 +130,8 @@ public partial class Inventory : Node
         }
         lookupList.Add(index);
 
+        itemInstanceLookup.Add(inventoryItems[index], index);
+
         RefreshInventorySlot(index);
     }
 
@@ -144,7 +148,21 @@ public partial class Inventory : Node
         }
     }
 
-    public void RemoveItem(InventoryItemDefinition item)
+    public void RemoveItem(InventoryItem item, int count)
+    {
+        int inventoryIndex = itemInstanceLookup[item];
+
+        item.currentStackSize -= count;
+        if(item.currentStackSize <= 0)
+        {
+            RemoveItem(inventoryIndex);
+        }
+
+        // Refresh slot
+        RefreshInventorySlot(inventoryIndex);
+    }
+
+    public void RemoveItem(InventoryItemDefinition item, int count)
     {
 
     }

@@ -177,7 +177,7 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3yfn1"]
 
-[node name="Chest" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents")]
+[node name="Chest" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
 script = ExtResource("1_drppp")
 interactPoint = NodePath("InteractShape")
 interactShape = NodePath("InteractShape")
@@ -185,6 +185,7 @@ selectArrowAnchor = NodePath("ArrowAnchor")
 interactRequirement = SubResource("Resource_88xi3")
 interactEvents = [NodePath("InteractEventPlayAnimation")]
 interactCompleteEvents = []
+mainSprite = NodePath("ChestSprite")
 
 [node name="ChestAnimator" type="AnimationPlayer" parent="."]
 libraries = {
