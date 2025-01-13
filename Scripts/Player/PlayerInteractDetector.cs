@@ -5,13 +5,14 @@ using System.Linq;
 [GlobalClass]
 public partial class PlayerInteractDetector : Area2D
 {
-    public Interactable SelectedInteractable { get; private set; }
+    public Interactable SelectedInteractable => IsInstanceValid(selectedInteractable) ? selectedInteractable : null;
     public bool IsInRange { get; private set; }
 
     [Export]
     private float interactRadius = 25;
 
     private Node2D parent;
+    private Interactable selectedInteractable;
 	private List<Interactable> interactables = new();
 
     public override void _Ready()
@@ -25,16 +26,22 @@ public partial class PlayerInteractDetector : Area2D
 
         if (interactables.Count == 0)
         {
-            SelectedInteractable = null;
+            selectedInteractable = null;
             return;
         }
 
         Vector2 position = GlobalPosition;
-        int closestIndex = 0;
+        int closestIndex = -1;
         float closestDistance = float.MaxValue;
-        for (int i = 0; i < interactables.Count; i++)
+        for (int i = interactables.Count - 1; i >= 0; i--)
         {
             Interactable interactable = interactables[i];
+            if(interactable == null || interactable.IsQueuedForDeletion() || !IsInstanceValid(interactable))
+            {
+                interactables.RemoveAt(i);
+                continue;
+            }
+
             float distance = position.DistanceSquaredTo(interactable.GlobalPosition);
             if(distance < closestDistance )
             {
@@ -43,7 +50,13 @@ public partial class PlayerInteractDetector : Area2D
             }
         }
 
-        SelectedInteractable = interactables[closestIndex];
+        if(closestIndex == -1)
+        {
+            selectedInteractable = null;
+            return;
+        }
+
+        selectedInteractable = interactables[closestIndex];
         IsInRange = SelectedInteractable.GlobalPosition.DistanceTo(parent.GlobalPosition) <= interactRadius;
     }
 

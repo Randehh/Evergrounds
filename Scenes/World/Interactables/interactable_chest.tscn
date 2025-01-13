@@ -1,15 +1,15 @@
 [gd_scene load_steps=13 format=3 uid="uid://cv78ude3j44mx"]
 
-[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_qaesl"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_3hqba"]
-[ext_resource type="Texture2D" uid="uid://dycxjnpyccbh6" path="res://Art/World/Interactables/Interactable_Chest_Open.png" id="3_mntyo"]
-[ext_resource type="Texture2D" uid="uid://dxv1suh6sexl7" path="res://Art/World/Interactables/Interactable_Chest_Closed.png" id="3_yuxii"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="4_dwfji"]
-[ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="5_n88fw"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventPlayAnimation.cs" id="7_gpgdr"]
+[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_drppp"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_35spc"]
+[ext_resource type="Texture2D" uid="uid://dxv1suh6sexl7" path="res://Art/World/Interactables/Interactable_Chest_Closed.png" id="3_5raf4"]
+[ext_resource type="Texture2D" uid="uid://dycxjnpyccbh6" path="res://Art/World/Interactables/Interactable_Chest_Open.png" id="4_o2gcd"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="5_0kiej"]
+[ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="6_mk56t"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventPlayAnimation.cs" id="7_wifgg"]
 
 [sub_resource type="Resource" id="Resource_88xi3"]
-script = ExtResource("2_3hqba")
+script = ExtResource("2_35spc")
 interactType = 0
 minimumLevel = 0
 
@@ -27,7 +27,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("3_yuxii"), ExtResource("3_mntyo")]
+"values": [ExtResource("3_5raf4"), ExtResource("4_o2gcd")]
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -111,7 +111,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_yuxii")]
+"values": [ExtResource("3_5raf4")]
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -177,13 +177,14 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3yfn1"]
 
-[node name="Chest" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents")]
-script = ExtResource("1_qaesl")
+[node name="Chest" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents")]
+script = ExtResource("1_drppp")
 interactPoint = NodePath("InteractShape")
 interactShape = NodePath("InteractShape")
 selectArrowAnchor = NodePath("ArrowAnchor")
 interactRequirement = SubResource("Resource_88xi3")
 interactEvents = [NodePath("InteractEventPlayAnimation")]
+interactCompleteEvents = []
 
 [node name="ChestAnimator" type="AnimationPlayer" parent="."]
 libraries = {
@@ -194,18 +195,18 @@ libraries = {
 shape = SubResource("CircleShape2D_3yfn1")
 
 [node name="ChestSprite" type="Sprite2D" parent="."]
-texture = ExtResource("3_yuxii")
+texture = ExtResource("3_5raf4")
 
 [node name="ArrowAnchor" type="Node2D" parent="."]
 position = Vector2(0, -6)
 
 [node name="InteractEventSpawnItem" type="Node2D" parent="."]
-script = ExtResource("4_dwfji")
+script = ExtResource("5_0kiej")
 
-[node name="WorldNodeShadow" parent="." node_paths=PackedStringArray("targetNode") instance=ExtResource("5_n88fw")]
+[node name="WorldNodeShadow" parent="." node_paths=PackedStringArray("targetNode") instance=ExtResource("6_mk56t")]
 targetNode = NodePath("../ChestSprite")
 
 [node name="InteractEventPlayAnimation" type="Node2D" parent="." node_paths=PackedStringArray("player")]
-script = ExtResource("7_gpgdr")
+script = ExtResource("7_wifgg")
 player = NodePath("../ChestAnimator")
 animationName = "Open"

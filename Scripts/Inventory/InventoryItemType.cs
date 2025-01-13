@@ -3,5 +3,8 @@ public enum InventoryItemType
     GOLD,
     SHOVEL,
     AXE,
-    PITCHFORK
+    PITCHFORK,
+    WOOD,
+    LEAF,
+    ACORN
 }

@@ -10,7 +10,7 @@ public partial class InteractEventSpawnItem : InteractEvent
     private const float SPAWN_INTERVAL = 0.1f;
 
     [Export]
-    private Array<InventoryItemDefinition> itemsToSpawn;
+    private Array<InteractEventSpawnItemData> itemsToSpawn;
 
     private PackedScene worldItemScene;
     private bool isSpawning = false;
@@ -40,13 +40,14 @@ public partial class InteractEventSpawnItem : InteractEvent
             if(toSpawn.Count == 0)
             {
                 isSpawning = false;
+                QueueFree();
                 return;
             }
 
             spawningTime -= SPAWN_INTERVAL;
 
             WorldItem worldItem = worldItemScene.Instantiate<WorldItem>();
-            GetParent().AddChild(worldItem);
+            WorldMap.Instance.AddChild(worldItem);
             worldItem.Initialize(toSpawn.Dequeue(), 1);
             worldItem.GlobalPosition = GlobalPosition;
             worldItem.Spawn();
@@ -55,7 +56,20 @@ public partial class InteractEventSpawnItem : InteractEvent
 
     public override void Execute()
     {
-        toSpawn = new(itemsToSpawn);
+        Vector2 position = GlobalPosition;
+
+        GetParent().RemoveChild(this);
+        WorldMap.Instance.AddChild(this);
+
+        GlobalPosition = position;
+
+        toSpawn = new();
+        foreach(var spawnItemData in itemsToSpawn)
+        {
+            spawnItemData.InsertIntoQueue(toSpawn);
+        }
+
         isSpawning = true;
+        spawningTime = SPAWN_INTERVAL;
     }
 }

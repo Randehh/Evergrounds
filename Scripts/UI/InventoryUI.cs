@@ -50,8 +50,6 @@ public partial class InventoryUI : Control
         buttonData.textureRect.Texture = inventoryItem?.definition.itemSprite;
         buttonData.stackCountLabel.Text = inventoryItem?.currentStackSize.ToString();
         buttonData.stackCountLabel.Visible = inventoryItem?.definition.isStackable ?? false;
-
-        GD.Print($"{slot} = {inventoryIndex} -> {inventoryItem?.definition.itemType}");
     }
 
     private void EquipSlot(int slot)
