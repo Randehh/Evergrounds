@@ -9,4 +9,5 @@ script = ExtResource("1_7gk3i")
 shadowSprite = NodePath("ShadowSprite")
 
 [node name="ShadowSprite" type="Sprite2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("2_dbx44")
