@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 [GlobalClass]
-public partial class InteractEventSpawnItemData : Resource
+public partial class WorldItemSpawnerItemData : Resource
 {
 
     [Export]
@@ -17,7 +17,15 @@ public partial class InteractEventSpawnItemData : Resource
     [Export]
     private float baseChance = 1;
 
-    public InteractEventSpawnItemData() { }
+    public WorldItemSpawnerItemData() { }
+
+    public WorldItemSpawnerItemData(InventoryItemDefinition item, int minimumCount, int maximumCount, float baseChance)
+    {
+        this.item = item;
+        this.minimumCount = minimumCount;
+        this.maximumCount = maximumCount;
+        this.baseChance = baseChance;
+    }
 
     public void InsertIntoQueue(Queue<InventoryItemDefinition> queue)
     {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cv78ude3j44mx"]
+[gd_scene load_steps=16 format=3 uid="uid://cv78ude3j44mx"]
 
 [ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_drppp"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_35spc"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dycxjnpyccbh6" path="res://Art/World/Interactables/Interactable_Chest_Open.png" id="4_o2gcd"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="5_0kiej"]
 [ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="6_mk56t"]
+[ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="6_nfmq4"]
+[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="7_3ms7t"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventPlayAnimation.cs" id="7_wifgg"]
 
 [sub_resource type="Resource" id="Resource_88xi3"]
@@ -177,6 +179,13 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3yfn1"]
 
+[sub_resource type="Resource" id="Resource_31mgo"]
+script = ExtResource("7_3ms7t")
+item = ExtResource("6_nfmq4")
+minimumCount = 10
+maximumCount = 25
+baseChance = 1.0
+
 [node name="Chest" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
 script = ExtResource("1_drppp")
 interactPoint = NodePath("InteractShape")
@@ -205,6 +214,7 @@ position = Vector2(0, -14)
 
 [node name="InteractEventSpawnItem" type="Node2D" parent="."]
 script = ExtResource("5_0kiej")
+itemsToSpawn = Array[Object]([SubResource("Resource_31mgo")])
 
 [node name="WorldNodeShadow" parent="." node_paths=PackedStringArray("targetNode") instance=ExtResource("6_mk56t")]
 targetNode = NodePath("../ChestSprite")

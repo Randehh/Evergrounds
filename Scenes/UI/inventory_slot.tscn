@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cukj0u724ndo3"]
+[gd_scene load_steps=4 format=3 uid="uid://cukj0u724ndo3"]
+
+[ext_resource type="Texture2D" uid="uid://cqp6i62kk37i4" path="res://Art/UI/UI_Inventory_Slot.png" id="1_lcac8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ssisn"]
 line_spacing = 1.0
@@ -12,11 +14,11 @@ font_size = 8
 outline_size = 6
 outline_color = Color(0.0430392, 0.0430392, 0.0430392, 1)
 
-[node name="InventorySlot" type="Button"]
+[node name="InventorySlot" type="TextureRect"]
 custom_minimum_size = Vector2(34, 34)
-offset_right = 25.0
-offset_bottom = 25.0
-toggle_mode = true
+offset_right = 34.0
+offset_bottom = 34.0
+texture = ExtResource("1_lcac8")
 
 [node name="NumberLabel" type="Label" parent="."]
 layout_mode = 1

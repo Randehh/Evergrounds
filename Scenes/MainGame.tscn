@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=8 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/Inventory_UI.tscn" id="1_v08iy"]
 [ext_resource type="PackedScene" uid="uid://cevqvlshxo84w" path="res://Scenes/Map.tscn" id="2_be0ya"]
+[ext_resource type="Script" path="res://Scripts/DragAndDrop/DragAndDrop.cs" id="2_n5ome"]
 [ext_resource type="Script" path="res://Scripts/Inventory/Inventory.cs" id="3_fklsy"]
+[ext_resource type="Script" path="res://Scripts/UI/DragAndDropUI.cs" id="5_dfp8p"]
+[ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="6_3kt0a"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
+line_spacing = 5.0
+font_size = 10
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [node name="MainGame" type="Node"]
 
@@ -10,6 +19,51 @@
 script = ExtResource("3_fklsy")
 itemsToAdd = Array[Object]([])
 
+[node name="DragAndDrop" type="Node" parent="."]
+script = ExtResource("2_n5ome")
+
 [node name="Map" parent="." instance=ExtResource("2_be0ya")]
 
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
+
+[node name="DragAndDropCanvas" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="DragAndDropUI" type="Control" parent="DragAndDropCanvas" node_paths=PackedStringArray("mouseParent", "itemDisplay", "itemCountLabel")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("5_dfp8p")
+mouseParent = NodePath("MouseParent")
+itemDisplay = NodePath("MouseParent/ItemTexture")
+itemCountLabel = NodePath("MouseParent/ItemTexture/ItemCountLabel")
+
+[node name="MouseParent" type="Control" parent="DragAndDropCanvas/DragAndDropUI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="ItemTexture" type="TextureRect" parent="DragAndDropCanvas/DragAndDropUI/MouseParent"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+mouse_filter = 2
+texture = ExtResource("6_3kt0a")
+
+[node name="ItemCountLabel" type="Label" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/ItemTexture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+label_settings = SubResource("LabelSettings_irpbb")
+horizontal_alignment = 2
+vertical_alignment = 2

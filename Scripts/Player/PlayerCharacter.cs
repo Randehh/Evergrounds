@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public partial class PlayerCharacter : Node2D
 {
 
+	public static PlayerCharacter Instance { get; private set; }
+
     [Export]
 	private CharacterBase character;
 
@@ -29,7 +31,9 @@ public partial class PlayerCharacter : Node2D
 
 	public override void _Ready()
 	{
-		Inventory.Instance.OnSelectQuickslot += OnItemSelected;
+		Instance = this;
+
+        Inventory.Instance.OnSelectQuickslot += OnItemSelected;
 
 		OnItemSelected(0);
     }

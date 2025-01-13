@@ -1,43 +1,43 @@
 using Godot;
-using Godot.Collections;
 using System.Collections.Generic;
 
 [GlobalClass]
-public partial class InteractEventSpawnItem : InteractEvent
+public partial class WorldItemSpawner : Node2D
 {
-
     private const string WORLD_ITEM_SCENE = @"res://Scenes/World/world_item.tscn";
     private const float SPAWN_INTERVAL = 0.075f;
 
-    [Export]
-    private Array<WorldItemSpawnerItemData> itemsToSpawn;
-
     private PackedScene worldItemScene;
-    private bool isSpawning = false;
     private Queue<InventoryItemDefinition> toSpawn = new();
     private double spawningTime = 0;
+    private bool isSpawning = false;
 
-    public override void _Ready()
+    public WorldItemSpawner(params WorldItemSpawnerItemData[] itemsToSpawn)
     {
-        base._Ready();
-
         worldItemScene = GD.Load<PackedScene>(WORLD_ITEM_SCENE);
+        spawningTime = SPAWN_INTERVAL;
+
+        foreach (var itemData in itemsToSpawn)
+        {
+            itemData.InsertIntoQueue(toSpawn);
+        }
+        isSpawning = true;
     }
 
     public override void _Process(double delta)
     {
         base._Process(delta);
 
-        if(!isSpawning)
+        if (!isSpawning)
         {
             return;
         }
 
         spawningTime += delta;
 
-        while(spawningTime > SPAWN_INTERVAL)
+        while (spawningTime > SPAWN_INTERVAL)
         {
-            if(toSpawn.Count == 0)
+            if (toSpawn.Count == 0)
             {
                 isSpawning = false;
                 QueueFree();
@@ -52,24 +52,5 @@ public partial class InteractEventSpawnItem : InteractEvent
             worldItem.GlobalPosition = GlobalPosition;
             worldItem.Spawn();
         }
-    }
-
-    public override void Execute()
-    {
-        Vector2 position = GlobalPosition;
-
-        GetParent().RemoveChild(this);
-        WorldMap.Instance.AddChild(this);
-
-        GlobalPosition = position;
-
-        toSpawn = new();
-        foreach(var spawnItemData in itemsToSpawn)
-        {
-            spawnItemData.InsertIntoQueue(toSpawn);
-        }
-
-        isSpawning = true;
-        spawningTime = SPAWN_INTERVAL;
     }
 }

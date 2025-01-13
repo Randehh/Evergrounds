@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_4lh03"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_j1ih2"]
 [ext_resource type="Resource" uid="uid://bkuersrsvb7ty" path="res://Resources/Items/item_wood.tres" id="4_jgta5"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItemData.cs" id="5_qlvsw"]
+[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_5ckqr"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventPlayAnimation.cs" id="5_rl274"]
 [ext_resource type="Texture2D" uid="uid://b5wka57y7fcb0" path="res://Art/World/Interactables/Interactable_Tree_Yellow.png" id="6_4qrqw"]
 [ext_resource type="Resource" uid="uid://dkneqfx24g3j5" path="res://Resources/Items/item_leaf.tres" id="6_7gpjj"]
@@ -99,26 +99,26 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_04bqn"]
 
-[sub_resource type="Resource" id="Resource_nn4q6"]
-script = ExtResource("5_qlvsw")
+[sub_resource type="Resource" id="Resource_urmos"]
+script = ExtResource("5_5ckqr")
 item = ExtResource("4_jgta5")
-minimumCount = 2
-maximumCount = 4
+minimumCount = 1
+maximumCount = 2
 baseChance = 1.0
 
-[sub_resource type="Resource" id="Resource_ehr8w"]
-script = ExtResource("5_qlvsw")
+[sub_resource type="Resource" id="Resource_6hjsb"]
+script = ExtResource("5_5ckqr")
 item = ExtResource("6_7gpjj")
-minimumCount = 2
+minimumCount = 4
 maximumCount = 6
 baseChance = 1.0
 
-[sub_resource type="Resource" id="Resource_sb5la"]
-script = ExtResource("5_qlvsw")
+[sub_resource type="Resource" id="Resource_k6m2f"]
+script = ExtResource("5_5ckqr")
 item = ExtResource("7_054iu")
-minimumCount = 1
-maximumCount = 2
-baseChance = 0.25
+minimumCount = 2
+maximumCount = 3
+baseChance = 0.5
 
 [node name="TreeYellow" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
 y_sort_enabled = true
@@ -145,7 +145,7 @@ position = Vector2(0, -30)
 
 [node name="InteractEventSpawnItem" type="Node2D" parent="."]
 script = ExtResource("3_j1ih2")
-itemsToSpawn = Array[Object]([SubResource("Resource_nn4q6"), SubResource("Resource_ehr8w"), SubResource("Resource_sb5la")])
+itemsToSpawn = Array[Object]([SubResource("Resource_urmos"), SubResource("Resource_6hjsb"), SubResource("Resource_k6m2f")])
 
 [node name="InteractEventPlayAnimation" type="Node2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("5_rl274")

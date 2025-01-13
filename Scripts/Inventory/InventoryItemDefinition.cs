@@ -5,6 +5,12 @@ using static CharacterBase;
 public partial class InventoryItemDefinition : Resource
 {
     [Export]
+    public string displayName;
+
+    [Export(PropertyHint.MultilineText)]
+    public string description;
+
+    [Export]
     public InventoryItemType itemType;
 
     [Export]

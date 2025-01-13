@@ -1,35 +1,19 @@
-[gd_scene load_steps=14 format=4 uid="uid://cevqvlshxo84w"]
+[gd_scene load_steps=10 format=4 uid="uid://cevqvlshxo84w"]
 
 [ext_resource type="Script" path="res://Scripts/World/WorldMap.cs" id="1_1x1iq"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.cs" id="1_8er03"]
 [ext_resource type="TileSet" uid="uid://u1q06kau1m65" path="res://TileSets/Default.tres" id="2_3poui"]
 [ext_resource type="PackedScene" uid="uid://cigl51myg13f6" path="res://Scenes/Characters/player.tscn" id="3_rslf7"]
 [ext_resource type="PackedScene" uid="uid://cv78ude3j44mx" path="res://Scenes/World/Interactables/interactable_chest.tscn" id="4_b7prb"]
-[ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="5_o0df3"]
 [ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="5_rudrl"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItemData.cs" id="7_h443h"]
-[ext_resource type="Resource" uid="uid://p4innrlpa2cc" path="res://Resources/Items/item_acorn.tres" id="8_gvl7q"]
+[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="7_vig5y"]
 [ext_resource type="PackedScene" uid="uid://bmu70m6spkl83" path="res://Scenes/World/Interactables/interactable_tree_yellow.tscn" id="9_56mls"]
 
-[sub_resource type="Resource" id="Resource_lf21s"]
-script = ExtResource("7_h443h")
+[sub_resource type="Resource" id="Resource_nxwyw"]
+script = ExtResource("7_vig5y")
 item = ExtResource("5_rudrl")
 minimumCount = 1
 maximumCount = 1
-baseChance = 1.0
-
-[sub_resource type="Resource" id="Resource_dvc8e"]
-script = ExtResource("7_h443h")
-item = ExtResource("8_gvl7q")
-minimumCount = 20
-maximumCount = 50
-baseChance = 1.0
-
-[sub_resource type="Resource" id="Resource_48ffl"]
-script = ExtResource("7_h443h")
-item = ExtResource("5_o0df3")
-minimumCount = 5
-maximumCount = 20
 baseChance = 1.0
 
 [node name="Map" type="Node2D"]
@@ -60,13 +44,10 @@ decceleration = 0.8
 position = Vector2(-24, -16)
 
 [node name="InteractEventSpawnItem" parent="Chest" index="4"]
-itemsToSpawn = Array[Object]([SubResource("Resource_lf21s")])
+itemsToSpawn = Array[Object]([SubResource("Resource_nxwyw")])
 
 [node name="Chest5" parent="." instance=ExtResource("4_b7prb")]
 position = Vector2(34, -16)
-
-[node name="InteractEventSpawnItem" parent="Chest5" index="4"]
-itemsToSpawn = Array[Object]([SubResource("Resource_dvc8e"), SubResource("Resource_48ffl")])
 
 [node name="TreeYellow" parent="." instance=ExtResource("9_56mls")]
 position = Vector2(-22, 41)

@@ -60,11 +60,6 @@ public partial class PlayerInteractHandler : Node2D
             case InteractType.MINE_ORE:
             case InteractType.HARVEST_PLANTS:
                 HandleDefaultInteract(itemInHand);
-
-                if(activateIndicator)
-                {
-                    selectArrow.Visible = true;
-                }
                 break;
 
             case InteractType.GRID_SELECT:

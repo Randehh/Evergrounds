@@ -5,9 +5,11 @@
 
 [resource]
 script = ExtResource("2_d6mj5")
+displayName = ""
+description = ""
 itemType = 6
 itemSprite = ExtResource("1_fd8hf")
-stackSize = 100
+stackSize = 1
 useAnimation = 0
 interactType = 5
 interactLevel = 0

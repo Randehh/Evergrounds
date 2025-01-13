@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://byw6uf1hldkac"]
+[gd_scene load_steps=6 format=3 uid="uid://byw6uf1hldkac"]
 
 [ext_resource type="PackedScene" uid="uid://cukj0u724ndo3" path="res://Scenes/UI/inventory_slot.tscn" id="1_boum4"]
 [ext_resource type="Script" path="res://Scripts/UI/InventoryUI.cs" id="1_gpbcs"]
+[ext_resource type="Texture2D" uid="uid://cqp6i62kk37i4" path="res://Art/UI/UI_Inventory_Slot.png" id="3_nome4"]
+[ext_resource type="Texture2D" uid="uid://dxgfoiitl7irw" path="res://Art/UI/UI_Inventory_Slot_Hover.png" id="4_7uvhs"]
+[ext_resource type="Texture2D" uid="uid://bwu0vge34b7tj" path="res://Art/UI/UI_Inventory_Slot_Selected.png" id="4_thf6r"]
 
 [node name="InventoryCanvas" type="CanvasLayer"]
 
-[node name="InventoryUi" type="Control" parent="." node_paths=PackedStringArray("inventorySlotsParent")]
+[node name="InventoryUi" type="Control" parent="." node_paths=PackedStringArray("inventoryRowContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,9 +16,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gpbcs")
-inventorySlotsParent = NodePath("InventorySlots")
+inventorySlotScene = ExtResource("1_boum4")
+inventoryRowContainer = NodePath("InventorySlots")
+slotBackground = ExtResource("3_nome4")
+slotBackgroundHover = ExtResource("4_7uvhs")
+slotBackgroundSelected = ExtResource("4_thf6r")
 
-[node name="InventorySlots" type="HBoxContainer" parent="InventoryUi"]
+[node name="InventorySlots" type="VBoxContainer" parent="InventoryUi"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -26,33 +33,3 @@ offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
-
-[node name="InventorySlot" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2
-
-[node name="InventorySlot2" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2
-
-[node name="InventorySlot3" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2
-
-[node name="InventorySlot4" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2
-
-[node name="InventorySlot5" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2
-
-[node name="InventorySlot6" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2
-
-[node name="InventorySlot7" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2
-
-[node name="InventorySlot8" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2
-
-[node name="InventorySlot9" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2
-
-[node name="InventorySlot10" parent="InventoryUi/InventorySlots" instance=ExtResource("1_boum4")]
-layout_mode = 2

@@ -2,7 +2,6 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 [GlobalClass]
 public partial class Inventory : Node
@@ -10,7 +9,7 @@ public partial class Inventory : Node
     public static Inventory Instance;
 
     public Action<int> OnSelectQuickslot = delegate { };
-    public Action<int, int> OnSetQuickslot = delegate { };
+    public Action<int> OnUpdateSlot = delegate { };
 
     public const int QUICK_SELECT_COUNT = 10;
     public const int INVENTORY_SIZE = 50;
@@ -77,7 +76,7 @@ public partial class Inventory : Node
         for (int i = 0; i < quickSelectIndexes.Length; i++)
         {
             int inventoryIndex = quickSelectIndexes[i];
-            OnSetQuickslot.Invoke(i, inventoryIndex);
+            OnUpdateSlot.Invoke(i);
         }
     }
 
@@ -118,7 +117,6 @@ public partial class Inventory : Node
         return false;
     }
 
-
     public void SetItem(int index, InventoryItemDefinition item, int count)
     {
         inventoryItems[index] = new InventoryItem(item, count);
@@ -139,14 +137,11 @@ public partial class Inventory : Node
 
     private void RefreshInventorySlot(int index)
     {
-        if (quickSelectIndexes.Contains(index))
-        {
-            OnSetQuickslot.Invoke(index, quickSelectIndexes[index]);
+        OnUpdateSlot.Invoke(index);
 
-            if (quickSelectEquipped == index)
-            {
-                OnSelectQuickslot(index);
-            }
+        if (quickSelectEquipped == index)
+        {
+            OnSelectQuickslot(index);
         }
     }
 
@@ -159,9 +154,6 @@ public partial class Inventory : Node
         {
             RemoveItem(inventoryIndex);
         }
-
-        // Refresh slot
-        RefreshInventorySlot(inventoryIndex);
 
         return true;
     }
@@ -207,6 +199,12 @@ public partial class Inventory : Node
     public bool RemoveItem(int index)
     {
         var itemToRemove = inventoryItems[index];
+
+        if(itemToRemove == null)
+        {
+            return false;
+        }
+
         inventoryItems[index] = null;
 
         // Update lookups
@@ -217,6 +215,8 @@ public partial class Inventory : Node
         }
 
         itemInstanceLookup.Remove(itemToRemove);
+
+        RefreshInventorySlot(index);
 
         return true;
     }
