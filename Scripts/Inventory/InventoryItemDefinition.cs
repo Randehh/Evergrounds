@@ -22,6 +22,9 @@ public partial class InventoryItemDefinition : Resource
     [Export]
     public int interactLevel = 1;
 
+    [Export]
+    public float worldShadowScale = 0.5f;
+
     public bool isStackable => stackSize > 1;
 
     public InventoryItemDefinition() { }

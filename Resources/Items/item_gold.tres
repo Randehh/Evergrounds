@@ -11,3 +11,4 @@ stackSize = 100
 useAnimation = 0
 interactType = 0
 interactLevel = 1
+worldShadowScale = 0.25

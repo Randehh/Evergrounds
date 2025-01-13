@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bokq7ofwp6afk"]
+
+[ext_resource type="Script" path="res://Scripts/World/WorldNodeShadow.cs" id="1_7gk3i"]
+[ext_resource type="Texture2D" uid="uid://d4jelsu0lct5l" path="res://Art/Effects/Effects_Shadow.png" id="2_dbx44"]
+
+[node name="WorldNodeShadow" type="Node2D" node_paths=PackedStringArray("targetNode", "shadowSprite")]
+z_index = -1
+script = ExtResource("1_7gk3i")
+targetNode = NodePath("")
+shadowSprite = NodePath("ShadowSprite")
+
+[node name="ShadowSprite" type="Sprite2D" parent="."]
+position = Vector2(0, 7)
+texture = ExtResource("2_dbx44")
