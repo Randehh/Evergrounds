@@ -81,7 +81,7 @@ public partial class Inventory : Node
         }
     }
 
-    public void AddItem(InventoryItem item) => AddItem(item.definition, item.currentStackSize);
+    public bool AddItem(InventoryItem item) => AddItem(item.definition, item.currentStackSize);
 
     public bool AddItem(InventoryItemDefinition item, int count)
     {
@@ -122,6 +122,8 @@ public partial class Inventory : Node
     public void SetItem(int index, InventoryItemDefinition item, int count)
     {
         inventoryItems[index] = new InventoryItem(item, count);
+
+        // Update lookups
         List<int> lookupList;
         if (!itemLookup.TryGetValue(item.itemType, out lookupList))
         {
@@ -148,7 +150,7 @@ public partial class Inventory : Node
         }
     }
 
-    public void RemoveItem(InventoryItem item, int count)
+    public bool RemoveItem(InventoryItem item, int count)
     {
         int inventoryIndex = itemInstanceLookup[item];
 
@@ -160,16 +162,63 @@ public partial class Inventory : Node
 
         // Refresh slot
         RefreshInventorySlot(inventoryIndex);
+
+        return true;
     }
 
-    public void RemoveItem(InventoryItemDefinition item, int count)
+    public bool RemoveItem(InventoryItemDefinition itemDefinition, int count)
     {
+        if(!itemLookup.TryGetValue(itemDefinition.itemType, out var lookupList))
+        {
+            return false;
+        }
 
+        List<int> indexesToRemove = new();
+        int finalIndex = -1;
+        for (int i = 0; i < lookupList.Count; i++)
+        {
+            int inventoryIndex = lookupList[i];
+            InventoryItem item = inventoryItems[inventoryIndex];
+            if(item.currentStackSize <= count)
+            {
+                indexesToRemove.Add(inventoryIndex);
+                count -= item.currentStackSize;
+                continue;
+            }
+
+            finalIndex = inventoryIndex;
+        }
+
+        if(finalIndex == -1 && count != 0)
+        {
+            return false;
+        }
+
+        foreach(int indexToRemove in indexesToRemove)
+        {
+            RemoveItem(indexToRemove);
+        }
+
+        inventoryItems[finalIndex].currentStackSize -= count;
+
+        return true;
     }
 
-    public void RemoveItem(int index)
+    public bool RemoveItem(int index)
     {
+        var itemToRemove = inventoryItems[index];
         inventoryItems[index] = null;
+
+        // Update lookups
+        List<int> lookupList;
+        if (itemLookup.TryGetValue(itemToRemove.definition.itemType, out lookupList))
+        {
+            lookupList.Remove(index);
+        }
+
+        itemInstanceLookup.Remove(itemToRemove);
+
+        return true;
     }
 
     public InventoryItem GetItem(int index)

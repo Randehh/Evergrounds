@@ -7,7 +7,7 @@ public partial class InteractEventSpawnItem : InteractEvent
 {
 
     private const string WORLD_ITEM_SCENE = @"res://Scenes/World/world_item.tscn";
-    private const float SPAWN_INTERVAL = 0.1f;
+    private const float SPAWN_INTERVAL = 0.075f;
 
     [Export]
     private Array<InteractEventSpawnItemData> itemsToSpawn;
