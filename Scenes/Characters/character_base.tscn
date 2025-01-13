@@ -92,19 +92,19 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite/Holdable:position")
+tracks/0/path = NodePath("CharacterSprites/Holdable:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(7, 4)]
+"values": [Vector2(7, -4)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite/Holdable:rotation")
+tracks/1/path = NodePath("CharacterSprites/Holdable:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -116,7 +116,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CharacterSprite/Holdable:scale")
+tracks/2/path = NodePath("CharacterSprites/Holdable:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -128,7 +128,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CharacterSprite/Holdable:skew")
+tracks/3/path = NodePath("CharacterSprites/Holdable:skew")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -145,19 +145,19 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite/Holdable:position")
+tracks/0/path = NodePath("CharacterSprites/Holdable:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3, 0.5, 0.8),
 "transitions": PackedFloat32Array(1, 1.86607, 0.233258, 1),
 "update": 0,
-"values": [Vector2(7, 4), Vector2(-7, 5), Vector2(15, 5), Vector2(7, 4)]
+"values": [Vector2(7, -4), Vector2(-7, -3), Vector2(15, -3), Vector2(7, -4)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterSprite/Holdable:rotation")
+tracks/1/path = NodePath("CharacterSprites/Holdable:rotation")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -169,7 +169,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CharacterSprite/Holdable:scale")
+tracks/2/path = NodePath("CharacterSprites/Holdable:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -181,7 +181,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CharacterSprite/Holdable:skew")
+tracks/3/path = NodePath("CharacterSprites/Holdable:skew")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -201,10 +201,10 @@ _data = {
 script = ExtResource("1_dppcc")
 characterAnimator = NodePath("MovementAnimator")
 holdableAnimator = NodePath("HoldableAnimator")
-holdableSprite = NodePath("CharacterSprite/Holdable/HoldableSprite")
+holdableSprite = NodePath("CharacterSprites/Holdable/HoldableSprite")
 
 [node name="MovementAnimator" type="AnimationPlayer" parent="."]
-root_node = NodePath("../CharacterSprite")
+root_node = NodePath("../CharacterSprites")
 libraries = {
 "": SubResource("AnimationLibrary_50ce0")
 }
@@ -215,26 +215,10 @@ libraries = {
 "": SubResource("AnimationLibrary_12kvp")
 }
 
-[node name="CharacterSprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_gmury")
+[node name="CharacterSprites" type="Node2D" parent="."]
 
-[node name="Holdable" type="Node2D" parent="CharacterSprite" node_paths=PackedStringArray("targetNode", "attachmentNode")]
-z_index = 10
-position = Vector2(7, 4)
-rotation = 0.702786
-script = ExtResource("2_jybix")
-targetNode = NodePath("..")
-attachmentNode = NodePath("HoldableSprite")
-followSpeed = 50.0
-rotationSpeed = 8.0
-
-[node name="HoldableSprite" type="Sprite2D" parent="CharacterSprite/Holdable"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_jejjs")
-
-[node name="Backpack" type="Node2D" parent="CharacterSprite" node_paths=PackedStringArray("targetNode", "attachmentNode")]
-z_index = -10
-position = Vector2(-4, 3)
+[node name="Backpack" type="Node2D" parent="CharacterSprites" node_paths=PackedStringArray("targetNode", "attachmentNode")]
+position = Vector2(-4, -5)
 script = ExtResource("2_jybix")
 targetNode = NodePath("..")
 attachmentNode = NodePath("BackpackSprite")
@@ -242,10 +226,27 @@ followSpeed = 35.0
 rotationSpeed = 3.0
 rotationMultiplier = 5.0
 
-[node name="BackpackSprite" type="Sprite2D" parent="CharacterSprite/Backpack"]
+[node name="BackpackSprite" type="Sprite2D" parent="CharacterSprites/Backpack"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_1i5mm")
 
+[node name="CharacterSprite" type="Sprite2D" parent="CharacterSprites"]
+texture = ExtResource("1_gmury")
+offset = Vector2(0, -8)
+
+[node name="Holdable" type="Node2D" parent="CharacterSprites" node_paths=PackedStringArray("targetNode", "attachmentNode")]
+position = Vector2(7, -4)
+rotation = 0.702786
+script = ExtResource("2_jybix")
+targetNode = NodePath("..")
+attachmentNode = NodePath("HoldableSprite")
+followSpeed = 50.0
+rotationSpeed = 8.0
+
+[node name="HoldableSprite" type="Sprite2D" parent="CharacterSprites/Holdable"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_jejjs")
+
 [node name="WorldNodeShadow" parent="." node_paths=PackedStringArray("targetNode") instance=ExtResource("6_gcjf1")]
-targetNode = NodePath("../CharacterSprite")
+targetNode = NodePath("../CharacterSprites")
 baseScaleMultiplier = 0.75

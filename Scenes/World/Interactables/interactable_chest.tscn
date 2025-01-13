@@ -192,13 +192,15 @@ libraries = {
 }
 
 [node name="InteractShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_3yfn1")
 
 [node name="ChestSprite" type="Sprite2D" parent="."]
 texture = ExtResource("3_5raf4")
+offset = Vector2(0, -8)
 
 [node name="ArrowAnchor" type="Node2D" parent="."]
-position = Vector2(0, -6)
+position = Vector2(0, -14)
 
 [node name="InteractEventSpawnItem" type="Node2D" parent="."]
 script = ExtResource("5_0kiej")

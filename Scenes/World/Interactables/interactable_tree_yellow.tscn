@@ -48,7 +48,7 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-16, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 
@@ -86,7 +86,7 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(-16, 0, 0, 0, 0, -16, 0, 0, 0, 0, -16, 0, 0, 0, 0, -16, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 "times": PackedFloat32Array(0, 0.15, 0.3, 0.4)
 }
 
@@ -120,6 +120,7 @@ maximumCount = 2
 baseChance = 0.25
 
 [node name="TreeYellow" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents")]
+y_sort_enabled = true
 script = ExtResource("1_kwlpf")
 interactPoint = NodePath("Shape")
 interactShape = NodePath("Shape")
@@ -150,8 +151,8 @@ player = NodePath("../TreeAnimator")
 animationName = "Shake"
 
 [node name="TreeSprite" type="Sprite2D" parent="."]
-position = Vector2(0, -16)
 texture = ExtResource("6_4qrqw")
+offset = Vector2(0, -16)
 
 [node name="InteractEventDestroyNode" type="Node2D" parent="." node_paths=PackedStringArray("toDestroy")]
 script = ExtResource("7_vfhnh")

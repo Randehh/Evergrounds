@@ -20,6 +20,7 @@ shadow = NodePath("WorldNodeShadow")
 [node name="ItemSprite" type="Sprite2D" parent="FloatParent"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_ivm82")
+offset = Vector2(0, -8)
 
 [node name="ItemShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ynqdi")
