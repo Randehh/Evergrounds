@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://cigl51myg13f6"]
+[gd_scene load_steps=12 format=3 uid="uid://cigl51myg13f6"]
 
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
 [ext_resource type="PackedScene" uid="uid://ctkvevyma6uqu" path="res://Scenes/Characters/character_base.tscn" id="2_ah60g"]
 [ext_resource type="Texture2D" uid="uid://b2c6m7ka7bi0m" path="res://Art/UI/Arrow_Down.png" id="3_d6q47"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerInteractHandler.cs" id="3_vywfg"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerInteractDetector.cs" id="4_faxxo"]
+[ext_resource type="Texture2D" uid="uid://cbspc4phk6w78" path="res://Art/UI/UI_Grid_Overlay.png" id="6_8im18"]
 
 [sub_resource type="Animation" id="Animation_cxq1k"]
 resource_name = "Highlight"
@@ -123,12 +124,13 @@ maxSpeed = 0.15
 
 [node name="CharacterBase" parent="." instance=ExtResource("2_ah60g")]
 
-[node name="PlayerInteractHandler" type="Node2D" parent="." node_paths=PackedStringArray("character", "interactDetector", "selectArrow", "previewSprite")]
+[node name="PlayerInteractHandler" type="Node2D" parent="." node_paths=PackedStringArray("character", "interactDetector", "selectArrow", "previewSprite", "gridTileView")]
 script = ExtResource("3_vywfg")
 character = NodePath("../CharacterBase")
 interactDetector = NodePath("../InteractableDetector")
 selectArrow = NodePath("../SelectArrow")
 previewSprite = NodePath("../ItemPlacePreviewSprite")
+gridTileView = NodePath("../GridPreviewSprite")
 
 [node name="SelectArrow" type="Node2D" parent="."]
 
@@ -162,6 +164,10 @@ shape = SubResource("CircleShape2D_ndks1")
 
 [node name="ItemPlacePreviewSprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.5)
+
+[node name="GridPreviewSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("6_8im18")
 
 [connection signal="area_entered" from="InteractableDetector" to="InteractableDetector" method="OnAreaEntered"]
 [connection signal="area_exited" from="InteractableDetector" to="InteractableDetector" method="OnAreaExited"]

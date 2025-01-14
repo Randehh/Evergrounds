@@ -7,6 +7,9 @@ public partial class PlayerInteractHandler : Node2D
     private readonly Color colorWhite = new Color(1, 1, 1, 1);
     private readonly Color colorHalfAlpha = new Color(1, 1, 1, 0.5f);
 
+    private readonly Color colorValid = new Color(0.25f, 1, 0.25f, 0.5f);
+    private readonly Color colorInvalid = new Color(1, 0.25f, 0.25f, 0.5f);
+
     [Export]
     private CharacterBase character;
 
@@ -19,6 +22,9 @@ public partial class PlayerInteractHandler : Node2D
     [Export]
     private Sprite2D previewSprite;
 
+    [Export]
+    private Sprite2D gridTileView;
+
     // Default interactions
     private Interactable currentInteracable;
     private InteractResult currentInteractResult;
@@ -29,6 +35,7 @@ public partial class PlayerInteractHandler : Node2D
     private PackedScene currentlyLoadedPackedScene;
     private Node2D currentLoadedScene;
     private Vector2 gridPreviewNodeOffset = Vector2.Zero;
+    private double alphaTimer;
 
     private InteractType previousInteractType;
 
@@ -39,7 +46,7 @@ public partial class PlayerInteractHandler : Node2D
         (selectArrow.FindChild("ArrowAnimator") as AnimationPlayer).Play("Highlight");
     }
 
-    public void ProcessInteraction(InventoryItem itemInHand)
+    public void ProcessInteraction(InventoryItem itemInHand, double delta)
     {
         InteractType interactType = itemInHand?.definition.interactType ?? InteractType.NONE;
 
@@ -49,6 +56,7 @@ public partial class PlayerInteractHandler : Node2D
         {
             selectArrow.Visible = false;
             previewSprite.Visible = false;
+            gridTileView.Visible = false;
 
             activateIndicator = true;
         }
@@ -63,7 +71,13 @@ public partial class PlayerInteractHandler : Node2D
                 break;
 
             case InteractType.SET_TILE_MATERIAL:
-                HandleSetTileMaterial(itemInHand);
+                HandleSetTileMaterial(itemInHand, delta);
+
+                if (activateIndicator)
+                {
+                    alphaTimer = 0;
+                    gridTileView.Visible = true;
+                }
                 break;
 
             case InteractType.GRID_SELECT:
@@ -129,14 +143,25 @@ public partial class PlayerInteractHandler : Node2D
         }
     }
 
-    private void HandleSetTileMaterial(InventoryItem itemInHand)
+    private void HandleSetTileMaterial(InventoryItem itemInHand, double delta)
     {
         bool canChangeMaterial = WorldMap.Instance.CanChangeToTileMaterial(itemInHand.definition.tileMaterial);
-        if(canChangeMaterial && IsUseHoldablePressed())
+
+        gridTileView.GlobalPosition = WorldMap.Instance.GetMouseCoordinates();
+        gridTileView.Modulate = (canChangeMaterial ? colorValid : colorInvalid).WithAlpha(SinBetween(0.25f, 0.75f));
+
+        if (canChangeMaterial && IsUseHoldablePressed())
         {
             WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial);
             character.UseHoldable();
         }
+
+        alphaTimer += delta;
+    }
+
+    private float SinBetween(float min, float max)
+    {
+        return ((max - min) * (float)Mathf.Sin(alphaTimer * 5) + max + min) / 2;
     }
 
     private void HandleGridSelection(InventoryItem itemInHand, int gridDivision)

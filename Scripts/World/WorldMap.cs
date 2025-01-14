@@ -10,14 +10,13 @@ public partial class WorldMap : Node2D
     public static WorldMap Instance;
 
     public AtlasMaterial SelectedTileMaterial { get; private set; }
+    public Vector2I MouseGridPosition { get; private set; }
 
     [Export]
     private TileMapLayer defaultTileMap;
 
     [Export]
     private TileMapLayer displayTileMap;
-
-    private Vector2I mouseGridPosition;
 
     public override void _Ready()
     {
@@ -31,9 +30,9 @@ public partial class WorldMap : Node2D
 
     public override void _Process(double delta)
     {
-        mouseGridPosition = defaultTileMap.LocalToMap(GetMouseCoordinates());
+        MouseGridPosition = defaultTileMap.LocalToMap(GetMouseCoordinates());
 
-        TileData tileData = defaultTileMap.GetCellTileData(mouseGridPosition);
+        TileData tileData = defaultTileMap.GetCellTileData(MouseGridPosition);
         if(tileData == null)
         {
             return;
@@ -70,10 +69,10 @@ public partial class WorldMap : Node2D
             case AtlasMaterial.TILLED: atlasCoord = dirtPlaceholderAtlasCoord; break;
         }
 
-        SetTile(mouseGridPosition, atlasCoord);
+        SetTile(MouseGridPosition, atlasCoord);
     }
 
-    private Vector2 GetMouseCoordinates()
+    public Vector2 GetMouseCoordinates()
     {
         Vector2 globalMousePosition = GetGlobalMousePosition();
         int xInt = Mathf.FloorToInt(globalMousePosition.X / 16) * 16;

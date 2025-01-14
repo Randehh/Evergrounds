@@ -63,7 +63,7 @@ public partial class PlayerCharacter : Node2D
 
 		Position += currentSpeed;
 
-		interactHandler.ProcessInteraction(character.CurrentlyHolding);
+		interactHandler.ProcessInteraction(character.CurrentlyHolding, delta);
 	}
 
     public override void _PhysicsProcess(double delta)

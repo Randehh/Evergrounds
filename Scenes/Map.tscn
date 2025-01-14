@@ -44,7 +44,8 @@ dirtPlaceholderAtlasCoord = Vector2i(1, 0)
 zoom = Vector2(2, 2)
 script = ExtResource("1_8er03")
 character = NodePath("../Characters/Player")
-followSpeed = 2.0
+followSpeed = 4.0
+mousePullPower = 15.0
 
 [node name="DefaultTileMap" type="TileMapLayer" parent="."]
 visible = false
