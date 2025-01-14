@@ -47,6 +47,18 @@ public partial class WorldMap : Node2D
         return new WorldMapTileSet(dataLayer, displayLayer, materialOne, materialTwo, dataAtlasId, displayAtlasId);
     }
 
+    public AtlasMaterial GetSelectedTileMaterial()
+    {
+        if (tillingTileMap.SelectedTileMaterial != AtlasMaterial.NONE)
+        {
+            return tillingTileMap.SelectedTileMaterial;
+        }
+        else
+        {
+            return standardTileMap.SelectedTileMaterial;
+        }
+    }
+
     public bool CanChangeToTileMaterial(AtlasMaterial targetMaterial)
     {
         switch(targetMaterial)

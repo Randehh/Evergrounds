@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://cevqvlshxo84w"]
+[gd_scene load_steps=18 format=4 uid="uid://cevqvlshxo84w"]
 
 [ext_resource type="Script" path="res://Scripts/World/WorldMap.cs" id="1_1x1iq"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.cs" id="1_8er03"]
@@ -10,6 +10,8 @@
 [ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="8_i6jss"]
 [ext_resource type="PackedScene" uid="uid://bmu70m6spkl83" path="res://Scenes/World/Interactables/interactable_tree_yellow.tscn" id="9_56mls"]
 [ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_761cn"]
+[ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="10_pekgq"]
+[ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="11_dnerq"]
 
 [sub_resource type="Resource" id="Resource_nxwyw"]
 script = ExtResource("7_vig5y")
@@ -30,6 +32,20 @@ script = ExtResource("7_vig5y")
 item = ExtResource("9_761cn")
 minimumCount = 1
 maximumCount = 1
+baseChance = 1.0
+
+[sub_resource type="Resource" id="Resource_31mgo"]
+script = ExtResource("7_vig5y")
+item = ExtResource("10_pekgq")
+minimumCount = 10
+maximumCount = 25
+baseChance = 1.0
+
+[sub_resource type="Resource" id="Resource_wkhgm"]
+script = ExtResource("7_vig5y")
+item = ExtResource("11_dnerq")
+minimumCount = 10
+maximumCount = 20
 baseChance = 1.0
 
 [node name="Map" type="Node2D" node_paths=PackedStringArray("defaultTileMapLayer", "displayTileMapLayer", "tillingTileMapLayer", "tillingDisplayTileMapLayer")]
@@ -87,6 +103,9 @@ itemsToSpawn = Array[Object]([SubResource("Resource_nxwyw"), SubResource("Resour
 
 [node name="Chest5" parent="." instance=ExtResource("4_b7prb")]
 position = Vector2(34, -16)
+
+[node name="InteractEventSpawnItem" parent="Chest5" index="4"]
+itemsToSpawn = Array[Object]([SubResource("Resource_31mgo"), SubResource("Resource_wkhgm")])
 
 [node name="TreeYellow" parent="." instance=ExtResource("9_56mls")]
 position = Vector2(-22, 41)

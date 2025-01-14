@@ -6,5 +6,6 @@ public enum InventoryItemType
     PITCHFORK,
     WOOD,
     LEAF,
-    ACORN
+    ACORN,
+    SEED_CARROT,
 }

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://crmrvkfikd4f6"]
+
+[ext_resource type="Texture2D" uid="uid://wjdbvryvk3vf" path="res://Art/Items/Holdables/Holdable_Seed_Carrot.png" id="1_ejlg2"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_k0gam"]
+
+[resource]
+script = ExtResource("2_k0gam")
+displayName = "Carrot seed"
+description = ""
+usageText = "Plant carrots"
+itemType = 7
+itemSprite = ExtResource("1_ejlg2")
+stackSize = 100
+useAnimation = 0
+interactType = 4
+interactLevel = 0
+worldShadowScale = 0.25
+gridPlacementScene = "res://Scenes/World/Interactables/interactable_seeds.tscn"
+tileMaterial = 0
+validTilePlacementMaterials = [2]

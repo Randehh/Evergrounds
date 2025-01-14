@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using static CharacterBase;
 using static WorldMap;
 
@@ -38,8 +39,11 @@ public partial class InventoryItemDefinition : Resource
     [Export(hintString: "Defines what is placed on the grid with grid-based interaction types")]
     public string gridPlacementScene;
 
-    [Export(hintString: "Defines which material to change the tile to in tile material events")]
+    [Export(hintString: "Defines which material to change the tile to in tile material events, or on which tile the item can be placed")]
     public AtlasMaterial tileMaterial;
+
+    [Export(hintString: "Defines on which tiles the item can be placed")]
+    public Array<AtlasMaterial> validTilePlacementMaterials = new();
 
     public bool isStackable => stackSize > 1;
 

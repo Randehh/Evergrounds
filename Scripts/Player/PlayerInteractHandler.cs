@@ -194,21 +194,14 @@ public partial class PlayerInteractHandler : Node2D
             gridPreviewNodeOffset = gridNode.gridPlacementOffset;
         }
 
-        int gridSize = WorldMap.GRID_SIZE / gridDivision;
-        int halfGridOffset = WorldMap.GRID_SIZE / 2;
-        Vector2I halfGrid = new Vector2I(halfGridOffset, halfGridOffset);
-        Vector2 desiredPosition = WorldMap.Instance.GetMouseCoordinates(gridDivision);
-        desiredPosition.X = desiredPosition.X < 0 ? desiredPosition.X - WorldMap.GRID_SIZE : desiredPosition.X;
-        desiredPosition.Y = desiredPosition.Y < 0 ? desiredPosition.Y - WorldMap.GRID_SIZE : desiredPosition.Y;
         Vector2I gridPosition = WorldMap.Instance.GetMouseCoordinates(gridDivision);
-
         currentGridPosition = gridPosition;
         previewSprite.GlobalPosition = currentGridPosition + gridPreviewNodeOffset;
 
-        bool canPlace = !WorldMap.Instance.IsSelectedTileTilled;
+        bool canPlace = itemInHand.definition.validTilePlacementMaterials.Contains(WorldMap.Instance.GetSelectedTileMaterial());
         previewSprite.Modulate = (canPlace ? colorValid : colorInvalid).WithAlpha(SinBetween(0.25f, 0.75f));
 
-        if(IsUseHoldablePressed())
+        if(IsUseHoldablePressed() && canPlace)
         {
             Node2D placedNode = currentlyLoadedPackedScene.Instantiate<Node2D>();
             WorldMap.Instance.AddChild(placedNode);
