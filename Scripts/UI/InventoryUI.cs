@@ -91,6 +91,9 @@ public partial class InventoryUI : Control
                         else
                         {
                             inventory.RemoveItem(slotMouseOver);
+                            DragAndDrop.Instance.StopDragging();
+
+                            inventory.SetItem(slotMouseOver, draggingItem.definition, draggingItem.CurrentStackSize);
                             DragAndDrop.Instance.StartDragging(itemInSlot);
                         }
 

@@ -10,6 +10,9 @@ public partial class CursorUI : Control
     private TextureRect cursorTextureRect;
 
     [Export]
+    private TextureRect cursorGrabTextureRect;
+
+    [Export]
     private Texture2D cursorTexture;
 
     [Export]
@@ -23,6 +26,10 @@ public partial class CursorUI : Control
     public override void _Process(double delta)
     {
         mouseParent.Position = GetLocalMousePosition();
+
+        cursorTextureRect.Visible = DragAndDrop.Instance.DraggingItem == null;
+        cursorGrabTextureRect.Visible = !cursorTextureRect.Visible;
+
         cursorTextureRect.Texture = Input.IsMouseButtonPressed(MouseButton.Left) ? cursorTexturePressed : cursorTexture;
     }
 }

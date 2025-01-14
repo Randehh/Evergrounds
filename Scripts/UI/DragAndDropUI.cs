@@ -34,6 +34,7 @@ public partial class DragAndDropUI : Control
         {
             mouseParent.Visible = true;
             itemDisplay.Texture = item.definition.itemSprite;
+            itemCountLabel.Visible = item.definition.isStackable;
             itemCountLabel.Text = item.CurrentStackSize.ToString();
         }
     }

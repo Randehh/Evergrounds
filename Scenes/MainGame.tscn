@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=13 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/Inventory_UI.tscn" id="1_v08iy"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/CursorUI.cs" id="8_4ge1w"]
 [ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
 [ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="10_821fs"]
+[ext_resource type="Texture2D" uid="uid://bbms8e28hb43t" path="res://Art/UI/UI_Cursor_Grab.png" id="11_cpyry"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
 line_spacing = 5.0
@@ -44,8 +45,8 @@ offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("5_dfp8p")
 mouseParent = NodePath("MouseParent")
-itemDisplay = NodePath("MouseParent/ItemTexture")
-itemCountLabel = NodePath("MouseParent/ItemTexture/ItemCountLabel")
+itemDisplay = NodePath("MouseParent/CursorOffset/ItemTexture")
+itemCountLabel = NodePath("MouseParent/CursorOffset/ItemTexture/ItemCountLabel")
 
 [node name="MouseParent" type="Control" parent="DragAndDropCanvas/DragAndDropUI"]
 anchors_preset = 0
@@ -53,7 +54,15 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[node name="ItemTexture" type="TextureRect" parent="DragAndDropCanvas/DragAndDropUI/MouseParent"]
+[node name="CursorOffset" type="Control" parent="DragAndDropCanvas/DragAndDropUI/MouseParent"]
+anchors_preset = 0
+offset_left = -5.0
+offset_top = -4.0
+offset_right = 35.0
+offset_bottom = 36.0
+mouse_filter = 2
+
+[node name="ItemTexture" type="TextureRect" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/CursorOffset"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_right = 16.0
@@ -61,7 +70,7 @@ offset_bottom = 16.0
 mouse_filter = 2
 texture = ExtResource("6_3kt0a")
 
-[node name="ItemCountLabel" type="Label" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/ItemTexture"]
+[node name="ItemCountLabel" type="Label" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/CursorOffset/ItemTexture"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,14 +87,16 @@ vertical_alignment = 2
 [node name="CursorCanvas" type="CanvasLayer" parent="."]
 layer = 100
 
-[node name="CursorUI" type="Control" parent="CursorCanvas" node_paths=PackedStringArray("mouseParent", "cursorTextureRect")]
+[node name="CursorUI" type="Control" parent="CursorCanvas" node_paths=PackedStringArray("mouseParent", "cursorTextureRect", "cursorGrabTextureRect")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("8_4ge1w")
 mouseParent = NodePath("CursorParent")
 cursorTextureRect = NodePath("CursorParent/CursorTextureRect")
+cursorGrabTextureRect = NodePath("CursorParent/GrabTextureRect")
 cursorTexture = ExtResource("9_rfphm")
 cursorTexturePressed = ExtResource("10_821fs")
 
@@ -93,6 +104,7 @@ cursorTexturePressed = ExtResource("10_821fs")
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="CursorTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent"]
 layout_mode = 0
@@ -101,4 +113,14 @@ offset_top = -4.0
 offset_right = 25.0
 offset_bottom = 24.0
 scale = Vector2(0.75, 0.75)
+mouse_filter = 2
 texture = ExtResource("9_rfphm")
+
+[node name="GrabTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent"]
+offset_left = -7.0
+offset_top = -20.0
+offset_right = 21.0
+offset_bottom = 8.0
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("11_cpyry")
