@@ -5,6 +5,9 @@
 
 [resource]
 script = ExtResource("2_sj50q")
+displayName = "Leaf"
+description = ""
+usageText = "Crafting material"
 itemType = 5
 itemSprite = ExtResource("1_yfhou")
 stackSize = 100
@@ -12,3 +15,5 @@ useAnimation = 0
 interactType = 0
 interactLevel = 0
 worldShadowScale = 0.25
+gridPlacementScene = ""
+tileMaterial = 0

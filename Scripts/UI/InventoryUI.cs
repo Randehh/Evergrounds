@@ -4,6 +4,8 @@ using System.Collections.Generic;
 [GlobalClass]
 public partial class InventoryUI : Control
 {
+    private readonly Color COLOR_TRANSPARENT = new Color(1, 1, 1, 0);
+    private readonly Color COLOR_WHITE = new Color(1, 1, 1, 1);
 
     private const int slotSize = 34;
     private const int separatorSize = 4;
@@ -25,6 +27,15 @@ public partial class InventoryUI : Control
 
     [Export]
     private Texture2D slotBackgroundSelected;
+
+    [Export]
+    private Control itemInfoParent;
+
+    [Export]
+    private Label itemInfoLabel;
+
+    [Export]
+    private TextureRect itemInfoTexture;
 
     private Inventory inventory;
     private int currentlyEquipped = 0;
@@ -169,6 +180,8 @@ public partial class InventoryUI : Control
                 {
                     slot.Texture = slotBackgroundHover;
                 }
+
+                SetQuickInfo(slotMouseOver);
             };
 
             slot.MouseExited += () =>
@@ -179,6 +192,8 @@ public partial class InventoryUI : Control
                 {
                     slot.Texture = slotBackground;
                 }
+
+                SetQuickInfo(currentlyEquipped);
             };
         }
 
@@ -201,6 +216,16 @@ public partial class InventoryUI : Control
         inventoryButtons[slot].buttonRect.Texture = slotBackgroundSelected;
 
         currentlyEquipped = slot;
+
+        SetQuickInfo(currentlyEquipped);
+    }
+
+    private void SetQuickInfo(int slot)
+    {
+        InventoryItem itemInfo = inventory.GetItem(slot);
+        itemInfoParent.Modulate = itemInfo != null ? COLOR_WHITE : COLOR_TRANSPARENT;
+        itemInfoTexture.Texture = itemInfo?.definition.itemSprite;
+        itemInfoLabel.Text = $"{itemInfo?.definition.displayName} - {itemInfo?.definition.usageText}";
     }
 
     private int GetEquipmentSlotDisplayIndex(int slot)

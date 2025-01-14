@@ -1,14 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://byw6uf1hldkac"]
+[gd_scene load_steps=9 format=3 uid="uid://byw6uf1hldkac"]
 
 [ext_resource type="PackedScene" uid="uid://cukj0u724ndo3" path="res://Scenes/UI/inventory_slot.tscn" id="1_boum4"]
 [ext_resource type="Script" path="res://Scripts/UI/InventoryUI.cs" id="1_gpbcs"]
 [ext_resource type="Texture2D" uid="uid://cqp6i62kk37i4" path="res://Art/UI/UI_Inventory_Slot.png" id="3_nome4"]
 [ext_resource type="Texture2D" uid="uid://dxgfoiitl7irw" path="res://Art/UI/UI_Inventory_Slot_Hover.png" id="4_7uvhs"]
 [ext_resource type="Texture2D" uid="uid://bwu0vge34b7tj" path="res://Art/UI/UI_Inventory_Slot_Selected.png" id="4_thf6r"]
+[ext_resource type="Texture2D" uid="uid://c3kocogfilgsv" path="res://Art/Items/Resources/Resource_Acorn.png" id="6_arafo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rpwul"]
+texture = ExtResource("3_nome4")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_idbs3"]
+font_size = 12
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
 
 [node name="InventoryCanvas" type="CanvasLayer"]
 
-[node name="InventoryUi" type="Control" parent="." node_paths=PackedStringArray("inventoryRowContainer", "expandParent")]
+[node name="InventoryUi" type="Control" parent="." node_paths=PackedStringArray("inventoryRowContainer", "expandParent", "itemInfoParent", "itemInfoLabel", "itemInfoTexture")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,11 +30,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gpbcs")
 inventorySlotScene = ExtResource("1_boum4")
-inventoryRowContainer = NodePath("Pivot/InventorySlots")
+inventoryRowContainer = NodePath("Pivot/AllRows/InventorySlots")
 expandParent = NodePath("Pivot")
 slotBackground = ExtResource("3_nome4")
 slotBackgroundHover = ExtResource("4_7uvhs")
 slotBackgroundSelected = ExtResource("4_thf6r")
+itemInfoParent = NodePath("Pivot/AllRows/PanelContainer")
+itemInfoLabel = NodePath("Pivot/AllRows/PanelContainer/MarginContainer/HBoxContainer/Title")
+itemInfoTexture = NodePath("Pivot/AllRows/PanelContainer/MarginContainer/HBoxContainer/ItemTextureRect")
 
 [node name="Pivot" type="MarginContainer" parent="InventoryUi"]
 layout_mode = 1
@@ -32,5 +48,35 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="InventorySlots" type="VBoxContainer" parent="InventoryUi/Pivot"]
+[node name="AllRows" type="VBoxContainer" parent="InventoryUi/Pivot"]
+layout_mode = 2
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="InventoryUi/Pivot/AllRows"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_rpwul")
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryUi/Pivot/AllRows/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InventoryUi/Pivot/AllRows/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ItemTextureRect" type="TextureRect" parent="InventoryUi/Pivot/AllRows/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_arafo")
+
+[node name="Title" type="Label" parent="InventoryUi/Pivot/AllRows/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Acorn - Plant trees"
+label_settings = SubResource("LabelSettings_idbs3")
+
+[node name="InventorySlots" type="VBoxContainer" parent="InventoryUi/Pivot/AllRows"]
 layout_mode = 2

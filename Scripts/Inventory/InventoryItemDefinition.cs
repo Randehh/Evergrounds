@@ -12,6 +12,9 @@ public partial class InventoryItemDefinition : Resource
     public string description;
 
     [Export]
+    public string usageText;
+
+    [Export]
     public InventoryItemType itemType;
 
     [Export]

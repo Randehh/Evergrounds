@@ -5,9 +5,15 @@
 
 [resource]
 script = ExtResource("1_dp16n")
+displayName = "Axe"
+description = ""
+usageText = "Chop down trees"
 itemType = 2
 itemSprite = ExtResource("1_m0s1t")
 stackSize = 1
 useAnimation = 0
 interactType = 1
 interactLevel = 1
+worldShadowScale = 0.5
+gridPlacementScene = ""
+tileMaterial = 0

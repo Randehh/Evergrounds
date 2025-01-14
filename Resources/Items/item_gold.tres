@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("2_ifhfj")
-displayName = ""
+displayName = "Gold coin"
 description = ""
+usageText = "Transactional material"
 itemType = 0
 itemSprite = ExtResource("1_v6uc3")
 stackSize = 100
@@ -15,3 +16,4 @@ interactType = 0
 interactLevel = 1
 worldShadowScale = 0.25
 gridPlacementScene = ""
+tileMaterial = 0

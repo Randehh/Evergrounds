@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("2_a1drs")
-displayName = ""
+displayName = "Shovel"
 description = ""
+usageText = "Turn grass to dirt"
 itemType = 1
 itemSprite = ExtResource("1_mprqx")
 stackSize = 1
@@ -15,4 +16,4 @@ interactType = 6
 interactLevel = 1
 worldShadowScale = 0.5
 gridPlacementScene = ""
-tileMaterial = 0
+tileMaterial = 1

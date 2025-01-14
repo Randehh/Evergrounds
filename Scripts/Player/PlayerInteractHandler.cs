@@ -58,6 +58,8 @@ public partial class PlayerInteractHandler : Node2D
             previewSprite.Visible = false;
             gridTileView.Visible = false;
 
+            alphaTimer = 0;
+
             activateIndicator = true;
         }
 
@@ -75,7 +77,6 @@ public partial class PlayerInteractHandler : Node2D
 
                 if (activateIndicator)
                 {
-                    alphaTimer = 0;
                     gridTileView.Visible = true;
                 }
                 break;
@@ -100,6 +101,8 @@ public partial class PlayerInteractHandler : Node2D
         }
 
         previousInteractType = interactType;
+
+        alphaTimer += delta;
     }
 
     private void HandleDefaultInteract(InventoryItem itemInHand)
@@ -147,7 +150,7 @@ public partial class PlayerInteractHandler : Node2D
     {
         bool canChangeMaterial = WorldMap.Instance.CanChangeToTileMaterial(itemInHand.definition.tileMaterial);
 
-        gridTileView.GlobalPosition = WorldMap.Instance.GetMouseCoordinates();
+        gridTileView.GlobalPosition = WorldMap.Instance.GetMouseCoordinates(1);
         gridTileView.Modulate = (canChangeMaterial ? colorValid : colorInvalid).WithAlpha(SinBetween(0.25f, 0.75f));
 
         if (canChangeMaterial && IsUseHoldablePressed())
@@ -155,8 +158,6 @@ public partial class PlayerInteractHandler : Node2D
             WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial);
             character.UseHoldable();
         }
-
-        alphaTimer += delta;
     }
 
     private float SinBetween(float min, float max)
@@ -196,16 +197,16 @@ public partial class PlayerInteractHandler : Node2D
         int gridSize = WorldMap.GRID_SIZE / gridDivision;
         int halfGridOffset = WorldMap.GRID_SIZE / 2;
         Vector2I halfGrid = new Vector2I(halfGridOffset, halfGridOffset);
-        Vector2 desiredPosition = GetGlobalMousePosition();
+        Vector2 desiredPosition = WorldMap.Instance.GetMouseCoordinates(gridDivision);
         desiredPosition.X = desiredPosition.X < 0 ? desiredPosition.X - WorldMap.GRID_SIZE : desiredPosition.X;
         desiredPosition.Y = desiredPosition.Y < 0 ? desiredPosition.Y - WorldMap.GRID_SIZE : desiredPosition.Y;
-        Vector2I gridPosition = new Vector2I(
-            (int)(desiredPosition.X / gridSize) * gridSize,
-            (int)(desiredPosition.Y / gridSize) * gridSize
-            );
+        Vector2I gridPosition = WorldMap.Instance.GetMouseCoordinates(gridDivision);
 
-        currentGridPosition = gridPosition + halfGrid;
+        currentGridPosition = gridPosition;
         previewSprite.GlobalPosition = currentGridPosition + gridPreviewNodeOffset;
+
+        bool canPlace = !WorldMap.Instance.IsSelectedTileTilled;
+        previewSprite.Modulate = (canPlace ? colorValid : colorInvalid).WithAlpha(SinBetween(0.25f, 0.75f));
 
         if(IsUseHoldablePressed())
         {

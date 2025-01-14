@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("2_d6mj5")
-displayName = ""
+displayName = "Acorn"
 description = ""
+usageText = "Plant trees"
 itemType = 6
 itemSprite = ExtResource("1_fd8hf")
 stackSize = 100
@@ -15,3 +16,4 @@ interactType = 5
 interactLevel = 0
 worldShadowScale = 0.25
 gridPlacementScene = "res://Scenes/World/Interactables/interactable_tree_yellow.tscn"
+tileMaterial = 0
