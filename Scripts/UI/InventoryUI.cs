@@ -70,20 +70,40 @@ public partial class InventoryUI : Control
                     var itemInSlot = inventory.GetItem(slotMouseOver);
                     if (itemInSlot != null)
                     {
-                        inventory.RemoveItem(slotMouseOver);
+                        if (itemInSlot.definition.itemType == draggingItem.definition.itemType &&
+                            itemInSlot.CurrentStackSize < itemInSlot.definition.stackSize)
+                        {
+                            int spaceRemaining = itemInSlot.definition.stackSize - itemInSlot.CurrentStackSize;
+
+                            // If dragging item count is more than space remaining, split
+                            if (draggingItem.CurrentStackSize >= spaceRemaining)
+                            {
+                                itemInSlot.CurrentStackSize = itemInSlot.definition.stackSize;
+                                draggingItem.CurrentStackSize -= spaceRemaining;
+                                DragAndDrop.Instance.StartDragging(draggingItem);
+                            }
+                            else
+                            {
+                                itemInSlot.CurrentStackSize += draggingItem.CurrentStackSize;
+                                DragAndDrop.Instance.StopDragging();
+                            }
+                        }
+                        else
+                        {
+                            inventory.RemoveItem(slotMouseOver);
+                            DragAndDrop.Instance.StartDragging(itemInSlot);
+                        }
+
                     }
-
-                    inventory.SetItem(slotMouseOver, draggingItem.definition, draggingItem.currentStackSize);
-                    DragAndDrop.Instance.StopDragging();
-
-                    if (itemInSlot != null)
+                    else
                     {
-                        DragAndDrop.Instance.StartDragging(itemInSlot);
+                        inventory.SetItem(slotMouseOver, draggingItem.definition, draggingItem.CurrentStackSize);
+                        DragAndDrop.Instance.StopDragging();
                     }
                 }
                 else
                 {
-                    WorldItemSpawner itemSpawner = new WorldItemSpawner(new WorldItemSpawnerItemData(draggingItem.definition, draggingItem.currentStackSize, draggingItem.currentStackSize, 1));
+                    WorldItemSpawner itemSpawner = new WorldItemSpawner(new WorldItemSpawnerItemData(draggingItem.definition, draggingItem.CurrentStackSize, draggingItem.CurrentStackSize, 1));
                     PlayerCharacter.Instance.AddChild(itemSpawner);
                     itemSpawner.GlobalPosition = PlayerCharacter.Instance.GlobalPosition;
                     DragAndDrop.Instance.StopDragging();
@@ -168,7 +188,7 @@ public partial class InventoryUI : Control
         ButtonData buttonData = inventoryButtons[slot];
         InventoryItem inventoryItem = inventory.GetItem(slot);
         buttonData.textureRect.Texture = inventoryItem?.definition.itemSprite;
-        buttonData.stackCountLabel.Text = inventoryItem?.currentStackSize.ToString();
+        buttonData.stackCountLabel.Text = inventoryItem?.CurrentStackSize.ToString();
         buttonData.stackCountLabel.Visible = inventoryItem?.definition.isStackable ?? false;
     }
 

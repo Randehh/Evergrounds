@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cigl51myg13f6"]
+[gd_scene load_steps=11 format=3 uid="uid://cigl51myg13f6"]
 
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
 [ext_resource type="PackedScene" uid="uid://ctkvevyma6uqu" path="res://Scenes/Characters/character_base.tscn" id="2_ah60g"]
 [ext_resource type="Texture2D" uid="uid://b2c6m7ka7bi0m" path="res://Art/UI/Arrow_Down.png" id="3_d6q47"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerInteractHandler.cs" id="3_vywfg"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerInteractDetector.cs" id="4_faxxo"]
-[ext_resource type="Texture2D" uid="uid://bg3uc8a0iqsxd" path="res://Art/UI/Mouse.png" id="5_n31qi"]
 
 [sub_resource type="Animation" id="Animation_cxq1k"]
 resource_name = "Highlight"
@@ -153,11 +152,6 @@ interactRadius = 30.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="InteractableDetector"]
 shape = SubResource("CircleShape2D_vfjf2")
-
-[node name="Sprite2D" type="Sprite2D" parent="InteractableDetector"]
-z_index = 1000
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_n31qi")
 
 [node name="VacuumDetector" type="Area2D" parent="."]
 collision_layer = 0

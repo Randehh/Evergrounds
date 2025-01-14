@@ -80,7 +80,7 @@ public partial class Inventory : Node
         }
     }
 
-    public bool AddItem(InventoryItem item) => AddItem(item.definition, item.currentStackSize);
+    public bool AddItem(InventoryItem item) => AddItem(item.definition, item.CurrentStackSize);
 
     public bool AddItem(InventoryItemDefinition item, int count)
     {
@@ -90,17 +90,15 @@ public partial class Inventory : Node
             foreach (int existingIndex in existingIndexes)
             {
                 InventoryItem existingItem = inventoryItems[existingIndex];
-                if (existingItem.currentStackSize + count <= item.stackSize)
+                if (existingItem.CurrentStackSize + count <= item.stackSize)
                 {
-                    existingItem.currentStackSize += count;
-                    RefreshInventorySlot(existingIndex);
+                    existingItem.CurrentStackSize += count;
                     return true;
                 }
                 else
                 {
-                    count = (existingItem.currentStackSize + count) - item.stackSize;
-                    existingItem.currentStackSize = item.stackSize;
-                    RefreshInventorySlot(existingIndex);
+                    count = (existingItem.CurrentStackSize + count) - item.stackSize;
+                    existingItem.CurrentStackSize = item.stackSize;
                 }
             }
         }
@@ -117,22 +115,30 @@ public partial class Inventory : Node
         return false;
     }
 
-    public void SetItem(int index, InventoryItemDefinition item, int count)
+    public void SetItem(int index, InventoryItemDefinition itemDefinition, int count)
     {
-        inventoryItems[index] = new InventoryItem(item, count);
+        InventoryItem item = new InventoryItem(itemDefinition, count);
+        inventoryItems[index] = item;
 
         // Update lookups
         List<int> lookupList;
-        if (!itemLookup.TryGetValue(item.itemType, out lookupList))
+        if (!itemLookup.TryGetValue(itemDefinition.itemType, out lookupList))
         {
             lookupList = new List<int>();
-            itemLookup.Add(item.itemType, lookupList);
+            itemLookup.Add(itemDefinition.itemType, lookupList);
         }
         lookupList.Add(index);
 
-        itemInstanceLookup.Add(inventoryItems[index], index);
+        itemInstanceLookup.Add(item, index);
+
+        item.onStackSizeUpdated += OnStackSizeUpdated;
 
         RefreshInventorySlot(index);
+    }
+
+    private void OnStackSizeUpdated(InventoryItem item)
+    {
+        RefreshInventorySlot(itemInstanceLookup[item]);
     }
 
     private void RefreshInventorySlot(int index)
@@ -149,8 +155,8 @@ public partial class Inventory : Node
     {
         int inventoryIndex = itemInstanceLookup[item];
 
-        item.currentStackSize -= count;
-        if(item.currentStackSize <= 0)
+        item.CurrentStackSize -= count;
+        if(item.CurrentStackSize <= 0)
         {
             RemoveItem(inventoryIndex);
         }
@@ -171,10 +177,10 @@ public partial class Inventory : Node
         {
             int inventoryIndex = lookupList[i];
             InventoryItem item = inventoryItems[inventoryIndex];
-            if(item.currentStackSize <= count)
+            if(item.CurrentStackSize <= count)
             {
                 indexesToRemove.Add(inventoryIndex);
-                count -= item.currentStackSize;
+                count -= item.CurrentStackSize;
                 continue;
             }
 
@@ -191,7 +197,7 @@ public partial class Inventory : Node
             RemoveItem(indexToRemove);
         }
 
-        inventoryItems[finalIndex].currentStackSize -= count;
+        inventoryItems[finalIndex].CurrentStackSize -= count;
 
         return true;
     }
@@ -215,6 +221,8 @@ public partial class Inventory : Node
         }
 
         itemInstanceLookup.Remove(itemToRemove);
+
+        itemToRemove.onStackSizeUpdated -= OnStackSizeUpdated;
 
         RefreshInventorySlot(index);
 

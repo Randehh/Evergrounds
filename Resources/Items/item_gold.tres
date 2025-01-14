@@ -5,6 +5,8 @@
 
 [resource]
 script = ExtResource("2_ifhfj")
+displayName = ""
+description = ""
 itemType = 0
 itemSprite = ExtResource("1_v6uc3")
 stackSize = 100
@@ -12,3 +14,4 @@ useAnimation = 0
 interactType = 0
 interactLevel = 1
 worldShadowScale = 0.25
+gridPlacementScene = ""

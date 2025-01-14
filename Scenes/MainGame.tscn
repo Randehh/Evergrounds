@@ -1,11 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=12 format=3 uid="uid://m5u74rphpivx"]
 
+[ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/Inventory_UI.tscn" id="1_v08iy"]
 [ext_resource type="PackedScene" uid="uid://cevqvlshxo84w" path="res://Scenes/Map.tscn" id="2_be0ya"]
 [ext_resource type="Script" path="res://Scripts/DragAndDrop/DragAndDrop.cs" id="2_n5ome"]
 [ext_resource type="Script" path="res://Scripts/Inventory/Inventory.cs" id="3_fklsy"]
 [ext_resource type="Script" path="res://Scripts/UI/DragAndDropUI.cs" id="5_dfp8p"]
 [ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="6_3kt0a"]
+[ext_resource type="Script" path="res://Scripts/UI/CursorUI.cs" id="8_4ge1w"]
+[ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
+[ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="10_821fs"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
 line_spacing = 5.0
@@ -14,6 +18,9 @@ outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
 [node name="MainGame" type="Node"]
+
+[node name="GameSetup" type="Node" parent="."]
+script = ExtResource("1_4si5g")
 
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("3_fklsy")
@@ -67,3 +74,31 @@ text = "1"
 label_settings = SubResource("LabelSettings_irpbb")
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[node name="CursorCanvas" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="CursorUI" type="Control" parent="CursorCanvas" node_paths=PackedStringArray("mouseParent", "cursorTextureRect")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("8_4ge1w")
+mouseParent = NodePath("CursorParent")
+cursorTextureRect = NodePath("CursorParent/CursorTextureRect")
+cursorTexture = ExtResource("9_rfphm")
+cursorTexturePressed = ExtResource("10_821fs")
+
+[node name="CursorParent" type="Control" parent="CursorCanvas/CursorUI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CursorTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -4.0
+offset_right = 25.0
+offset_bottom = 24.0
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("9_rfphm")

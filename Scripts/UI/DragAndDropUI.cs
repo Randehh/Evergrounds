@@ -34,7 +34,7 @@ public partial class DragAndDropUI : Control
         {
             mouseParent.Visible = true;
             itemDisplay.Texture = item.definition.itemSprite;
-            itemCountLabel.Text = item.currentStackSize.ToString();
+            itemCountLabel.Text = item.CurrentStackSize.ToString();
         }
     }
 }
