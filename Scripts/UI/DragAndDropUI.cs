@@ -21,7 +21,8 @@ public partial class DragAndDropUI : Control
 
     public override void _Process(double delta)
     {
-        mouseParent.Position = GetLocalMousePosition();
+        Vector2 mousePosition = GetLocalMousePosition();
+        mouseParent.Position = mouseParent.Position.Lerp(mousePosition, (20 + 1 / mousePosition.DistanceTo(mouseParent.Position)) * (float)delta);
     }
 
     private void OnDraggingItemChanged(InventoryItem item)

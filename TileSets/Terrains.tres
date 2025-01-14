@@ -1,0 +1,38 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://c1k01p45fhnsg"]
+
+[ext_resource type="Texture2D" uid="uid://c00ch6tm8lf2c" path="res://Art/Tilemaps/Default_Dual_Grid.png" id="1_rnrnl"]
+[ext_resource type="Texture2D" uid="uid://cvyjd8sxcb53x" path="res://Art/Tilemaps/Default_Dual_Grid_Generation.png" id="1_sogxp"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lx033"]
+texture = ExtResource("1_rnrnl")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sur8a"]
+texture = ExtResource("1_sogxp")
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/custom_data_0 = true
+1:0/0/custom_data_1 = 1
+
+[resource]
+custom_data_layer_0/name = "is_tillable"
+custom_data_layer_0/type = 1
+custom_data_layer_1/name = "material"
+custom_data_layer_1/type = 2
+sources/1 = SubResource("TileSetAtlasSource_sur8a")
+sources/0 = SubResource("TileSetAtlasSource_lx033")

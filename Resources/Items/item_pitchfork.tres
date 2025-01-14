@@ -5,9 +5,14 @@
 
 [resource]
 script = ExtResource("2_t6tb7")
+displayName = ""
+description = ""
 itemType = 3
 itemSprite = ExtResource("1_vfib3")
 stackSize = 1
 useAnimation = 0
-interactType = 4
+interactType = 6
 interactLevel = 1
+worldShadowScale = 0.5
+gridPlacementScene = ""
+tileMaterial = 1

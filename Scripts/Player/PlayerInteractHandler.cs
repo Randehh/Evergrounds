@@ -62,6 +62,10 @@ public partial class PlayerInteractHandler : Node2D
                 HandleDefaultInteract(itemInHand);
                 break;
 
+            case InteractType.SET_TILE_MATERIAL:
+                HandleSetTileMaterial(itemInHand);
+                break;
+
             case InteractType.GRID_SELECT:
                 HandleGridSelection(itemInHand, 1);
 
@@ -122,6 +126,16 @@ public partial class PlayerInteractHandler : Node2D
             {
                 character.UseHoldable();
             }
+        }
+    }
+
+    private void HandleSetTileMaterial(InventoryItem itemInHand)
+    {
+        bool canChangeMaterial = WorldMap.Instance.CanChangeToTileMaterial(itemInHand.definition.tileMaterial);
+        if(canChangeMaterial && IsUseHoldablePressed())
+        {
+            WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial);
+            character.UseHoldable();
         }
     }
 

@@ -7,5 +7,6 @@ public enum InteractType
     MINE_ORE,
     HARVEST_PLANTS,
     GRID_SELECT,
-    GRID_SELECT_HALF
+    GRID_SELECT_HALF,
+    SET_TILE_MATERIAL
 }
