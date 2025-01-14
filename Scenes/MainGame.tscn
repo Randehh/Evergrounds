@@ -117,6 +117,7 @@ mouse_filter = 2
 texture = ExtResource("9_rfphm")
 
 [node name="GrabTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent"]
+layout_mode = 0
 offset_left = -7.0
 offset_top = -20.0
 offset_right = 21.0
