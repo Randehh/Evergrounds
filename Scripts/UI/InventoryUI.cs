@@ -5,11 +5,17 @@ using System.Collections.Generic;
 public partial class InventoryUI : Control
 {
 
+    private const int slotSize = 34;
+    private const int separatorSize = 4;
+
     [Export]
     private PackedScene inventorySlotScene;
 
     [Export]
     private VBoxContainer inventoryRowContainer;
+
+    [Export]
+    private Control expandParent;
 
     [Export]
     private Texture2D slotBackground;
@@ -24,6 +30,10 @@ public partial class InventoryUI : Control
     private int currentlyEquipped = 0;
     private List<ButtonData> inventoryButtons = new();
     private int slotMouseOver = -1;
+
+    private float foldedY;
+    private float expandedY;
+    private bool isExpanded = false;
 
     public override void _Ready()
     {
@@ -51,22 +61,42 @@ public partial class InventoryUI : Control
                 DragAndDrop.Instance.StartDragging(inventory.GetItem(slotMouseOver));
                 inventory.RemoveItem(slotMouseOver);
             }
+
+            // Stop dragging
             else if (draggingItem != null)
             {
                 if (slotMouseOver != -1)
                 {
+                    var itemInSlot = inventory.GetItem(slotMouseOver);
+                    if (itemInSlot != null)
+                    {
+                        inventory.RemoveItem(slotMouseOver);
+                    }
+
                     inventory.SetItem(slotMouseOver, draggingItem.definition, draggingItem.currentStackSize);
+                    DragAndDrop.Instance.StopDragging();
+
+                    if (itemInSlot != null)
+                    {
+                        DragAndDrop.Instance.StartDragging(itemInSlot);
+                    }
                 }
                 else
                 {
                     WorldItemSpawner itemSpawner = new WorldItemSpawner(new WorldItemSpawnerItemData(draggingItem.definition, draggingItem.currentStackSize, draggingItem.currentStackSize, 1));
                     PlayerCharacter.Instance.AddChild(itemSpawner);
                     itemSpawner.GlobalPosition = PlayerCharacter.Instance.GlobalPosition;
+                    DragAndDrop.Instance.StopDragging();
                 }
-
-                DragAndDrop.Instance.StopDragging();
             }
         }
+
+        if(Input.IsActionJustPressed("inventory_toggle"))
+        {
+            isExpanded = !isExpanded;
+        }
+
+        expandParent.Position = new Vector2(expandParent.Position.X, (float)Mathf.Lerp(expandParent.Position.Y, isExpanded ? expandedY : foldedY, 20 * delta));
     }
 
     private void ReloadUI()
@@ -101,33 +131,36 @@ public partial class InventoryUI : Control
             if (i < 10)
             {
                 buttonData.label.Text = GetEquipmentSlotDisplayIndex(i).ToString();
-
-                int slotIndex = i;
-                slot.MouseEntered += () =>
-                {
-                    slotMouseOver = slotIndex;
-
-                    if(slot.Texture != slotBackgroundSelected)
-                    {
-                        slot.Texture = slotBackgroundHover;
-                    }
-                };
-
-                slot.MouseExited += () =>
-                {
-                    slotMouseOver = -1;
-
-                    if (slot.Texture != slotBackgroundSelected)
-                    {
-                        slot.Texture = slotBackground;
-                    }
-                };
             }
             else
             {
                 buttonData.label.Visible = false;
             }
+
+            int slotIndex = i;
+            slot.MouseEntered += () =>
+            {
+                slotMouseOver = slotIndex;
+
+                if (slot.Texture != slotBackgroundSelected)
+                {
+                    slot.Texture = slotBackgroundHover;
+                }
+            };
+
+            slot.MouseExited += () =>
+            {
+                slotMouseOver = -1;
+
+                if (slot.Texture != slotBackgroundSelected)
+                {
+                    slot.Texture = slotBackground;
+                }
+            };
         }
+
+        foldedY = expandParent.Position.Y - slotSize - separatorSize;
+        expandedY = foldedY - (inventoryRowContainer.GetChildren().Count * slotSize) - separatorSize;
     }
 
     private void SetSlot(int slot)

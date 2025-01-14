@@ -8,7 +8,7 @@
 
 [node name="InventoryCanvas" type="CanvasLayer"]
 
-[node name="InventoryUi" type="Control" parent="." node_paths=PackedStringArray("inventoryRowContainer")]
+[node name="InventoryUi" type="Control" parent="." node_paths=PackedStringArray("inventoryRowContainer", "expandParent")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,19 +17,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gpbcs")
 inventorySlotScene = ExtResource("1_boum4")
-inventoryRowContainer = NodePath("InventorySlots")
+inventoryRowContainer = NodePath("Pivot/InventorySlots")
+expandParent = NodePath("Pivot")
 slotBackground = ExtResource("3_nome4")
 slotBackgroundHover = ExtResource("4_7uvhs")
 slotBackgroundSelected = ExtResource("4_thf6r")
 
-[node name="InventorySlots" type="VBoxContainer" parent="InventoryUi"]
+[node name="Pivot" type="MarginContainer" parent="InventoryUi"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -30.0
-offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 0
-alignment = 1
+
+[node name="InventorySlots" type="VBoxContainer" parent="InventoryUi/Pivot"]
+layout_mode = 2
