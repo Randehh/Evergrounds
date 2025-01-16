@@ -63,9 +63,8 @@ position = Vector2(0, -30)
 script = ExtResource("3_cqpyo")
 itemsToSpawn = Array[Object]([SubResource("Resource_urmos"), SubResource("Resource_6hjsb"), SubResource("Resource_k6m2f")])
 
-[node name="InteractEventPlayAnimation" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+[node name="InteractEventPlayAnimation" type="Node2D" parent="."]
 script = ExtResource("8_mgay7")
-player = NodePath("")
 animationName = "Shake"
 
 [node name="TreeSprite" type="Sprite2D" parent="."]

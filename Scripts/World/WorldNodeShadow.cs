@@ -27,12 +27,14 @@ public partial class WorldNodeShadow : Node2D
 
     public override void _Process(double delta)
     {
-        if(GlobalPosition.Y - targetNode.GlobalPosition.Y > maxHeight)
+        float globalY = GlobalPosition.Y;
+        float targetGlobalY = targetNode.GlobalPosition.Y;
+        if(globalY - targetGlobalY > maxHeight)
         {
             shadowSprite.Scale = Vector2.Zero;
         } else
         {
-            shadowSprite.Scale = baseScale.Lerp(Vector2.Zero, Mathf.Max(0, GlobalPosition.Y - targetNode.GlobalPosition.Y) / maxHeight);
+            shadowSprite.Scale = baseScale.Lerp(Vector2.Zero, Mathf.Max(0, globalY - targetGlobalY) / maxHeight);
         }
 
     }

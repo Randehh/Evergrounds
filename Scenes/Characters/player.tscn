@@ -120,7 +120,9 @@ script = ExtResource("1_ty55n")
 character = NodePath("CharacterBase")
 interactHandler = NodePath("PlayerInteractHandler")
 vacuumArea = NodePath("VacuumDetector")
-maxSpeed = 0.15
+maxSpeed = 50.0
+acceleration = 7.5
+decceleration = 0.75
 
 [node name="CharacterBase" parent="." instance=ExtResource("2_ah60g")]
 

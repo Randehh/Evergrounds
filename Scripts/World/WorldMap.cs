@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 
 [GlobalClass]
 public partial class WorldMap : Node2D
@@ -13,38 +11,41 @@ public partial class WorldMap : Node2D
     public bool IsSelectedTileTilled => tillingTileMap.SelectedTileMaterial == AtlasMaterial.TILLED;
 
     [Export]
-    private TileMapLayer defaultTileMapLayer;
-
-    [Export]
     private TileMapLayer displayTileMapLayer;
-
-    [Export]
-    private TileMapLayer tillingTileMapLayer;
 
     [Export]
     private TileMapLayer tillingDisplayTileMapLayer;
 
+    [Export]
+    private WorldMapGenerator generator;
+
+    private WorldMapData worldMapData;
     private WorldMapTileSet standardTileMap;
     private WorldMapTileSet tillingTileMap;
 
     public override void _Ready()
     {
         Instance = this;
-        standardTileMap = CreateTileSet(defaultTileMapLayer, displayTileMapLayer, AtlasMaterial.SOIL, AtlasMaterial.SOFT_SURFACE, 1, 0);
-        tillingTileMap = CreateTileSet(tillingTileMapLayer, tillingDisplayTileMapLayer, AtlasMaterial.TILLED, AtlasMaterial.NONE, 1, 2);
+
+        worldMapData = new WorldMapData();
+
+        generator.GenerateInitialChunks(worldMapData);
+
+        standardTileMap = CreateTileSet(worldMapData, displayTileMapLayer, AtlasMaterial.SOFT_SURFACE, AtlasMaterial.SOIL, WorldMapData.WorldMapDataLayerType.BASE, 0);
+        tillingTileMap = CreateTileSet(worldMapData, tillingDisplayTileMapLayer, AtlasMaterial.NONE, AtlasMaterial.TILLED, WorldMapData.WorldMapDataLayerType.TILLING, 2);
     }
 
     public override void _Process(double delta)
     {
-        MouseGridPosition = defaultTileMapLayer.LocalToMap(GetMouseCoordinates(1));
+        MouseGridPosition = displayTileMapLayer.LocalToMap(GetMouseCoordinates(1));
 
         standardTileMap.Process(MouseGridPosition, delta);
         tillingTileMap.Process(MouseGridPosition, delta);
     }
 
-    private WorldMapTileSet CreateTileSet(TileMapLayer dataLayer, TileMapLayer displayLayer, AtlasMaterial materialOne, AtlasMaterial materialTwo, int dataAtlasId, int displayAtlasId)
+    private WorldMapTileSet CreateTileSet(WorldMapData mapData, TileMapLayer displayLayer, AtlasMaterial materialOne, AtlasMaterial materialTwo, WorldMapData.WorldMapDataLayerType layerType, int displayAtlasId)
     {
-        return new WorldMapTileSet(dataLayer, displayLayer, materialOne, materialTwo, dataAtlasId, displayAtlasId);
+        return new WorldMapTileSet(mapData, displayLayer, materialOne, materialTwo, layerType, displayAtlasId);
     }
 
     public AtlasMaterial GetSelectedTileMaterial()
@@ -105,7 +106,6 @@ public partial class WorldMap : Node2D
         Vector2 globalMousePosition = GetGlobalMousePosition();
         int xInt = Mathf.FloorToInt(globalMousePosition.X / size) * size;
         int yInt = Mathf.FloorToInt(globalMousePosition.Y / size) * size;
-        Vector2I result = new(xInt, yInt);
         return new Vector2I(xInt, yInt) + new Vector2I(size / 2, size / 2);
     }
 

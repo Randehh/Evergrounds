@@ -2,31 +2,28 @@
 using System;
 using System.Collections.Generic;
 using static WorldMap;
+using static WorldMapData;
 
 public class WorldMapTileSet
 {
     public AtlasMaterial SelectedTileMaterial { get; private set; }
 
-    private Vector2I typeOneCoord = new Vector2I(0, 0);
-    private Vector2I typeTwoCoord = new Vector2I(1, 0);
-    private Vector2I typeUnknownCoord = new Vector2I(-1, -1);
-
     private readonly Dictionary<Tuple<AtlasMaterial, AtlasMaterial, AtlasMaterial, AtlasMaterial>, Vector2I> neighboursToAtlasCoord;
     private readonly Vector2I[] neighbours = new Vector2I[] { new(0, 0), new(1, 0), new(0, 1), new(1, 1) };
-    private readonly TileMapLayer dataLayer;
+    private readonly WorldMapData mapData;
     private readonly TileMapLayer displayLayer;
     private readonly AtlasMaterial typeOne;
     private readonly AtlasMaterial typeTwo;
-    private readonly int dataAtlasId;
+    private readonly WorldMapDataLayerType layerType;
     private readonly int displayAtlasId;
 
-    public WorldMapTileSet(TileMapLayer dataLayer, TileMapLayer displayLayer, AtlasMaterial typeOne, AtlasMaterial typeTwo, int dataAtlasId, int displayAtlasId)
+    public WorldMapTileSet(WorldMapData mapData, TileMapLayer displayLayer, AtlasMaterial typeOne, AtlasMaterial typeTwo, WorldMapDataLayerType layerType, int displayAtlasId)
     {
-        this.dataLayer = dataLayer;
+        this.mapData = mapData;
         this.displayLayer = displayLayer;
         this.typeOne = typeOne;
         this.typeTwo = typeTwo;
-        this.dataAtlasId = dataAtlasId;
+        this.layerType = layerType;
         this.displayAtlasId = displayAtlasId;
 
         neighboursToAtlasCoord = new() {
@@ -48,7 +45,7 @@ public class WorldMapTileSet
 	    	{ new(typeTwo, typeTwo, typeTwo, typeTwo), new Vector2I(0, 3)}, // No corners
         };
 
-        foreach (Vector2I coord in dataLayer.GetUsedCells())
+        foreach (Vector2I coord in mapData.GetAllUsedCoords(layerType))
         {
             SetDisplayTile(coord);
         }
@@ -56,20 +53,12 @@ public class WorldMapTileSet
 
     public void Process(Vector2I mouseGridPosition, double delta)
     {
-        TileData tileData = dataLayer.GetCellTileData(mouseGridPosition);
-        if (tileData != null)
-        {
-            SelectedTileMaterial = tileData.GetCustomData("material").AsInt32() == 1 ? typeOne : typeTwo;
-        }
-        else
-        {
-            SelectedTileMaterial = AtlasMaterial.NONE;
-        }
+        SelectedTileMaterial = mapData.GetMaterial(mouseGridPosition, layerType);
     }
 
     public void SetTile(Vector2I coords, bool asTypeOne)
     {
-        dataLayer.SetCell(coords, dataAtlasId, asTypeOne ? typeOneCoord : typeTwoCoord);
+        mapData.SetMaterial(coords, asTypeOne ? typeOne : typeTwo, layerType);
         SetDisplayTile(coords);
     }
 
@@ -98,14 +87,6 @@ public class WorldMapTileSet
 
     private AtlasMaterial GetWorldTile(Vector2I coords)
     {
-        Vector2I atlasCoord = dataLayer.GetCellAtlasCoords(coords);
-        if (atlasCoord == typeOneCoord || atlasCoord == typeUnknownCoord)
-        {
-            return typeOne;
-        }
-        else
-        {
-            return typeTwo;
-        }
+        return mapData.GetMaterial(coords, layerType);
     }
 }

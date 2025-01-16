@@ -46,22 +46,22 @@ public partial class PlayerCharacter : Node2D
 			Input.GetAxis("move_up", "move_down")
 			).Normalized();
 
-		currentSpeed += input * acceleration * (float)delta;
+		currentSpeed += input * acceleration;
 
 		if (input.X < 0.05f && input.X > -0.05f)
 		{
-			currentSpeed.X *= decceleration * (float)delta;
+			currentSpeed.X *= decceleration;
 		}
 
 		if (input.Y < 0.05f && input.Y > -0.05f)
 		{
-			currentSpeed.Y *= decceleration * (float)delta;
+			currentSpeed.Y *= decceleration;
 		}
 
 		currentSpeed.X = Mathf.Clamp(currentSpeed.X, -maxSpeed, maxSpeed);
 		currentSpeed.Y = Mathf.Clamp(currentSpeed.Y, -maxSpeed, maxSpeed);
 
-		Position += currentSpeed;
+		Position += currentSpeed * (float)delta;
 
 		interactHandler.ProcessInteraction(character.CurrentlyHolding, delta);
 	}
