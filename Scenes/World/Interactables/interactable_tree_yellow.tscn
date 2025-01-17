@@ -164,3 +164,4 @@ toDestroy = NodePath("..")
 position = Vector2(0, -1)
 targetNode = NodePath("../TreeSprite")
 baseScaleMultiplier = 0.5
+isStatic = true

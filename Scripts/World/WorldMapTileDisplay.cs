@@ -52,6 +52,27 @@ public class WorldMapTileDisplay
         SelectedTileMaterial = mapData.GetMaterial(mouseGridPosition, layerType);
     }
 
+    public void ResetEdge(Vector2I chunkTilePosition, WorldMapTileDisplayEdge edge)
+    {
+        bool isHorizontal = edge == WorldMapTileDisplayEdge.UP || edge == WorldMapTileDisplayEdge.DOWN;
+        bool oppositeSide = edge == WorldMapTileDisplayEdge.DOWN || edge == WorldMapTileDisplayEdge.RIGHT;
+        for (int i = 0; i < WorldMap.CHUNK_SIZE; i++)
+        {
+            Vector2I coord = new Vector2I(
+                chunkTilePosition.X + (isHorizontal ? i : (oppositeSide ? WorldMap.CHUNK_SIZE : 0)),
+                chunkTilePosition.Y + (isHorizontal ? i : (oppositeSide ? WorldMap.CHUNK_SIZE : 0))
+            );
+
+            SetDisplayTile(coord);
+        }
+
+        for(int x = 0; x < WorldMap.CHUNK_SIZE; x++)
+        {
+            Vector2I coord = new Vector2I(chunkTilePosition.X + x, chunkTilePosition.Y);
+            SetDisplayTile(coord);
+        }
+    }
+
     public bool SetTile(Vector2I coords, bool asTypeOne)
     {
         bool isUpdated = mapData.SetMaterial(coords, asTypeOne ? typeOne : typeTwo, layerType);
@@ -91,5 +112,13 @@ public class WorldMapTileDisplay
     private AtlasMaterial GetWorldTile(Vector2I coords)
     {
         return mapData.GetMaterial(coords, layerType);
+    }
+
+    public enum WorldMapTileDisplayEdge
+    {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
     }
 }

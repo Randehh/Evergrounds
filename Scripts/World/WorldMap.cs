@@ -1,16 +1,14 @@
 using Godot;
-using System;
 using System.Collections.Generic;
+using static WorldMapTileDisplay;
 
 [GlobalClass]
 public partial class WorldMap : Node2D
 {
     public const int GRID_SIZE = 16;
     public const int CHUNK_SIZE = 5;
-    //public const int CHUNK_GENERATION_RANGE_X = 7;
-    //public const int CHUNK_GENERATION_RANGE_Y = 4;
-    public const int CHUNK_GENERATION_RANGE_X = 5;
-    public const int CHUNK_GENERATION_RANGE_Y = 3;
+    public const int CHUNK_GENERATION_RANGE_X = 7;
+    public const int CHUNK_GENERATION_RANGE_Y = 4;
 
     public static WorldMap Instance;
 
@@ -25,6 +23,7 @@ public partial class WorldMap : Node2D
 
     private WorldMapData worldMapData;
     private List<WorldMapChunk> chunks = new();
+    private Dictionary<Vector2I, WorldMapChunk> chunkLookup = new();
 
     private AtlasMaterial selectedMaterial;
 
@@ -33,7 +32,16 @@ public partial class WorldMap : Node2D
     private Vector2I baseChunkOffset = new Vector2I(CHUNK_GENERATION_RANGE_X, CHUNK_GENERATION_RANGE_Y);
     private bool initialChunksSet = false;
 
-    private Queue<(WorldMapChunk, Vector2I)> chunkMovementQueue = new();
+    private Queue<(WorldMapChunk, Vector2I, Vector2I)> chunkMovementQueue = new();
+    private List<WorldMapChunk> lockedChunks = new();
+
+    private Dictionary<Vector2I, WorldMapTileDisplayEdge> edgeLookup = new()
+    {
+        { new(-1, 0), WorldMapTileDisplayEdge.LEFT },
+        { new(1, 0), WorldMapTileDisplayEdge.RIGHT },
+        { new(0, -1), WorldMapTileDisplayEdge.UP },
+        { new(0, 1), WorldMapTileDisplayEdge.DOWN }
+    };
 
     public override void _Ready()
     {
@@ -66,6 +74,7 @@ public partial class WorldMap : Node2D
         {
             var nextChunk = chunkData.Item1;
             var chunkArrayPosition = chunkData.Item2;
+            var movementDirection = chunkData.Item3;
 
             generator.GenerateChunk(worldMapData, chunkArrayPosition);
 
@@ -73,6 +82,20 @@ public partial class WorldMap : Node2D
             Vector2I chunkWorldPosition = chunkArrayPosition * GRID_SIZE - (chunkArrayPosition * GRID_SIZE) - baseChunkOffset;
             Vector2I chunkPixelPosition = chunkTilePosition * GRID_SIZE;
             nextChunk.SetChunkPosition(chunkTilePosition, chunkWorldPosition, chunkPixelPosition);
+
+            Vector2I chunkPosition = nextChunk.ChunkTilePosition / CHUNK_SIZE;
+            chunkLookup[chunkPosition] = nextChunk;
+
+            if(edgeLookup.TryGetValue(movementDirection, out WorldMapTileDisplayEdge edge) &&
+                chunkLookup.TryGetValue(chunkPosition - movementDirection, out WorldMapChunk edgeChunk))
+            {
+                edgeChunk.UpdateEdgeVisuals(edge);
+            }
+
+            if (lockedChunks.Contains(nextChunk))
+            {
+                lockedChunks.Remove(nextChunk);
+            }
         }
     }
 
@@ -94,8 +117,6 @@ public partial class WorldMap : Node2D
 
     private void RecenterMap(Vector2I position)
     {
-        chunkMovementQueue.Clear();
-
         List<WorldMapChunk> freeChunks = new List<WorldMapChunk>(chunks);
         HashSet<Vector2I> filledSpaces = new HashSet<Vector2I>();
 
@@ -119,6 +140,8 @@ public partial class WorldMap : Node2D
             }
         }
 
+        Vector2I movementDirection = (position - currentMapCenter);
+
         for (int x = 0; x < chunkGenerationSize.X; x++)
         {
             for (int y = 0; y < chunkGenerationSize.Y; y++)
@@ -131,9 +154,19 @@ public partial class WorldMap : Node2D
                 }
 
                 WorldMapChunk nextChunk = freeChunks[0];
+                if (lockedChunks.Contains(nextChunk))
+                {
+                    continue;
+                }
+
                 freeChunks.RemoveAt(0);
 
-                chunkMovementQueue.Enqueue((nextChunk, chunkArrayPosition));
+                chunkMovementQueue.Enqueue((nextChunk, chunkArrayPosition, movementDirection));
+
+                Vector2I chunkPosition = nextChunk.ChunkTilePosition / CHUNK_SIZE;
+                chunkLookup.Remove(chunkPosition);
+
+                lockedChunks.Add(nextChunk);
             }
         }
 

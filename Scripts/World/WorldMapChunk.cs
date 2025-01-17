@@ -1,5 +1,7 @@
 using Godot;
+using System.Drawing;
 using static WorldMap;
+using static WorldMapTileDisplay;
 
 public class WorldMapChunk
 {
@@ -174,5 +176,11 @@ public class WorldMapChunk
     {
         standardTileMap.SetDisplayTile(coord);
         tillingTileMap.SetDisplayTile(coord);
+    }
+
+    public void UpdateEdgeVisuals(WorldMapTileDisplayEdge edge)
+    {
+        standardTileMap.ResetEdge(chunkTilePosition, edge);
+        tillingTileMap.ResetEdge(chunkTilePosition, edge);
     }
 }

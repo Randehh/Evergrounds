@@ -19,15 +19,11 @@ public partial class InteractEventSpawnItem : InteractEvent
 
     public override void _Ready()
     {
-        base._Ready();
-
         worldItemScene = GD.Load<PackedScene>(WORLD_ITEM_SCENE);
     }
 
     public override void _Process(double delta)
     {
-        base._Process(delta);
-
         if(!isSpawning)
         {
             return;

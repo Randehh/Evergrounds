@@ -1,7 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=15 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
-[ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/Inventory_UI.tscn" id="1_v08iy"]
+[ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/UI/Inventory_UI.tscn" id="1_v08iy"]
 [ext_resource type="PackedScene" uid="uid://cevqvlshxo84w" path="res://Scenes/Map.tscn" id="2_be0ya"]
 [ext_resource type="Script" path="res://Scripts/DragAndDrop/DragAndDrop.cs" id="2_n5ome"]
 [ext_resource type="Script" path="res://Scripts/Inventory/Inventory.cs" id="3_fklsy"]
@@ -11,12 +11,16 @@
 [ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
 [ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="10_821fs"]
 [ext_resource type="Texture2D" uid="uid://bbms8e28hb43t" path="res://Art/UI/UI_Cursor_Grab.png" id="11_cpyry"]
+[ext_resource type="Script" path="res://Scripts/UI/DebugUI.cs" id="12_i1bcf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
 line_spacing = 5.0
 font_size = 10
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n2blw"]
+font_size = 10
 
 [node name="MainGame" type="Node"]
 
@@ -125,3 +129,33 @@ offset_bottom = 8.0
 scale = Vector2(0.75, 0.75)
 mouse_filter = 2
 texture = ExtResource("11_cpyry")
+
+[node name="DebugCanvas" type="CanvasLayer" parent="."]
+
+[node name="DebugUI" type="Control" parent="DebugCanvas" node_paths=PackedStringArray("fpsLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_i1bcf")
+fpsLabel = NodePath("MarginContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="DebugCanvas/DebugUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="DebugCanvas/DebugUI/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "FPS 20"
+label_settings = SubResource("LabelSettings_n2blw")

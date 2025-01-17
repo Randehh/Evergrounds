@@ -43,9 +43,9 @@ public partial class WorldMapGenerator : Node
             return;
         }
 
-        for (int y = 0; y < WorldMap.CHUNK_SIZE; y++)
+        for (int y = -1; y < WorldMap.CHUNK_SIZE + 1; y++)
         {
-            for (int x = 0; x < WorldMap.CHUNK_SIZE; x++)
+            for (int x = -1; x < WorldMap.CHUNK_SIZE + 1; x++)
             {
                 GenerateTile(mapData, chunkCoords, new Vector2I(x, y));
             }
