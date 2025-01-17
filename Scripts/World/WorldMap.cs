@@ -90,8 +90,6 @@ public partial class WorldMap : Node2D
                 chunks.Add(newChunk);
             }
         }
-
-        RecenterMap(Vector2I.Zero);
     }
 
     private void RecenterMap(Vector2I position)
