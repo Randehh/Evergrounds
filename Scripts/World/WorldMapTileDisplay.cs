@@ -4,23 +4,24 @@ using System.Collections.Generic;
 using static WorldMap;
 using static WorldMapData;
 
-public class WorldMapTileSet
+public class WorldMapTileDisplay
 {
+    public TileMapLayer DisplayLayer { get; private set; }
     public AtlasMaterial SelectedTileMaterial { get; private set; }
 
     private readonly Dictionary<Tuple<AtlasMaterial, AtlasMaterial, AtlasMaterial, AtlasMaterial>, Vector2I> neighboursToAtlasCoord;
     private readonly Vector2I[] neighbours = new Vector2I[] { new(0, 0), new(1, 0), new(0, 1), new(1, 1) };
     private readonly WorldMapData mapData;
-    private readonly TileMapLayer displayLayer;
     private readonly AtlasMaterial typeOne;
     private readonly AtlasMaterial typeTwo;
     private readonly WorldMapDataLayerType layerType;
     private readonly int displayAtlasId;
 
-    public WorldMapTileSet(WorldMapData mapData, TileMapLayer displayLayer, AtlasMaterial typeOne, AtlasMaterial typeTwo, WorldMapDataLayerType layerType, int displayAtlasId)
+    public WorldMapTileDisplay(WorldMapData mapData, TileMapLayer displayLayer, AtlasMaterial typeOne, AtlasMaterial typeTwo, WorldMapDataLayerType layerType, int displayAtlasId)
     {
+        DisplayLayer = displayLayer;
+
         this.mapData = mapData;
-        this.displayLayer = displayLayer;
         this.typeOne = typeOne;
         this.typeTwo = typeTwo;
         this.layerType = layerType;
@@ -44,32 +45,34 @@ public class WorldMapTileSet
             { new(typeOne, typeTwo, typeTwo, typeOne), new Vector2I(0, 1)}, // Top-left down-right corners
 	    	{ new(typeTwo, typeTwo, typeTwo, typeTwo), new Vector2I(0, 3)}, // No corners
         };
-
-        foreach (Vector2I coord in mapData.GetAllUsedCoords(layerType))
-        {
-            SetDisplayTile(coord);
-        }
     }
 
-    public void Process(Vector2I mouseGridPosition, double delta)
+    public void UpdateSelectedMaterial(Vector2I mouseGridPosition)
     {
         SelectedTileMaterial = mapData.GetMaterial(mouseGridPosition, layerType);
     }
 
-    public void SetTile(Vector2I coords, bool asTypeOne)
+    public bool SetTile(Vector2I coords, bool asTypeOne)
     {
-        mapData.SetMaterial(coords, asTypeOne ? typeOne : typeTwo, layerType);
-        SetDisplayTile(coords);
+        bool isUpdated = mapData.SetMaterial(coords, asTypeOne ? typeOne : typeTwo, layerType);
+        return isUpdated;
     }
 
-    private void SetDisplayTile(Vector2I pos)
+    public void SetDisplayTile(Vector2I pos)
     {
-        // loop through 4 display neighbours
         for (int i = 0; i < neighbours.Length; i++)
         {
             Vector2I newPos = pos + neighbours[i];
-            Vector2I displayTile = CalculateDisplayTile(newPos);
-            displayLayer.SetCell(newPos, displayAtlasId, CalculateDisplayTile(newPos));
+
+            // Skip last row and column
+            if((i == 1 || i == 2 || i == 3) &&
+                ((newPos.X % 10 == 0 && newPos.X >= pos.X) ||
+                (newPos.Y % 10 == 0 && newPos.Y >= pos.Y)))
+            {
+                continue;
+            }
+
+            DisplayLayer.SetCell(newPos, displayAtlasId, CalculateDisplayTile(newPos));
         }
     }
 

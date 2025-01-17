@@ -1,12 +1,11 @@
 ﻿using Godot;
 using Godot.Collections;
+using System.Collections.Generic;
 using static WorldMap;
 
 [GlobalClass]
 public partial class WorldMapGenerator : Node
 {
-    private const int CHUNK_SIZE = 10;
-    private const int INITIAL_CHUNKS_SIZE = 5;
     private const float NOISE_SIZE = 5f;
 
     [Export]
@@ -15,10 +14,11 @@ public partial class WorldMapGenerator : Node
     [Export]
     private Array<WorldMapGeneratorNodePlacementData> placementDatas;
 
-    private WorldMapData mapData;
     private FastNoiseLite noise;
     private AtlasMaterial defaultMaterial = AtlasMaterial.SOFT_SURFACE;
     private AtlasMaterial soilMaterial = AtlasMaterial.SOIL;
+
+    private HashSet<Vector2I> generatedChunkCoords = new();
 
     private Vector2I gridSize;
     private Vector2I gridSizeHalf;
@@ -27,8 +27,7 @@ public partial class WorldMapGenerator : Node
     {
         noise = new FastNoiseLite();
         noise.Seed = seed;
-        noise.NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth;
-        noise.FractalOctaves = 2;
+        noise.NoiseType = FastNoiseLite.NoiseTypeEnum.Cellular;
     }
 
     public override void _Ready()
@@ -37,42 +36,38 @@ public partial class WorldMapGenerator : Node
         gridSizeHalf = gridSize / 2;
     }
 
-    public void GenerateInitialChunks(WorldMapData mapData)
+    public void GenerateChunk(WorldMapData mapData, Vector2I chunkCoords)
     {
-        this.mapData = mapData;
-
-        for (int x = -INITIAL_CHUNKS_SIZE; x < INITIAL_CHUNKS_SIZE; x++)
+        if(generatedChunkCoords.Contains(chunkCoords))
         {
-            for (int y = -INITIAL_CHUNKS_SIZE; y < INITIAL_CHUNKS_SIZE; y++)
+            return;
+        }
+
+        for (int y = 0; y < WorldMap.CHUNK_SIZE; y++)
+        {
+            for (int x = 0; x < WorldMap.CHUNK_SIZE; x++)
             {
-                GenerateChunk(new Vector2I(x, y));
+                GenerateTile(mapData, chunkCoords, new Vector2I(x, y));
             }
         }
     }
 
-    public void GenerateChunk(Vector2I chunkCoords)
-    {
-        for (int y = 0; y < CHUNK_SIZE; y++)
-        {
-            for (int x = 0; x < CHUNK_SIZE; x++)
-            {
-                GenerateTile(chunkCoords, new Vector2I(x, y));
-            }
-        }
-    }
-
-    private void GenerateTile(Vector2I chunkCoords, Vector2I tileCoord)
+    private void GenerateTile(WorldMapData mapData, Vector2I chunkCoords, Vector2I tileCoord)
     {
         Vector2I globalTileCoord = (chunkCoords * CHUNK_SIZE) + tileCoord;
 
-        float noiseValue = (noise.GetNoise2D(globalTileCoord.X * NOISE_SIZE, globalTileCoord.Y * NOISE_SIZE) + 1) * 0.5f;
+        float noiseValue = (noise.GetNoise2D(globalTileCoord.X * NOISE_SIZE, globalTileCoord.Y * NOISE_SIZE) + 1) * 0.5f * 3;
 
         int tileValue = Mathf.RoundToInt(noiseValue - 0.3f);
         mapData.SetMaterial(globalTileCoord, tileValue == 0 ? defaultMaterial : soilMaterial, WorldMapData.WorldMapDataLayerType.BASE);
 
         foreach (WorldMapGeneratorNodePlacementData placementData in placementDatas)
         {
-            placementData.TryPlace(globalTileCoord * gridSize - gridSizeHalf, noiseValue);
+            bool isPlaced = placementData.TryPlace(globalTileCoord * gridSize - gridSizeHalf, noiseValue);
+            if(isPlaced)
+            {
+                break;
+            }
         }
     }
 }

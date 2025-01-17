@@ -155,7 +155,7 @@ public partial class PlayerInteractHandler : Node2D
 
         if (canChangeMaterial && IsUseHoldablePressed())
         {
-            WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial);
+            WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial, true);
             character.UseHoldable();
         }
     }
@@ -198,7 +198,7 @@ public partial class PlayerInteractHandler : Node2D
         currentGridPosition = gridPosition;
         previewSprite.GlobalPosition = currentGridPosition + gridPreviewNodeOffset;
 
-        bool canPlace = itemInHand.definition.validTilePlacementMaterials.Contains(WorldMap.Instance.GetSelectedTileMaterial());
+        bool canPlace = itemInHand.definition.validTilePlacementMaterials.Contains(WorldMap.Instance.GetSelectedMaterial());
         previewSprite.Modulate = (canPlace ? colorValid : colorInvalid).WithAlpha(SinBetween(0.25f, 0.75f));
 
         if(IsUseHoldablePressed() && canPlace)

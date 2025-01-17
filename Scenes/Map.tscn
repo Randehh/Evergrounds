@@ -1,10 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://cevqvlshxo84w"]
+[gd_scene load_steps=21 format=3 uid="uid://cevqvlshxo84w"]
 
 [ext_resource type="Script" path="res://Scripts/World/WorldMap.cs" id="1_1x1iq"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.cs" id="1_8er03"]
 [ext_resource type="Script" path="res://Scripts/World/WorldMapGenerator.cs" id="2_pbtj7"]
 [ext_resource type="PackedScene" uid="uid://cigl51myg13f6" path="res://Scenes/Characters/player.tscn" id="3_rslf7"]
-[ext_resource type="TileSet" uid="uid://c1k01p45fhnsg" path="res://TileSets/Terrains.tres" id="3_wwon3"]
 [ext_resource type="PackedScene" uid="uid://cv78ude3j44mx" path="res://Scenes/World/Interactables/interactable_chest.tscn" id="4_b7prb"]
 [ext_resource type="Script" path="res://Scripts/World/WorldMapGeneratorNodePlacementData.cs" id="4_xlhxp"]
 [ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="5_rudrl"]
@@ -64,16 +63,17 @@ minimumCount = 10
 maximumCount = 20
 baseChance = 1.0
 
-[node name="Map" type="Node2D" node_paths=PackedStringArray("displayTileMapLayer", "tillingDisplayTileMapLayer", "generator")]
+[node name="Map" type="Node2D" node_paths=PackedStringArray("generator", "mapChunkParent")]
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_1x1iq")
-displayTileMapLayer = NodePath("DisplayTileMap")
-tillingDisplayTileMapLayer = NodePath("TillingDisplayTileMap")
 generator = NodePath("WorldMapGenerator")
+mapChunkParent = NodePath("MapChunks")
+metadata/_edit_lock_ = true
 
 [node name="WorldMapGenerator" type="Node" parent="."]
 script = ExtResource("2_pbtj7")
+seed = 1255
 placementDatas = Array[Object]([SubResource("Resource_826ao"), SubResource("Resource_g6bnd")])
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("character")]
@@ -83,15 +83,8 @@ character = NodePath("../Characters/Player")
 followSpeed = 4.0
 mousePullPower = 15.0
 
-[node name="DisplayTileMap" type="TileMapLayer" parent="."]
-z_index = -500
+[node name="MapChunks" type="Node2D" parent="."]
 position = Vector2(-8, -8)
-tile_set = ExtResource("3_wwon3")
-
-[node name="TillingDisplayTileMap" type="TileMapLayer" parent="."]
-z_index = -500
-position = Vector2(-8, -8)
-tile_set = ExtResource("3_wwon3")
 
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -100,7 +93,6 @@ y_sort_enabled = true
 position = Vector2(103, 47)
 
 [node name="Chest" parent="." instance=ExtResource("4_b7prb")]
-position = Vector2(-24, -16)
 
 [node name="InteractEventSpawnItem" parent="Chest" index="4"]
 itemsToSpawn = Array[Object]([SubResource("Resource_nxwyw"), SubResource("Resource_61s83"), SubResource("Resource_1ppvw")])

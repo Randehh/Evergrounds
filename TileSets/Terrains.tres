@@ -54,6 +54,6 @@ custom_data_layer_0/name = "is_tillable"
 custom_data_layer_0/type = 1
 custom_data_layer_1/name = "material"
 custom_data_layer_1/type = 2
+sources/2 = SubResource("TileSetAtlasSource_dgt0c")
 sources/1 = SubResource("TileSetAtlasSource_sur8a")
 sources/0 = SubResource("TileSetAtlasSource_lx033")
-sources/2 = SubResource("TileSetAtlasSource_dgt0c")
