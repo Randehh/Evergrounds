@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cigl51myg13f6"]
+[gd_scene load_steps=13 format=3 uid="uid://cigl51myg13f6"]
 
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
 [ext_resource type="PackedScene" uid="uid://ctkvevyma6uqu" path="res://Scenes/Characters/character_base.tscn" id="2_ah60g"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/Player/PlayerInteractHandler.cs" id="3_vywfg"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerInteractDetector.cs" id="4_faxxo"]
 [ext_resource type="Texture2D" uid="uid://cbspc4phk6w78" path="res://Art/UI/UI_Grid_Overlay.png" id="6_8im18"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerDespawnableHandler.cs" id="6_47lku"]
 
 [sub_resource type="Animation" id="Animation_cxq1k"]
 resource_name = "Highlight"
@@ -110,7 +111,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vfjf2"]
-radius = 1.0
+radius = 400.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ndks1"]
 radius = 25.0
@@ -164,6 +165,12 @@ collision_mask = 2
 [node name="VacuumShape" type="CollisionShape2D" parent="VacuumDetector"]
 shape = SubResource("CircleShape2D_ndks1")
 
+[node name="DespawnableDetector" type="Area2D" parent="."]
+script = ExtResource("6_47lku")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="DespawnableDetector"]
+shape = SubResource("CircleShape2D_vfjf2")
+
 [node name="ItemPlacePreviewSprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.5)
 
@@ -175,3 +182,5 @@ texture = ExtResource("6_8im18")
 [connection signal="area_exited" from="InteractableDetector" to="InteractableDetector" method="OnAreaExited"]
 [connection signal="area_entered" from="VacuumDetector" to="." method="OnVacuumAreaEntered"]
 [connection signal="area_exited" from="VacuumDetector" to="." method="OnVacuumAreaExited"]
+[connection signal="area_entered" from="DespawnableDetector" to="DespawnableDetector" method="OnAreaEntered"]
+[connection signal="area_exited" from="DespawnableDetector" to="DespawnableDetector" method="OnAreaExited"]

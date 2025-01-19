@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class Interactable : Area2D, IWorldGridNode
+public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNode
 {
     [Export]
     private Node2D interactPoint;
@@ -37,6 +37,8 @@ public partial class Interactable : Area2D, IWorldGridNode
     {
         interactCountRemaining = interactCount;
     }
+
+    public Node2D GetNode() => this;
 
     public void Interact()
     {

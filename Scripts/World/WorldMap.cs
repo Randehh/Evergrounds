@@ -7,8 +7,8 @@ public partial class WorldMap : Node2D
 {
     public const int GRID_SIZE = 16;
     public const int CHUNK_SIZE = 5;
-    public const int CHUNK_GENERATION_RANGE_X = 7;
-    public const int CHUNK_GENERATION_RANGE_Y = 4;
+    public const int CHUNK_GENERATION_RANGE_X = 4;
+    public const int CHUNK_GENERATION_RANGE_Y = 3;
 
     public static WorldMap Instance;
 
@@ -64,7 +64,7 @@ public partial class WorldMap : Node2D
 
         selectedMaterial = GetSelectedMaterial();
 
-        Vector2I nextMapCenter = GetGridPosition(PlayerCharacter.Instance.Position, GRID_SIZE * CHUNK_SIZE, 1, false) / (GRID_SIZE * CHUNK_SIZE);
+        Vector2I nextMapCenter = GetGridChunkPosition(PlayerCharacter.Instance.Position);
         if(currentMapCenter != nextMapCenter)
         {
             RecenterMap(nextMapCenter);
@@ -76,6 +76,9 @@ public partial class WorldMap : Node2D
             var chunkArrayPosition = chunkData.Item2;
             var movementDirection = chunkData.Item3;
 
+            Vector2I chunkPosition = (chunkArrayPosition * CHUNK_SIZE) / CHUNK_SIZE;
+            chunkLookup[chunkPosition] = nextChunk;
+
             generator.GenerateChunk(worldMapData, chunkArrayPosition);
 
             Vector2I chunkTilePosition = chunkArrayPosition * CHUNK_SIZE;
@@ -83,8 +86,6 @@ public partial class WorldMap : Node2D
             Vector2I chunkPixelPosition = chunkTilePosition * GRID_SIZE;
             nextChunk.SetChunkPosition(chunkTilePosition, chunkWorldPosition, chunkPixelPosition);
 
-            Vector2I chunkPosition = nextChunk.ChunkTilePosition / CHUNK_SIZE;
-            chunkLookup[chunkPosition] = nextChunk;
 
             if(edgeLookup.TryGetValue(movementDirection, out WorldMapTileDisplayEdge edge) &&
                 chunkLookup.TryGetValue(chunkPosition - movementDirection, out WorldMapChunk edgeChunk))
@@ -107,10 +108,11 @@ public partial class WorldMap : Node2D
             {
                 Vector2I chunkArrayPosition = new Vector2I(x, y) - baseChunkOffset;
 
-                generator.GenerateChunk(worldMapData, chunkArrayPosition);
-
                 WorldMapChunk newChunk = new WorldMapChunk(mapChunkParent, worldMapData);
                 chunks.Add(newChunk);
+                chunkLookup.Add(chunkArrayPosition, newChunk);
+
+                generator.GenerateChunk(worldMapData, chunkArrayPosition);
             }
         }
     }
@@ -252,8 +254,9 @@ public partial class WorldMap : Node2D
         {
             return new Vector2I(xInt, yInt);
         }
-
     }
+
+    private Vector2I GetGridChunkPosition(Vector2 position) => GetGridPosition(position, GRID_SIZE * CHUNK_SIZE, 1, false) / (GRID_SIZE * CHUNK_SIZE);
 
     public enum AtlasMaterial
     {

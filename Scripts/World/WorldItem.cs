@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class WorldItem : Area2D
+public partial class WorldItem : Area2D, IWorldDespawnableNode
 {
 
     private const float VACUUM_SPEED = 15;
@@ -87,6 +87,11 @@ public partial class WorldItem : Area2D
         vacuumCharacter = character;
 
         itemState = WorldItemState.VACUUMING;
+    }
+
+    public Node2D GetNode()
+    {
+        return this;
     }
 
     private enum WorldItemState
