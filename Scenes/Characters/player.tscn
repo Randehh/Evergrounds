@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cigl51myg13f6"]
+[gd_scene load_steps=14 format=3 uid="uid://cigl51myg13f6"]
 
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
 [ext_resource type="PackedScene" uid="uid://ctkvevyma6uqu" path="res://Scenes/Characters/character_base.tscn" id="2_ah60g"]
@@ -110,11 +110,14 @@ _data = {
 "RESET": SubResource("Animation_lw88h")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_kovjw"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u6o11"]
+radius = 30.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_vfjf2"]
 radius = 400.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ndks1"]
-radius = 25.0
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("character", "interactHandler", "vacuumArea")]
 script = ExtResource("1_ty55n")
@@ -156,16 +159,18 @@ script = ExtResource("4_faxxo")
 interactRadius = 30.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="InteractableDetector"]
-shape = SubResource("CircleShape2D_vfjf2")
+shape = SubResource("CircleShape2D_kovjw")
 
 [node name="VacuumDetector" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
 [node name="VacuumShape" type="CollisionShape2D" parent="VacuumDetector"]
-shape = SubResource("CircleShape2D_ndks1")
+shape = SubResource("CircleShape2D_u6o11")
 
 [node name="DespawnableDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("6_47lku")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="DespawnableDetector"]

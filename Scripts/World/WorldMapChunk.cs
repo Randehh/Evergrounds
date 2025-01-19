@@ -17,7 +17,6 @@ public class WorldMapChunk
     public bool isSet = false;
 
     private Vector2I chunkTilePosition;
-    private Vector2I chunkWorldPosition;
     private Vector2I chunkPixelPosition;
     private AtlasMaterial selectedMaterial;
     private bool isMouseInChunk;
@@ -37,18 +36,18 @@ public class WorldMapChunk
     {
         TileMapLayer mapLayer = displayTileMapPackedScene.Instantiate<TileMapLayer>();
         mapParent.AddChild(mapLayer);
+        mapLayer.Position = Vector2.Zero;
 
         return new WorldMapTileDisplay(mapData, mapLayer, materialOne, materialTwo, layerType, atlasId);
     }
 
-    public void SetChunkPosition(Vector2I chunkTilePosition, Vector2I chunkWorldPosition, Vector2I chunkPixelPosition)
+    public void SetChunkPosition(Vector2I chunkTilePosition, Vector2I chunkPixelPosition)
     {
         this.chunkTilePosition = chunkTilePosition;
-        this.chunkWorldPosition = chunkWorldPosition;
         this.chunkPixelPosition = chunkPixelPosition;
 
-        standardTileMap.DisplayLayer.Position = chunkWorldPosition;
-        tillingTileMap.DisplayLayer.Position = chunkWorldPosition;
+        standardTileMap.DisplayLayer.Position = Vector2.Zero;
+        tillingTileMap.DisplayLayer.Position = Vector2.Zero;
 
         standardTileMap.DisplayLayer.Clear();
         tillingTileMap.DisplayLayer.Clear();

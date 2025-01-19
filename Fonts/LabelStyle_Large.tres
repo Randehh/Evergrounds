@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://c5x8qfymis31b"]
+
+[ext_resource type="FontFile" uid="uid://dr54byvtn2u20" path="res://Fonts/Kenney High.ttf" id="1_hq0tb"]
+
+[resource]
+font = ExtResource("1_hq0tb")
+outline_size = 8
+outline_color = Color(0.133196, 0.133196, 0.133196, 1)

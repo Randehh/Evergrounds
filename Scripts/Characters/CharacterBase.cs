@@ -40,7 +40,7 @@ public partial class CharacterBase : Node2D
 		if (moveSpeed > 0.01f)
 		{
             characterAnimator.Play("Walk");
-            characterAnimator.SpeedScale = Mathf.Clamp(moveSpeed * 3, 0, 2.5f);
+            characterAnimator.SpeedScale = Mathf.Clamp(moveSpeed * 15, 0, 2.5f);
 		}
 		else
 		{

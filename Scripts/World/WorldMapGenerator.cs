@@ -47,19 +47,27 @@ public partial class WorldMapGenerator : Node
         {
             for (int x = -1; x < WorldMap.CHUNK_SIZE + 1; x++)
             {
-                GenerateTile(mapData, chunkCoords, new Vector2I(x, y));
+                GenerateTile(mapData, chunkCoords, new Vector2I(x, y), x != -1 && x != WorldMap.CHUNK_SIZE && y != -1 && y != CHUNK_SIZE);
             }
         }
+
+        generatedChunkCoords.Add(chunkCoords);
     }
 
-    private void GenerateTile(WorldMapData mapData, Vector2I chunkCoords, Vector2I tileCoord)
+    private void GenerateTile(WorldMapData mapData, Vector2I chunkCoords, Vector2I tileCoord, bool placeNode)
     {
+
         Vector2I globalTileCoord = (chunkCoords * CHUNK_SIZE) + tileCoord;
 
         float noiseValue = (noise.GetNoise2D(globalTileCoord.X * NOISE_SIZE, globalTileCoord.Y * NOISE_SIZE) + 1) * 0.5f * 3;
 
         int tileValue = Mathf.RoundToInt(noiseValue - 0.3f);
         mapData.SetMaterial(globalTileCoord, tileValue == 0 ? defaultMaterial : soilMaterial, WorldMapData.WorldMapDataLayerType.BASE);
+
+        if(!placeNode)
+        {
+            return;
+        }
 
         foreach (WorldMapGeneratorNodePlacementData placementData in placementDatas)
         {

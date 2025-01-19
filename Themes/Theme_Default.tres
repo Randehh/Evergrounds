@@ -1,3 +1,7 @@
-[gd_resource type="Theme" format=3 uid="uid://grcak8uagcau"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://grcak8uagcau"]
+
+[ext_resource type="FontFile" uid="uid://0km3vn2tywnt" path="res://Fonts/Kenney Pixel.ttf" id="1_4vdcy"]
 
 [resource]
+Label/constants/outline_size = 4
+Label/fonts/font = ExtResource("1_4vdcy")

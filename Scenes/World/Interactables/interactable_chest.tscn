@@ -187,6 +187,7 @@ maximumCount = 25
 baseChance = 1.0
 
 [node name="Chest" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
+collision_layer = 5
 script = ExtResource("1_drppp")
 interactPoint = NodePath("InteractShape")
 interactShape = NodePath("InteractShape")

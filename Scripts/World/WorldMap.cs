@@ -56,7 +56,7 @@ public partial class WorldMap : Node2D
 
     public override void _Process(double delta)
     {
-        Vector2I mouseGridPosition = GetMouseCoordinates(1);
+        Vector2I mouseGridPosition = GetMouseCoordinates(1, true);
         foreach (WorldMapChunk chunk in chunks)
         {
             chunk.UpdateSelectedMaterial(mouseGridPosition);
@@ -82,9 +82,8 @@ public partial class WorldMap : Node2D
             generator.GenerateChunk(worldMapData, chunkArrayPosition);
 
             Vector2I chunkTilePosition = chunkArrayPosition * CHUNK_SIZE;
-            Vector2I chunkWorldPosition = chunkArrayPosition * GRID_SIZE - (chunkArrayPosition * GRID_SIZE) - baseChunkOffset;
             Vector2I chunkPixelPosition = chunkTilePosition * GRID_SIZE;
-            nextChunk.SetChunkPosition(chunkTilePosition, chunkWorldPosition, chunkPixelPosition);
+            nextChunk.SetChunkPosition(chunkTilePosition, chunkPixelPosition);
 
 
             if(edgeLookup.TryGetValue(movementDirection, out WorldMapTileDisplayEdge edge) &&
@@ -235,10 +234,10 @@ public partial class WorldMap : Node2D
     }
 
 
-    public Vector2I GetMouseCoordinates(int divisions)
+    public Vector2I GetMouseCoordinates(int divisions, bool addHalfSizeOffset)
     {
         Vector2 globalMousePosition = GetGlobalMousePosition();
-        return GetGridPosition(globalMousePosition, GRID_SIZE, divisions, true);
+        return GetGridPosition(globalMousePosition, GRID_SIZE, divisions, addHalfSizeOffset);
     }
 
     private Vector2I GetGridPosition(Vector2 position, int gridSize, int divisions, bool addHalfSizeOffset)

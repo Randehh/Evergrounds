@@ -8,7 +8,7 @@
 radius = 1.0
 
 [node name="WorldItem" type="Area2D" node_paths=PackedStringArray("sprite", "floatParent", "shadow")]
-collision_layer = 2
+collision_layer = 6
 collision_mask = 0
 script = ExtResource("1_syiyw")
 sprite = NodePath("FloatParent/ItemSprite")

@@ -1,80 +1,52 @@
-[gd_scene load_steps=17 format=3 uid="uid://hnncnqeulgog"]
+[gd_scene load_steps=11 format=3 uid="uid://hnncnqeulgog"]
 
 [ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_lbnul"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_hr3oi"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_cqpyo"]
-[ext_resource type="Resource" uid="uid://bkuersrsvb7ty" path="res://Resources/Items/item_wood.tres" id="4_igue3"]
+[ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="4_7tukf"]
 [ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_5elj0"]
-[ext_resource type="Resource" uid="uid://dkneqfx24g3j5" path="res://Resources/Items/item_leaf.tres" id="6_kj4tq"]
-[ext_resource type="Resource" uid="uid://p4innrlpa2cc" path="res://Resources/Items/item_acorn.tres" id="7_dov6y"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventPlayAnimation.cs" id="8_mgay7"]
 [ext_resource type="Texture2D" uid="uid://d03emquq8xpnj" path="res://Art/World/Interactables/Interactable_Seeds.png" id="9_cpy06"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="10_rt5ae"]
-[ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="11_qoacb"]
 
-[sub_resource type="Resource" id="Resource_cd1ki"]
+[sub_resource type="Resource" id="Resource_whq2g"]
 script = ExtResource("2_hr3oi")
-interactType = 1
+interactType = 0
 minimumLevel = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_04bqn"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_k8f8h"]
 
 [sub_resource type="Resource" id="Resource_urmos"]
 script = ExtResource("5_5elj0")
-item = ExtResource("4_igue3")
+item = ExtResource("4_7tukf")
 minimumCount = 1
 maximumCount = 2
-baseChance = 1.0
+baseChance = 0.25
 
-[sub_resource type="Resource" id="Resource_6hjsb"]
-script = ExtResource("5_5elj0")
-item = ExtResource("6_kj4tq")
-minimumCount = 4
-maximumCount = 6
-baseChance = 1.0
-
-[sub_resource type="Resource" id="Resource_k6m2f"]
-script = ExtResource("5_5elj0")
-item = ExtResource("7_dov6y")
-minimumCount = 2
-maximumCount = 3
-baseChance = 0.5
-
-[node name="TreeYellow" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
+[node name="Seeds" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
 y_sort_enabled = true
+collision_layer = 5
 script = ExtResource("1_lbnul")
 interactPoint = NodePath("Shape")
 interactShape = NodePath("Shape")
 selectArrowAnchor = NodePath("ArrowAnchor")
-interactRequirement = SubResource("Resource_cd1ki")
-interactEvents = [NodePath("InteractEventPlayAnimation")]
+interactRequirement = SubResource("Resource_whq2g")
+interactEvents = []
 interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode")]
-interactCount = 3
-mainSprite = NodePath("TreeSprite")
+mainSprite = NodePath("SeedsSprite")
 
 [node name="Shape" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_04bqn")
-disabled = true
+shape = SubResource("CircleShape2D_k8f8h")
 
 [node name="ArrowAnchor" type="Node2D" parent="."]
 position = Vector2(0, -30)
 
 [node name="InteractEventSpawnItem" type="Node2D" parent="."]
 script = ExtResource("3_cqpyo")
-itemsToSpawn = Array[Object]([SubResource("Resource_urmos"), SubResource("Resource_6hjsb"), SubResource("Resource_k6m2f")])
+itemsToSpawn = Array[Object]([SubResource("Resource_urmos")])
 
-[node name="InteractEventPlayAnimation" type="Node2D" parent="."]
-script = ExtResource("8_mgay7")
-animationName = "Shake"
-
-[node name="TreeSprite" type="Sprite2D" parent="."]
+[node name="SeedsSprite" type="Sprite2D" parent="."]
 texture = ExtResource("9_cpy06")
 
 [node name="InteractEventDestroyNode" type="Node2D" parent="." node_paths=PackedStringArray("toDestroy")]
 script = ExtResource("10_rt5ae")
 toDestroy = NodePath("..")
-
-[node name="WorldNodeShadow" parent="." node_paths=PackedStringArray("targetNode") instance=ExtResource("11_qoacb")]
-position = Vector2(0, -1)
-targetNode = NodePath("../TreeSprite")
-baseScaleMultiplier = 0.5

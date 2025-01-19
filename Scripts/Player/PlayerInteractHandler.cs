@@ -150,7 +150,7 @@ public partial class PlayerInteractHandler : Node2D
     {
         bool canChangeMaterial = WorldMap.Instance.CanChangeToTileMaterial(itemInHand.definition.tileMaterial);
 
-        gridTileView.GlobalPosition = WorldMap.Instance.GetMouseCoordinates(1);
+        gridTileView.GlobalPosition = WorldMap.Instance.GetMouseCoordinates(1, true);
         gridTileView.Modulate = (canChangeMaterial ? colorValid : colorInvalid).WithAlpha(SinBetween(0.25f, 0.75f));
 
         if (canChangeMaterial && IsUseHoldablePressed())
@@ -194,7 +194,7 @@ public partial class PlayerInteractHandler : Node2D
             gridPreviewNodeOffset = gridNode.gridPlacementOffset;
         }
 
-        Vector2I gridPosition = WorldMap.Instance.GetMouseCoordinates(gridDivision);
+        Vector2I gridPosition = WorldMap.Instance.GetMouseCoordinates(gridDivision, true);
         currentGridPosition = gridPosition;
         previewSprite.GlobalPosition = currentGridPosition + gridPreviewNodeOffset;
 

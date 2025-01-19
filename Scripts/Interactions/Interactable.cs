@@ -56,7 +56,7 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
 
         if (interactCountRemaining <= 0)
         {
-            interactShape.Disabled = true;
+            SetCollisionLayerValue(1, false);
 
             foreach (var interactEvent in interactCompleteEvents)
             {

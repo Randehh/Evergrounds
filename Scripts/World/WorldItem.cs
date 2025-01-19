@@ -44,8 +44,8 @@ public partial class WorldItem : Area2D, IWorldDespawnableNode
         {
             case WorldItemState.SPAWNING:
                 Position += velocity;
-                velocity *= (float)Mathf.Lerp((float)delta, 1, 0.95f);
-                if(velocity.Length() < 0.05f)
+                velocity *= (float)Mathf.Lerp((float)delta, 1, 0.98f);
+                if(velocity.Length() < 0.001f)
                 {
                     itemState = WorldItemState.FLOATING;
                 }
@@ -66,7 +66,7 @@ public partial class WorldItem : Area2D, IWorldDespawnableNode
         floatParent.Position = new Vector2(0, Mathf.Sin((float)currentTime * 3));
         if(sprite.Position.Y < 0 || spawnVelocityY < 0)
         {
-            spawnVelocityY += (float)delta * 5;
+            spawnVelocityY += (float)delta * 1.5f;
             sprite.Position = new Vector2(sprite.Position.X, Mathf.Min(0, sprite.Position.Y + spawnVelocityY));
         }
     }
@@ -75,9 +75,9 @@ public partial class WorldItem : Area2D, IWorldDespawnableNode
     {
         float randX = (GD.Randf() + 0.2f) * 0.6f * (GD.Randf() > 0.5f ? -1 : 1);
         float randY = (GD.Randf() + 0.2f) * 0.6f * (GD.Randf() > 0.5f ? -1 : 1);
-        velocity = new Vector2(randX, randY);
+        velocity = new Vector2(randX, randY) * 0.5f;
 
-        spawnVelocityY = ((GD.Randf() * 0.5f) + 0.5f) * -1.5f;
+        spawnVelocityY = ((GD.Randf() * 0.5f) + 0.5f) * -0.5f;
 
         itemState = WorldItemState.SPAWNING;
     }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=16 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/UI/Inventory_UI.tscn" id="1_v08iy"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Inventory/Inventory.cs" id="3_fklsy"]
 [ext_resource type="Script" path="res://Scripts/UI/DragAndDropUI.cs" id="5_dfp8p"]
 [ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="6_3kt0a"]
+[ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="6_c26d2"]
 [ext_resource type="Script" path="res://Scripts/UI/CursorUI.cs" id="8_4ge1w"]
 [ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
 [ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="10_821fs"]
@@ -47,6 +48,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
+theme = ExtResource("6_c26d2")
 script = ExtResource("5_dfp8p")
 mouseParent = NodePath("MouseParent")
 itemDisplay = NodePath("MouseParent/CursorOffset/ItemTexture")
@@ -139,6 +141,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("12_i1bcf")
 fpsLabel = NodePath("MarginContainer/Label")
 
@@ -149,6 +152,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
