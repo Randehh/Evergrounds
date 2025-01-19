@@ -126,7 +126,7 @@ public class WorldMapChunk
                 return standardTileMap.SelectedTileMaterial == AtlasMaterial.SOIL;
 
             case AtlasMaterial.SOIL:
-                return standardTileMap.SelectedTileMaterial == AtlasMaterial.SOFT_SURFACE;
+                return standardTileMap.SelectedTileMaterial == AtlasMaterial.SOFT_SURFACE || tillingTileMap.SelectedTileMaterial == AtlasMaterial.TILLED;
 
             case AtlasMaterial.TILLED:
                 return standardTileMap.SelectedTileMaterial == AtlasMaterial.SOIL && tillingTileMap.SelectedTileMaterial == AtlasMaterial.NONE;
@@ -160,6 +160,7 @@ public class WorldMapChunk
 
             case AtlasMaterial.SOIL:
                 standardTileMap.SetTile(mouseGridPosition, asTypeOne: false);
+                tillingTileMap.SetTile(mouseGridPosition, asTypeOne: true);
                 break;
 
             case AtlasMaterial.TILLED:
