@@ -1,7 +1,8 @@
 using Godot;
+using Godot.Collections;
 
 [GlobalClass]
-public partial class WorldItem : Area2D, IWorldDespawnableNode
+public partial class WorldItem : Area2D, IWorldDespawnableNode, IWorldSaveable
 {
 
     private const float VACUUM_SPEED = 15;
@@ -92,6 +93,14 @@ public partial class WorldItem : Area2D, IWorldDespawnableNode
     public Node2D GetNode()
     {
         return this;
+    }
+
+    public Dictionary<string, Variant> GetSaveData()
+    {
+        Dictionary<string, Variant> data = new();
+        data.Add("StackSize", stackSize);
+        data.Add("ItemDefinitionPath", definition.ResourcePath);
+        return data;
     }
 
     private enum WorldItemState

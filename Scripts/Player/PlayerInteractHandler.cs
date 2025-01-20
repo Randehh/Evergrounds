@@ -204,7 +204,7 @@ public partial class PlayerInteractHandler : Node2D
         if(IsUseHoldablePressed() && canPlace)
         {
             Node2D placedNode = currentlyLoadedPackedScene.Instantiate<Node2D>();
-            WorldMap.Instance.AddChild(placedNode);
+            WorldMap.Instance.AddWorldNode(placedNode);
             placedNode.GlobalPosition = currentGridPosition;
 
             Inventory.Instance.RemoveItem(itemInHand, 1);

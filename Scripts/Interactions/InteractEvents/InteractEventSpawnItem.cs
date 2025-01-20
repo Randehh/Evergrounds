@@ -43,7 +43,7 @@ public partial class InteractEventSpawnItem : InteractEvent
             spawningTime -= SPAWN_INTERVAL;
 
             WorldItem worldItem = worldItemScene.Instantiate<WorldItem>();
-            WorldMap.Instance.AddChild(worldItem);
+            WorldMap.Instance.AddWorldNode(worldItem);
             worldItem.Initialize(toSpawn.Dequeue(), 1);
             worldItem.GlobalPosition = GlobalPosition;
             worldItem.Spawn();

@@ -1,7 +1,8 @@
 using Godot;
+using Godot.Collections;
 
 [GlobalClass]
-public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNode
+public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNode, IWorldSaveable
 {
     [Export]
     private Node2D interactPoint;
@@ -97,6 +98,14 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
         }
 
         return InteractResult.OK;
+    }
+
+    public Dictionary<string, Variant> GetSaveData()
+    {
+        return new Dictionary<string, Variant>
+        {
+            [nameof(interactCountRemaining)] = interactCountRemaining
+        };
     }
 }
 

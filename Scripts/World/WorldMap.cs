@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using static WorldMapTileDisplay;
 
 [GlobalClass]
-public partial class WorldMap : Node2D
+public partial class WorldMap : Node2D, IWorldSaveable
 {
     public const int GRID_SIZE = 16;
     public const int CHUNK_SIZE = 5;
@@ -20,6 +20,8 @@ public partial class WorldMap : Node2D
 
     [Export]
     private Node2D mapChunkParent;
+
+    private WorldData worldData;
 
     private WorldMapData worldMapData;
     private List<WorldMapChunk> chunks = new();
@@ -45,10 +47,13 @@ public partial class WorldMap : Node2D
 
     public override void _Ready()
     {
+        AddToGroup(WorldData.SaveNodeGroup);
+
         Instance = this;
 
         chunkGenerationSize = new Vector2I(1 + (CHUNK_GENERATION_RANGE_X * 2), 1 + (CHUNK_GENERATION_RANGE_Y * 2));
 
+        worldData = new(this);
         worldMapData = new WorldMapData();
 
         CreateChunks();
@@ -56,6 +61,11 @@ public partial class WorldMap : Node2D
 
     public override void _Process(double delta)
     {
+        if(Input.IsActionJustPressed("save"))
+        {
+            worldData.Save();
+        }
+
         Vector2I mouseGridPosition = GetMouseCoordinates(1, true);
         foreach (WorldMapChunk chunk in chunks)
         {
@@ -255,7 +265,18 @@ public partial class WorldMap : Node2D
         }
     }
 
-    private Vector2I GetGridChunkPosition(Vector2 position) => GetGridPosition(position, GRID_SIZE * CHUNK_SIZE, 1, false) / (GRID_SIZE * CHUNK_SIZE);
+    public Vector2I GetGridChunkPosition(Vector2 position) => GetGridPosition(position, GRID_SIZE * CHUNK_SIZE, 1, false) / (GRID_SIZE * CHUNK_SIZE);
+
+    public void AddWorldNode(Node2D node)
+    {
+        AddChild(node);
+        worldMapData.AddWorldNode(node);
+    }
+
+    public Godot.Collections.Dictionary<string, Variant> GetSaveData()
+    {
+        return worldMapData.GetSaveData();
+    }
 
     public enum AtlasMaterial
     {
