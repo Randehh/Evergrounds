@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=17 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
+[ext_resource type="Script" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
 [ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/UI/Inventory_UI.tscn" id="1_v08iy"]
 [ext_resource type="PackedScene" uid="uid://cevqvlshxo84w" path="res://Scenes/Map.tscn" id="2_be0ya"]
 [ext_resource type="Script" path="res://Scripts/DragAndDrop/DragAndDrop.cs" id="2_n5ome"]
@@ -24,6 +25,10 @@ outline_color = Color(0, 0, 0, 1)
 font_size = 10
 
 [node name="MainGame" type="Node"]
+
+[node name="WorldData" type="Node" parent="." node_paths=PackedStringArray("rootNode")]
+script = ExtResource("1_rxiwr")
+rootNode = NodePath("../Map")
 
 [node name="GameSetup" type="Node" parent="."]
 script = ExtResource("1_4si5g")

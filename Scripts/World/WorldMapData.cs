@@ -4,6 +4,9 @@ using static WorldMap;
 
 public class WorldMapData : IWorldSaveable
 {
+    private const string SAVE_KEY_LAYER_DATA = "LayerData";
+    private const string SAVE_KEY_WORLD_NODE_DATA = "WorldNodeData";
+
     private Dictionary<WorldMapDataLayerType, WorldMapDataLayer> layers = new ();
     private List<WorldNodeData> worldNodes = new ();
 
@@ -31,6 +34,18 @@ public class WorldMapData : IWorldSaveable
         liveNodes.Add(node, worldNodeData);
     }
 
+    public void AddWorldNode(WorldNodeData worldNodeData)
+    {
+        worldNodes.Add(worldNodeData);
+
+        if (!worldNodeData.TrySpawn(RemoveWorldNode, out Node2D spawnedNode))
+        {
+            return;
+        }
+
+        liveNodes.Add(spawnedNode, worldNodeData);
+    }
+
     public void RemoveWorldNode(Node2D node)
     {
         if(!liveNodes.ContainsKey(node))
@@ -38,6 +53,7 @@ public class WorldMapData : IWorldSaveable
             return;
         }
 
+        worldNodes.Remove(liveNodes[node]);
         liveNodes.Remove(node);
     }
 
@@ -45,21 +61,41 @@ public class WorldMapData : IWorldSaveable
     {
         Godot.Collections.Dictionary<string, Variant> mapData = new();
 
-        Godot.Collections.Dictionary<string, Variant> layerSaveData = new();
-        mapData.Add("LayerData", layerSaveData);
+        Godot.Collections.Dictionary<int, Variant> layerSaveData = new();
+        mapData.Add(SAVE_KEY_LAYER_DATA, layerSaveData);
         foreach (KeyValuePair<WorldMapDataLayerType, WorldMapDataLayer> layerPair in layers)
         {
-            layerSaveData.Add(layerPair.Key.ToString(), layerPair.Value.GetSaveData());
+            layerSaveData.Add((int)layerPair.Key, layerPair.Value.GetSaveData());
         }
 
         Godot.Collections.Array<Variant> worldNodeDataArray = new();
-        mapData.Add("WorldNodeData", worldNodeDataArray);
+        mapData.Add(SAVE_KEY_WORLD_NODE_DATA, worldNodeDataArray);
         foreach (WorldNodeData worldNodeData in worldNodes)
         {
             Godot.Collections.Dictionary<string, Variant> worldNodeSaveData = worldNodeData.GetSaveData();
             worldNodeDataArray.Add(worldNodeSaveData);
         }
         return mapData;
+    }
+
+    public void SetSaveData(Godot.Collections.Dictionary<string, Variant> data)
+    {
+        Godot.Collections.Dictionary<int, Variant> layerSaveData = data[SAVE_KEY_LAYER_DATA].AsGodotDictionary<int, Variant>();
+        foreach(KeyValuePair<int, Variant> layerData in layerSaveData)
+        {
+            WorldMapDataLayerType layerType = (WorldMapDataLayerType)layerData.Key;
+            layers[layerType].SetSaveData(layerData.Value.AsGodotArray<Variant>());
+        }
+
+        Godot.Collections.Array<Variant> worldNodeDataArray = data[SAVE_KEY_WORLD_NODE_DATA].AsGodotArray<Variant>();
+        foreach(Variant worldNodeDataVariant in worldNodeDataArray)
+        {
+            Godot.Collections.Dictionary<string, Variant> worldNodeSaveData = worldNodeDataVariant.AsGodotDictionary<string, Variant>();
+            WorldNodeData worldNodeData = new WorldNodeData();
+            worldNodeData.SetSaveData(worldNodeSaveData);
+            
+            AddWorldNode(worldNodeData);
+        }
     }
 
     public enum WorldMapDataLayerType
@@ -114,9 +150,24 @@ public class WorldMapData : IWorldSaveable
 
                 valueData.Add($"PosX", valuePair.Key.X);
                 valueData.Add($"PosY", valuePair.Key.Y);
-                valueData.Add($"Material", valuePair.Value.ToString());
+                valueData.Add($"Material", (int)valuePair.Value);
             }
             return layerData;
+        }
+
+        public void SetSaveData(Godot.Collections.Array<Variant> data)
+        {
+            layerValues.Clear();
+
+            foreach (Variant tileVariantData in data)
+            {
+                Godot.Collections.Dictionary<string, Variant> tileDictionary = tileVariantData.AsGodotDictionary<string, Variant>();
+                layerValues.Add(new Vector2I(
+                    tileDictionary["PosX"].AsInt32(),
+                    tileDictionary["PosY"].AsInt32()),
+                    (AtlasMaterial)tileDictionary["Material"].AsInt32()
+                    );
+            }
         }
     }
 }

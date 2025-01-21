@@ -1,9 +1,12 @@
 using Godot;
 using Godot.Collections;
+using System;
 
 [GlobalClass]
 public partial class WorldItem : Area2D, IWorldDespawnableNode, IWorldSaveable
 {
+    private const string SAVE_KEY_ITEM_DEFINITION_PATH = "ItemDefinitionPath";
+    private const string SAVE_KEY_STACK_SIZE = "StackSize";
 
     private const float VACUUM_SPEED = 15;
 
@@ -98,9 +101,15 @@ public partial class WorldItem : Area2D, IWorldDespawnableNode, IWorldSaveable
     public Dictionary<string, Variant> GetSaveData()
     {
         Dictionary<string, Variant> data = new();
-        data.Add("StackSize", stackSize);
-        data.Add("ItemDefinitionPath", definition.ResourcePath);
+        data.Add(SAVE_KEY_STACK_SIZE, stackSize);
+        data.Add(SAVE_KEY_ITEM_DEFINITION_PATH, definition.ResourcePath);
         return data;
+    }
+
+    public void SetSaveData(Dictionary<string, Variant> data)
+    {
+        InventoryItemDefinition definition = GD.Load<InventoryItemDefinition>(data[SAVE_KEY_ITEM_DEFINITION_PATH].AsString());
+        Initialize(definition, data[SAVE_KEY_STACK_SIZE].AsInt32());
     }
 
     private enum WorldItemState

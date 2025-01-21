@@ -73,7 +73,7 @@ metadata/_edit_lock_ = true
 
 [node name="WorldMapGenerator" type="Node" parent="."]
 script = ExtResource("2_pbtj7")
-seed = 1255
+seed = 2425
 placementDatas = Array[Object]([SubResource("Resource_826ao"), SubResource("Resource_g6bnd")])
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("character")]

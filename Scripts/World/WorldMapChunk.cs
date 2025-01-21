@@ -10,6 +10,7 @@ public class WorldMapChunk
     public bool IsMouseInChunk => isMouseInChunk;
     public Vector2I MouseMapPosition => mouseMapPosition;
     public Vector2I ChunkTilePosition => chunkTilePosition;
+    public Vector2I ChunkPixelPosition => chunkPixelPosition;
 
     public WorldMapTileDisplay standardTileMap;
     private WorldMapTileDisplay tillingTileMap;
@@ -181,5 +182,11 @@ public class WorldMapChunk
     {
         standardTileMap.ResetEdge(chunkTilePosition, edge);
         tillingTileMap.ResetEdge(chunkTilePosition, edge);
+    }
+
+    public void ReplaceMapData(WorldMapData worldMapData)
+    {
+        standardTileMap.ReplaceMapData(worldMapData, chunkTilePosition);
+        tillingTileMap.ReplaceMapData(worldMapData, chunkTilePosition);
     }
 }

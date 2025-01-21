@@ -4,6 +4,8 @@ using Godot.Collections;
 [GlobalClass]
 public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNode, IWorldSaveable
 {
+    private const string SAVE_KEY_INTERACTABLE_COUNT = "InteractableCount";
+
     [Export]
     private Node2D interactPoint;
 
@@ -104,8 +106,13 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
     {
         return new Dictionary<string, Variant>
         {
-            [nameof(interactCountRemaining)] = interactCountRemaining
+            [SAVE_KEY_INTERACTABLE_COUNT] = interactCountRemaining
         };
+    }
+
+    public void SetSaveData(Dictionary<string, Variant> data)
+    {
+        interactCountRemaining = data[SAVE_KEY_INTERACTABLE_COUNT].AsInt32();
     }
 }
 

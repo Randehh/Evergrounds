@@ -11,11 +11,12 @@ public class WorldMapTileDisplay
 
     private readonly Dictionary<Tuple<AtlasMaterial, AtlasMaterial, AtlasMaterial, AtlasMaterial>, Vector2I> neighboursToAtlasCoord;
     private readonly Vector2I[] neighbours = new Vector2I[] { new(0, 0), new(1, 0), new(0, 1), new(1, 1) };
-    private readonly WorldMapData mapData;
     private readonly AtlasMaterial typeOne;
     private readonly AtlasMaterial typeTwo;
     private readonly WorldMapDataLayerType layerType;
     private readonly int displayAtlasId;
+
+    private WorldMapData mapData;
 
     public WorldMapTileDisplay(WorldMapData mapData, TileMapLayer displayLayer, AtlasMaterial typeOne, AtlasMaterial typeTwo, WorldMapDataLayerType layerType, int displayAtlasId)
     {
@@ -45,6 +46,20 @@ public class WorldMapTileDisplay
             { new(typeOne, typeTwo, typeTwo, typeOne), new Vector2I(0, 1)}, // Top-left down-right corners
 	    	{ new(typeTwo, typeTwo, typeTwo, typeTwo), new Vector2I(0, 3)}, // No corners
         };
+    }
+
+    public void ReplaceMapData(WorldMapData worldMapData, Vector2I chunkTilePosition)
+    {
+        mapData = worldMapData;
+
+        for (int x = 0; x < WorldMap.CHUNK_SIZE; x++)
+        {
+            for(int y = 0; y < WorldMap.CHUNK_SIZE; y++)
+            {
+                Vector2I coord = new Vector2I(chunkTilePosition.X + x, chunkTilePosition.Y + y);
+                SetDisplayTile(coord);
+            }
+        }
     }
 
     public void UpdateSelectedMaterial(Vector2I mouseGridPosition)

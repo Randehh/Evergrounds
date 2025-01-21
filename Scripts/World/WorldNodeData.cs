@@ -29,6 +29,27 @@ public class WorldNodeData : IWorldSaveable
     private Vector2I lastKnownChunk;
     private Dictionary<string, Variant> metadata;
 
+    public bool TrySpawn(Action<Node2D> onReleaseCallback, out Node2D spawnedNode)
+    {
+        spawnedNode = null;
+
+        if (!PlayerDespawnableHandler.Instance.IsPointInArea(lastKnownPosition))
+        {
+            return false;
+        }
+
+        var newObjectScene = GD.Load<PackedScene>(sceneFilePath);
+        spawnedNode = newObjectScene.Instantiate<Node2D>();
+        WorldMap.Instance.AddChild(spawnedNode);
+        spawnedNode.Set(Node2D.PropertyName.Position, lastKnownPosition);
+
+        (spawnedNode as IWorldSaveable).SetSaveData(metadata);
+
+        SetLiveNodeReference(spawnedNode, onReleaseCallback);
+
+        return true;
+    }
+
     public bool SetLiveNodeReference(Node2D liveNode, Action<Node2D> onReleaseCallback)
     {
         if(liveNode is not IWorldSaveable saveable)
@@ -89,5 +110,23 @@ public class WorldNodeData : IWorldSaveable
         saveDataDictionary.Add(SAVE_KEY_METADATA, metadata);
 
         return saveDataDictionary;
+    }
+
+    public void SetSaveData(Dictionary<string, Variant> data)
+    {
+        sceneFilePath = data[SAVE_KEY_FILEPATH].AsString();
+        parentPath = data[SAVE_KEY_PARENT].AsString();
+
+        lastKnownChunk = new Vector2I(
+            data[SAVE_KEY_CHUNK_X].AsInt32(),
+            data[SAVE_KEY_CHUNK_Y].AsInt32()
+            );
+
+        lastKnownPosition = new Vector2I(
+            data[SAVE_KEY_POS_X].AsInt32(),
+            data[SAVE_KEY_POS_Y].AsInt32()
+            );
+
+        metadata = data[SAVE_KEY_METADATA].AsGodotDictionary<string, Variant>();
     }
 }

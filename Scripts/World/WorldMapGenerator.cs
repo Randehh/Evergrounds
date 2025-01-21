@@ -26,7 +26,7 @@ public partial class WorldMapGenerator : Node
     public WorldMapGenerator()
     {
         noise = new FastNoiseLite();
-        noise.Seed = seed;
+
         noise.NoiseType = FastNoiseLite.NoiseTypeEnum.Cellular;
     }
 
@@ -34,6 +34,8 @@ public partial class WorldMapGenerator : Node
     {
         gridSize = new (WorldMap.GRID_SIZE, WorldMap.GRID_SIZE);
         gridSizeHalf = gridSize / 2;
+
+        noise.Seed = seed;
     }
 
     public void GenerateChunk(WorldMapData mapData, Vector2I chunkCoords)

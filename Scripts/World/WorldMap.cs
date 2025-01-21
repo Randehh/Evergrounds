@@ -21,8 +21,6 @@ public partial class WorldMap : Node2D, IWorldSaveable
     [Export]
     private Node2D mapChunkParent;
 
-    private WorldData worldData;
-
     private WorldMapData worldMapData;
     private List<WorldMapChunk> chunks = new();
     private Dictionary<Vector2I, WorldMapChunk> chunkLookup = new();
@@ -53,7 +51,6 @@ public partial class WorldMap : Node2D, IWorldSaveable
 
         chunkGenerationSize = new Vector2I(1 + (CHUNK_GENERATION_RANGE_X * 2), 1 + (CHUNK_GENERATION_RANGE_Y * 2));
 
-        worldData = new(this);
         worldMapData = new WorldMapData();
 
         CreateChunks();
@@ -61,10 +58,6 @@ public partial class WorldMap : Node2D, IWorldSaveable
 
     public override void _Process(double delta)
     {
-        if(Input.IsActionJustPressed("save"))
-        {
-            worldData.Save();
-        }
 
         Vector2I mouseGridPosition = GetMouseCoordinates(1, true);
         foreach (WorldMapChunk chunk in chunks)
@@ -276,6 +269,16 @@ public partial class WorldMap : Node2D, IWorldSaveable
     public Godot.Collections.Dictionary<string, Variant> GetSaveData()
     {
         return worldMapData.GetSaveData();
+    }
+
+    public void SetSaveData(Godot.Collections.Dictionary<string, Variant> data)
+    {
+        worldMapData.SetSaveData(data);
+
+        foreach (var chunk in chunks)
+        {
+            chunk.ReplaceMapData(worldMapData);
+        }
     }
 
     public enum AtlasMaterial

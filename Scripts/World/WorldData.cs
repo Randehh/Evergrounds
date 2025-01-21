@@ -1,31 +1,83 @@
 using Godot;
-using System.Collections.Generic;
 
-public class WorldData
+[GlobalClass]
+public partial class WorldData : Node
 {
+    public static WorldData Instance { get; private set; }
     public static StringName SaveNodeGroup = new StringName("SaveNode");
 
+    private const string SAVE_FILE_LOCATION = "user://savegame.save";
     private const string SAVE_KEY_FILEPATH = "FilePath";
     private const string SAVE_KEY_PARENT = "Parent";
     private const string SAVE_KEY_POS_X = "PosX";
     private const string SAVE_KEY_POS_Y = "PosY";
 
+    [Export]
     private Node rootNode;
 
-    public WorldData(Node rootNode)
+    public WorldData()
     {
-        this.rootNode = rootNode;
+        Instance = this;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("save"))
+        {
+            Save();
+        }
+
+        if(Input.IsActionJustPressed("load"))
+        {
+            Load();
+        }
     }
 
     public void Load()
     {
+        if (!FileAccess.FileExists(SAVE_FILE_LOCATION))
+        {
+            return;
+        }
 
+        var saveNodes = rootNode.GetTree().GetNodesInGroup(SaveNodeGroup);
+        foreach (Node saveNode in saveNodes)
+        {
+            saveNode.QueueFree();
+        }
+
+        using var saveFile = FileAccess.Open(SAVE_FILE_LOCATION, FileAccess.ModeFlags.Read);
+
+        while (saveFile.GetPosition() < saveFile.GetLength())
+        {
+            var jsonString = saveFile.GetLine();
+
+            // Creates the helper class to interact with JSON.
+            var json = new Json();
+            var parseResult = json.Parse(jsonString);
+            if (parseResult != Error.Ok)
+            {
+                GD.Print($"JSON Parse Error: {json.GetErrorMessage()} in {jsonString} at line {json.GetErrorLine()}");
+                continue;
+            }
+
+            // Get the data from the JSON object.
+            var nodeData = new Godot.Collections.Dictionary<string, Variant>((Godot.Collections.Dictionary)json.Data);
+
+            // Firstly, we need to create the object and add it to the tree and set its position.
+            var newObjectScene = GD.Load<PackedScene>(nodeData[SAVE_KEY_FILEPATH].ToString());
+            var newObject = newObjectScene.Instantiate<Node>();
+            GetNode(nodeData[SAVE_KEY_PARENT].ToString()).AddChild(newObject);
+            newObject.Set(Node2D.PropertyName.Position, new Vector2((float)nodeData[SAVE_KEY_POS_X], (float)nodeData[SAVE_KEY_POS_Y]));
+
+            (newObject as IWorldSaveable).SetSaveData(nodeData);
+        }
     }
 
 
     public void Save() {
 
-        using var saveFile = FileAccess.Open("user://savegame.save", FileAccess.ModeFlags.Write);
+        using var saveFile = FileAccess.Open(SAVE_FILE_LOCATION, FileAccess.ModeFlags.Write);
 
         Godot.Collections.Array<Node> saveNodes = rootNode.GetTree().GetNodesInGroup(SaveNodeGroup);
         foreach(Node node in saveNodes)
