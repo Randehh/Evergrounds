@@ -29,11 +29,19 @@ public partial class PlayerCharacter : Node2D
 
 	private List<WorldItem> vacuumItemsInRadius = new();
 
-	public override void _Ready()
+	public PlayerCharacter()
 	{
 		Instance = this;
+	}
 
-        Inventory.Instance.OnSelectQuickslot += OnItemSelected;
+    public override void _ExitTree()
+    {
+        ServiceLocator.InventoryService.OnSelectQuickslot -= OnItemSelected;
+    }
+
+    public override void _Ready()
+	{
+        ServiceLocator.InventoryService.OnSelectQuickslot += OnItemSelected;
 
 		OnItemSelected(0);
     }
@@ -83,7 +91,7 @@ public partial class PlayerCharacter : Node2D
 
 	private void OnItemSelected(int quickslot)
 	{
-		var item = Inventory.Instance.GetItemFromQuickslot(quickslot);
+		var item = ServiceLocator.InventoryService.GetItemFromQuickslot(quickslot);
 		character.SetHoldable(item);
 	}
 

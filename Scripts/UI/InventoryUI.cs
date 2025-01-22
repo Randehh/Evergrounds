@@ -37,7 +37,7 @@ public partial class InventoryUI : Control
     [Export]
     private TextureRect itemInfoTexture;
 
-    private Inventory inventory;
+    private InventoryService inventory;
     private int currentlyEquipped = 0;
     private List<ButtonData> inventoryButtons = new();
     private int slotMouseOver = -1;
@@ -48,7 +48,7 @@ public partial class InventoryUI : Control
 
     public override void _Ready()
     {
-        inventory = Inventory.Instance;
+        inventory = ServiceLocator.InventoryService;
 
         ReloadUI();
 
@@ -62,6 +62,29 @@ public partial class InventoryUI : Control
 
     public override void _Process(double delta)
     {
+        for (int i = 0; i < InventoryService.QUICK_SELECT_COUNT; i++)
+        {
+            if (Input.IsActionJustPressed($"equip_{i}"))
+            {
+                int buttonIndex = i - 1;
+                if (buttonIndex == -1)
+                {
+                    buttonIndex = 9;
+                }
+                ServiceLocator.InventoryService.EquipSlot(buttonIndex);
+            }
+        }
+
+        if (Input.IsActionJustPressed("equip_next"))
+        {
+            ServiceLocator.InventoryService.EquipSlotNext();
+        }
+
+        if (Input.IsActionJustPressed("equip_previous"))
+        {
+            ServiceLocator.InventoryService.EquipSlotPrevious();
+        }
+
         if (Input.IsActionJustReleased("click"))
         {
             var draggingItem = DragAndDrop.Instance.DraggingItem;
@@ -145,7 +168,7 @@ public partial class InventoryUI : Control
         }
 
         HBoxContainer row = null;
-        for(int i = 0; i < Inventory.INVENTORY_SIZE; i++)
+        for(int i = 0; i < InventoryService.INVENTORY_SIZE; i++)
         {
             if(i % 10 == 0)
             {

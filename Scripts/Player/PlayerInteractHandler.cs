@@ -207,7 +207,7 @@ public partial class PlayerInteractHandler : Node2D
             WorldMap.Instance.AddWorldNode(placedNode);
             placedNode.GlobalPosition = currentGridPosition;
 
-            Inventory.Instance.RemoveItem(itemInHand, 1);
+            ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
         }
     }
 

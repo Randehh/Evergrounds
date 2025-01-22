@@ -1,21 +1,15 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-[GlobalClass]
-public partial class Inventory : Node
+public class InventoryService : IService
 {
-    public static Inventory Instance;
 
     public Action<int> OnSelectQuickslot = delegate { };
     public Action<int> OnUpdateSlot = delegate { };
 
     public const int QUICK_SELECT_COUNT = 10;
     public const int INVENTORY_SIZE = 50;
-
-    [Export]
-    private InventoryItemDefinition[] itemsToAdd;
 
     private InventoryItem[] inventoryItems = new InventoryItem[INVENTORY_SIZE];
     private int quickSelectEquipped = 0;
@@ -24,51 +18,23 @@ public partial class Inventory : Node
     private Dictionary<InventoryItemType, List<int>> itemLookup = new();
     private Dictionary<InventoryItem, int> itemInstanceLookup = new();
 
-    public override void _EnterTree()
-    {
-        Instance = this;
-    }
-
-    public override void _Ready()
+    public void OnInit()
     {
         for (int i = 0; i < QUICK_SELECT_COUNT; i++)
         {
             quickSelectIndexes[i] = i;
         }
+    }
 
-        foreach (var item in itemsToAdd)
-        {
-            AddItem(item, item.stackSize);
-        }
-
+    public void OnReady()
+    {
         EquipSlot(0);
     }
 
-    public override void _Process(double delta)
+    public void OnDestroy()
     {
-
-        for (int i = 0; i < QUICK_SELECT_COUNT; i++)
-        {
-            if (Input.IsActionJustPressed($"equip_{i}"))
-            {
-                int buttonIndex = i - 1;
-                if (buttonIndex == -1)
-                {
-                    buttonIndex = 9;
-                }
-                EquipSlot(buttonIndex);
-            }
-        }
-
-        if (Input.IsActionJustPressed("equip_next"))
-        {
-            EquipSlot(quickSelectEquipped + 1);
-        }
-
-        if (Input.IsActionJustPressed("equip_previous"))
-        {
-            EquipSlot(quickSelectEquipped - 1);
-        }
+        OnSelectQuickslot = null;
+        OnUpdateSlot = null;
     }
 
     public void EmitQuickslotCallbacks()
@@ -246,7 +212,10 @@ public partial class Inventory : Node
         inventoryItems[index1] = cachedItem;
     }
 
-    private void EquipSlot(int slot)
+    public void EquipSlotNext() => EquipSlot(quickSelectEquipped + 1);
+    public void EquipSlotPrevious() => EquipSlot(quickSelectEquipped - 1);
+
+    public void EquipSlot(int slot)
     {
         if (slot < 0)
         {

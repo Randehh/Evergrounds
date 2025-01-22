@@ -61,7 +61,7 @@ public partial class WorldItem : Area2D, IWorldDespawnableNode, IWorldSaveable
             case WorldItemState.VACUUMING:
                 GlobalPosition = GlobalPosition.Lerp(vacuumCharacter.GlobalPosition, VACUUM_SPEED * (float)delta);
                 if(GlobalPosition.DistanceTo(vacuumCharacter.GlobalPosition) < 3.5f) {
-                    Inventory.Instance.AddItem(definition, stackSize);
+                    ServiceLocator.InventoryService.AddItem(definition, stackSize);
                     QueueFree();
                 }
                 return;

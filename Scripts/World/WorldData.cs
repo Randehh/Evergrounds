@@ -12,12 +12,16 @@ public partial class WorldData : Node
     private const string SAVE_KEY_POS_X = "PosX";
     private const string SAVE_KEY_POS_Y = "PosY";
 
-    [Export]
     private Node rootNode;
 
     public WorldData()
     {
         Instance = this;
+    }
+
+    public override void _Ready()
+    {
+        rootNode = GetParent();
     }
 
     public override void _Process(double delta)

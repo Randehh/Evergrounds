@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=16 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="Script" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
 [ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/UI/Inventory_UI.tscn" id="1_v08iy"]
 [ext_resource type="PackedScene" uid="uid://cevqvlshxo84w" path="res://Scenes/Map.tscn" id="2_be0ya"]
 [ext_resource type="Script" path="res://Scripts/DragAndDrop/DragAndDrop.cs" id="2_n5ome"]
-[ext_resource type="Script" path="res://Scripts/Inventory/Inventory.cs" id="3_fklsy"]
 [ext_resource type="Script" path="res://Scripts/UI/DragAndDropUI.cs" id="5_dfp8p"]
 [ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="6_3kt0a"]
 [ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="6_c26d2"]
@@ -32,10 +31,6 @@ rootNode = NodePath("../Map")
 
 [node name="GameSetup" type="Node" parent="."]
 script = ExtResource("1_4si5g")
-
-[node name="Inventory" type="Node" parent="."]
-script = ExtResource("3_fklsy")
-itemsToAdd = Array[Object]([])
 
 [node name="DragAndDrop" type="Node" parent="."]
 script = ExtResource("2_n5ome")
