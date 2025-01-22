@@ -2,8 +2,13 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class InventoryService : IService
+public class InventoryService : IService, IWorldSaveable
 {
+    private const string SAVE_KEY_QUICK_SELECT = "QuickSelect";
+    private const string SAVE_KEY_ITEMS = "Items";
+    private const string SAVE_KEY_ITEM_INDEX = "ItemIndex";
+    private const string SAVE_KEY_ITEM_DEFINITION = "ItemDefinitionPath";
+    private const string SAVE_KEY_ITEM_STACK_COUNT = "ItemStackCount";
 
     public Action<int> OnSelectQuickslot = delegate { };
     public Action<int> OnUpdateSlot = delegate { };
@@ -13,17 +18,13 @@ public class InventoryService : IService
 
     private InventoryItem[] inventoryItems = new InventoryItem[INVENTORY_SIZE];
     private int quickSelectEquipped = 0;
-    private int[] quickSelectIndexes = new int[QUICK_SELECT_COUNT];
 
-    private Dictionary<InventoryItemType, List<int>> itemLookup = new();
-    private Dictionary<InventoryItem, int> itemInstanceLookup = new();
+    private System.Collections.Generic.Dictionary<InventoryItemType, List<int>> itemLookup = new();
+    private System.Collections.Generic.Dictionary<InventoryItem, int> itemInstanceLookup = new();
 
     public void OnInit()
     {
-        for (int i = 0; i < QUICK_SELECT_COUNT; i++)
-        {
-            quickSelectIndexes[i] = i;
-        }
+
     }
 
     public void OnReady()
@@ -37,11 +38,10 @@ public class InventoryService : IService
         OnUpdateSlot = null;
     }
 
-    public void EmitQuickslotCallbacks()
+    public void UpdateAllSlots()
     {
-        for (int i = 0; i < quickSelectIndexes.Length; i++)
+        for (int i = 0; i < INVENTORY_SIZE; i++)
         {
-            int inventoryIndex = quickSelectIndexes[i];
             OnUpdateSlot.Invoke(i);
         }
     }
@@ -200,11 +200,6 @@ public class InventoryService : IService
         return inventoryItems[index];
     }
 
-    public InventoryItem GetItemFromQuickslot(int index)
-    {
-        return GetItem(quickSelectIndexes[index]);
-    }
-
     public void SwapItems(int index1, int index2)
     {
         InventoryItem cachedItem = inventoryItems[index2];
@@ -230,5 +225,61 @@ public class InventoryService : IService
 
         int nextButtonIndex = slot;
         OnSelectQuickslot.Invoke(nextButtonIndex);
+    }
+
+    public Godot.Collections.Dictionary<string, Variant> GetSaveData()
+    {
+        Godot.Collections.Dictionary<string, Variant> data = new ();
+        data.Add(SAVE_KEY_QUICK_SELECT, quickSelectEquipped);
+
+        Godot.Collections.Array<Godot.Collections.Dictionary<string, Variant>> itemsData = new();
+        data.Add(SAVE_KEY_ITEMS, itemsData);
+        for (int i = 0; i < inventoryItems.Length; i++)
+        {
+            InventoryItem item = inventoryItems[i];
+            if(item == null)
+            {
+                continue;
+            }
+
+            itemsData.Add(new Godot.Collections.Dictionary<string, Variant>
+            {
+                { SAVE_KEY_ITEM_INDEX, i },
+                { SAVE_KEY_ITEM_DEFINITION, item.definition.ResourcePath },
+                { SAVE_KEY_ITEM_STACK_COUNT, item.CurrentStackSize },
+            });
+        }
+
+        return data;
+    }
+
+    public void SetSaveData(Godot.Collections.Dictionary<string, Variant> data)
+    {
+        foreach(InventoryItem item in inventoryItems)
+        {
+            if(item == null)
+            {
+                continue;
+            }
+
+            item.onStackSizeUpdated -= OnStackSizeUpdated;
+        }
+
+        inventoryItems = new InventoryItem[inventoryItems.Length];
+        itemLookup.Clear();
+        itemInstanceLookup.Clear();
+
+        foreach (Godot.Collections.Dictionary<string, Variant> itemData in data[SAVE_KEY_ITEMS].AsGodotArray<Godot.Collections.Dictionary<string, Variant>>())
+        {
+            int index = itemData[SAVE_KEY_ITEM_INDEX].AsInt32();
+            InventoryItemDefinition itemDefinition = GD.Load<InventoryItemDefinition>(itemData[SAVE_KEY_ITEM_DEFINITION].AsString());
+            int stackCount = itemData[SAVE_KEY_ITEM_STACK_COUNT].AsInt32();
+
+            SetItem(index, itemDefinition, stackCount);
+        }
+
+        UpdateAllSlots();
+
+        EquipSlot(data[SAVE_KEY_QUICK_SELECT].AsInt32());
     }
 }

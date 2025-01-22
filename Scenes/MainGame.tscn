@@ -1,10 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=19 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="Script" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
+[ext_resource type="Script" path="res://Scripts/System/Services/ServiceSerializer.cs" id="1_u5mee"]
 [ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/UI/Inventory_UI.tscn" id="1_v08iy"]
 [ext_resource type="PackedScene" uid="uid://cevqvlshxo84w" path="res://Scenes/Map.tscn" id="2_be0ya"]
 [ext_resource type="Script" path="res://Scripts/DragAndDrop/DragAndDrop.cs" id="2_n5ome"]
+[ext_resource type="PackedScene" uid="uid://emajq5067js6" path="res://Scenes/player_camera.tscn" id="4_1vx5r"]
+[ext_resource type="PackedScene" uid="uid://cigl51myg13f6" path="res://Scenes/Characters/player.tscn" id="4_hyjsw"]
 [ext_resource type="Script" path="res://Scripts/UI/DragAndDropUI.cs" id="5_dfp8p"]
 [ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="6_3kt0a"]
 [ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="6_c26d2"]
@@ -25,12 +28,17 @@ font_size = 10
 
 [node name="MainGame" type="Node"]
 
-[node name="WorldData" type="Node" parent="." node_paths=PackedStringArray("rootNode")]
-script = ExtResource("1_rxiwr")
-rootNode = NodePath("../Map")
+[node name="ServiceSerializer" type="Node" parent="."]
+script = ExtResource("1_u5mee")
 
-[node name="GameSetup" type="Node" parent="."]
+[node name="WorldData" type="Node" parent="."]
+script = ExtResource("1_rxiwr")
+
+[node name="GameSetup" type="Node" parent="." node_paths=PackedStringArray("map")]
 script = ExtResource("1_4si5g")
+map = NodePath("../Map")
+cameraScene = ExtResource("4_1vx5r")
+characterScene = ExtResource("4_hyjsw")
 
 [node name="DragAndDrop" type="Node" parent="."]
 script = ExtResource("2_n5ome")

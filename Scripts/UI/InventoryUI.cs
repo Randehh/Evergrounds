@@ -57,7 +57,7 @@ public partial class InventoryUI : Control
         inventory.OnSelectQuickslot += (slot) => EquipSlot(slot);
         inventory.OnUpdateSlot += SetSlot;
 
-        inventory.EmitQuickslotCallbacks();
+        inventory.UpdateAllSlots();
     }
 
     public override void _Process(double delta)

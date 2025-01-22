@@ -4,7 +4,8 @@ using Godot;
 public partial class WorldData : Node
 {
     public static WorldData Instance { get; private set; }
-    public static StringName SaveNodeGroup = new StringName("SaveNode");
+    public static StringName RecreateSaveGroup = new StringName("RecreateSaveNode");
+    public static StringName ReloadSaveGroup = new StringName("ReloadSaveNode");
 
     private const string SAVE_FILE_LOCATION = "user://savegame.save";
     private const string SAVE_KEY_FILEPATH = "FilePath";
@@ -44,7 +45,7 @@ public partial class WorldData : Node
             return;
         }
 
-        var saveNodes = rootNode.GetTree().GetNodesInGroup(SaveNodeGroup);
+        var saveNodes = rootNode.GetTree().GetNodesInGroup(RecreateSaveGroup);
         foreach (Node saveNode in saveNodes)
         {
             saveNode.QueueFree();
@@ -67,14 +68,24 @@ public partial class WorldData : Node
 
             // Get the data from the JSON object.
             var nodeData = new Godot.Collections.Dictionary<string, Variant>((Godot.Collections.Dictionary)json.Data);
+            IWorldSaveable saveable = null;
 
             // Firstly, we need to create the object and add it to the tree and set its position.
-            var newObjectScene = GD.Load<PackedScene>(nodeData[SAVE_KEY_FILEPATH].ToString());
-            var newObject = newObjectScene.Instantiate<Node>();
-            GetNode(nodeData[SAVE_KEY_PARENT].ToString()).AddChild(newObject);
-            newObject.Set(Node2D.PropertyName.Position, new Vector2((float)nodeData[SAVE_KEY_POS_X], (float)nodeData[SAVE_KEY_POS_Y]));
+            if (nodeData.ContainsKey(SAVE_KEY_FILEPATH))
+            {
+                var newObjectScene = GD.Load<PackedScene>(nodeData[SAVE_KEY_FILEPATH].ToString());
+                var newObject = newObjectScene.Instantiate<Node>();
+                GetNode(nodeData[SAVE_KEY_PARENT].ToString()).AddChild(newObject);
+                newObject.Set(Node2D.PropertyName.Position, new Vector2((float)nodeData[SAVE_KEY_POS_X], (float)nodeData[SAVE_KEY_POS_Y]));
 
-            (newObject as IWorldSaveable).SetSaveData(nodeData);
+                saveable = newObject as IWorldSaveable;
+            }
+            else
+            {
+                saveable = GetNode(nodeData[SAVE_KEY_PARENT].ToString()) as IWorldSaveable;
+            }
+
+            saveable.SetSaveData(nodeData);
         }
     }
 
@@ -83,7 +94,7 @@ public partial class WorldData : Node
 
         using var saveFile = FileAccess.Open(SAVE_FILE_LOCATION, FileAccess.ModeFlags.Write);
 
-        Godot.Collections.Array<Node> saveNodes = rootNode.GetTree().GetNodesInGroup(SaveNodeGroup);
+        Godot.Collections.Array<Node> saveNodes = rootNode.GetTree().GetNodesInGroup(RecreateSaveGroup);
         foreach(Node node in saveNodes)
         {
             if(node is not IWorldSaveable saveableNode)
@@ -106,6 +117,22 @@ public partial class WorldData : Node
                     saveDataDictionary.Add(SAVE_KEY_POS_Y, positionalNode.Position.Y);
                 }
             }
+
+            var saveDataJson = Json.Stringify(saveDataDictionary);
+            saveFile.StoreLine(saveDataJson);
+        }
+
+        Godot.Collections.Array<Node> reloadNodes = rootNode.GetTree().GetNodesInGroup(ReloadSaveGroup);
+        foreach (Node node in reloadNodes)
+        {
+            if (node is not IWorldSaveable saveableNode)
+            {
+                GD.PushError($"Node that is not implementing {nameof(IWorldSaveable)} cannot be saved: {node.Name}");
+                continue;
+            }
+
+            var saveDataDictionary = saveableNode.GetSaveData();
+            saveDataDictionary.Add(SAVE_KEY_PARENT, node.GetPath());
 
             var saveDataJson = Json.Stringify(saveDataDictionary);
             saveFile.StoreLine(saveDataJson);

@@ -47,7 +47,7 @@ public partial class WorldItemSpawner : Node2D
             spawningTime -= SPAWN_INTERVAL;
 
             WorldItem worldItem = worldItemScene.Instantiate<WorldItem>();
-            WorldMap.Instance.AddWorldNode(worldItem);
+            WorldMap.Instance.AddWorldNode(worldItem, true);
             worldItem.Initialize(toSpawn.Dequeue(), 1);
             worldItem.GlobalPosition = GlobalPosition;
             worldItem.Spawn();

@@ -1,9 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://cevqvlshxo84w"]
+[gd_scene load_steps=19 format=3 uid="uid://cevqvlshxo84w"]
 
 [ext_resource type="Script" path="res://Scripts/World/WorldMap.cs" id="1_1x1iq"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerCamera.cs" id="1_8er03"]
 [ext_resource type="Script" path="res://Scripts/World/WorldMapGenerator.cs" id="2_pbtj7"]
-[ext_resource type="PackedScene" uid="uid://cigl51myg13f6" path="res://Scenes/Characters/player.tscn" id="3_rslf7"]
 [ext_resource type="PackedScene" uid="uid://cv78ude3j44mx" path="res://Scenes/World/Interactables/interactable_chest.tscn" id="4_b7prb"]
 [ext_resource type="Script" path="res://Scripts/World/WorldMapGeneratorNodePlacementData.cs" id="4_xlhxp"]
 [ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="5_rudrl"]
@@ -76,21 +74,8 @@ script = ExtResource("2_pbtj7")
 seed = 2425
 placementDatas = Array[Object]([SubResource("Resource_826ao"), SubResource("Resource_g6bnd")])
 
-[node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("character")]
-zoom = Vector2(2, 2)
-script = ExtResource("1_8er03")
-character = NodePath("../Characters/Player")
-followSpeed = 4.0
-mousePullPower = 15.0
-
 [node name="MapChunks" type="Node2D" parent="."]
 position = Vector2(-8, -8)
-
-[node name="Characters" type="Node2D" parent="."]
-y_sort_enabled = true
-
-[node name="Player" parent="Characters" instance=ExtResource("3_rslf7")]
-position = Vector2(103, 47)
 
 [node name="Chest" parent="." instance=ExtResource("4_b7prb")]
 

@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 
 [GlobalClass]
-public partial class PlayerCharacter : Node2D
+public partial class PlayerCharacter : Node2D, IWorldSaveable
 {
 
 	public static PlayerCharacter Instance { get; private set; }
@@ -34,20 +34,22 @@ public partial class PlayerCharacter : Node2D
 		Instance = this;
 	}
 
-    public override void _ExitTree()
-    {
-        ServiceLocator.InventoryService.OnSelectQuickslot -= OnItemSelected;
-    }
-
     public override void _Ready()
 	{
         ServiceLocator.InventoryService.OnSelectQuickslot += OnItemSelected;
 
 		OnItemSelected(0);
+
+		PlayerCamera.Instance.toFollow = this;
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    public override void _ExitTree()
+    {
+        ServiceLocator.InventoryService.OnSelectQuickslot -= OnItemSelected;
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 		Vector2 input = new Vector2(
 			Input.GetAxis("move_left", "move_right"),
@@ -91,7 +93,7 @@ public partial class PlayerCharacter : Node2D
 
 	private void OnItemSelected(int quickslot)
 	{
-		var item = ServiceLocator.InventoryService.GetItemFromQuickslot(quickslot);
+		var item = ServiceLocator.InventoryService.GetItem(quickslot);
 		character.SetHoldable(item);
 	}
 
@@ -114,4 +116,14 @@ public partial class PlayerCharacter : Node2D
 
         vacuumItemsInRadius.Remove(worldItem);
     }
+
+    public Godot.Collections.Dictionary<string, Variant> GetSaveData()
+    {
+        return new Godot.Collections.Dictionary<string, Variant>();
+    }
+
+	public void SetSaveData(Godot.Collections.Dictionary<string, Variant> data)
+	{
+
+	}
 }

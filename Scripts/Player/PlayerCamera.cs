@@ -3,9 +3,7 @@ using Godot;
 [GlobalClass]
 public partial class PlayerCamera : Camera2D
 {
-
-	[Export]
-	private PlayerCharacter character;
+	public static PlayerCamera Instance { get; private set; }
 
 	[Export]
 	private float followSpeed;
@@ -13,16 +11,24 @@ public partial class PlayerCamera : Camera2D
 	[Export]
 	private float mousePullPower = 5;
 
-	public override void _Ready()
-	{
-	}
+	public Node2D toFollow;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    public override void _Ready()
+    {
+        Instance = this;
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
+		if (toFollow == null)
+		{
+			return;
+		}
+
 		Vector2 mouseNormalized = GetViewport().GetMousePosition() / GetViewportRect().Size;
 		mouseNormalized = mouseNormalized - (Vector2.One * 0.5f);
-		Vector2 targetPosition = character.Position + (mouseNormalized * mousePullPower);
-        Position = Position.Lerp(targetPosition, (float)(followSpeed * delta));
+		Vector2 targetPosition = toFollow.Position + (mouseNormalized * mousePullPower);
+		Position = Position.Lerp(targetPosition, (float)(followSpeed * delta));
 	}
 }

@@ -43,15 +43,18 @@ public partial class WorldMap : Node2D, IWorldSaveable
         { new(0, 1), WorldMapTileDisplayEdge.DOWN }
     };
 
-    public override void _Ready()
+    public WorldMap()
     {
-        AddToGroup(WorldData.SaveNodeGroup);
-
         Instance = this;
 
         chunkGenerationSize = new Vector2I(1 + (CHUNK_GENERATION_RANGE_X * 2), 1 + (CHUNK_GENERATION_RANGE_Y * 2));
 
         worldMapData = new WorldMapData();
+    }
+
+    public override void _Ready()
+    {
+        AddToGroup(WorldData.RecreateSaveGroup);
 
         CreateChunks();
     }
@@ -260,9 +263,18 @@ public partial class WorldMap : Node2D, IWorldSaveable
 
     public Vector2I GetGridChunkPosition(Vector2 position) => GetGridPosition(position, GRID_SIZE * CHUNK_SIZE, 1, false) / (GRID_SIZE * CHUNK_SIZE);
 
-    public void AddWorldNode(Node2D node)
+    public void AddWorldNode(Node2D node, bool replaceParent)
     {
-        AddChild(node);
+        if(replaceParent)
+        {
+            if (node.GetParent() != null)
+            {
+                node.GetParent().RemoveChild(node);
+            }
+
+            AddChild(node);
+        }
+
         worldMapData.AddWorldNode(node);
     }
 
