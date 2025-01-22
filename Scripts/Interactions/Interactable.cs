@@ -113,6 +113,7 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
     public void SetSaveData(Dictionary<string, Variant> data)
     {
         interactCountRemaining = data[SAVE_KEY_INTERACTABLE_COUNT].AsInt32();
+        SetCollisionLayerValue(1, interactCountRemaining != 0);
     }
 }
 

@@ -38,6 +38,8 @@ public partial class WorldItem : Area2D, IWorldDespawnableNode, IWorldSaveable
         sprite.Texture = definition.itemSprite;
 
         shadow.SetBaseScale(definition.worldShadowScale);
+
+        currentTime = GD.Randf();
     }
 
     public override void _Process(double delta)
