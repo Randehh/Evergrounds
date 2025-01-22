@@ -71,7 +71,7 @@ public partial class WorldMap : Node2D, IWorldSaveable
         selectedMaterial = GetSelectedMaterial();
 
         Vector2I nextMapCenter = GetGridChunkPosition(PlayerCharacter.Instance.Position);
-        if(currentMapCenter != nextMapCenter)
+        if(currentMapCenter != nextMapCenter || !initialChunksSet)
         {
             RecenterMap(nextMapCenter);
         }

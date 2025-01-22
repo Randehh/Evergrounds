@@ -22,9 +22,9 @@ chance = 0.1
 [sub_resource type="Resource" id="Resource_g6bnd"]
 script = ExtResource("4_xlhxp")
 scene = ExtResource("4_b7prb")
-minThreshold = 0.0
-maxThreshold = 0.1
-chance = 0.08
+minThreshold = 0.8
+maxThreshold = 1.0
+chance = 0.005
 
 [sub_resource type="Resource" id="Resource_nxwyw"]
 script = ExtResource("7_vig5y")

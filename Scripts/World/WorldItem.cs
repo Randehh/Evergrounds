@@ -83,7 +83,7 @@ public partial class WorldItem : Area2D, IWorldDespawnableNode, IWorldSaveable
         float randY = (GD.Randf() + 0.2f) * 0.6f * (GD.Randf() > 0.5f ? -1 : 1);
         velocity = new Vector2(randX, randY) * 0.5f;
 
-        spawnVelocityY = ((GD.Randf() * 0.5f) + 0.5f) * -0.5f;
+        spawnVelocityY = ((GD.Randf() * 0.5f) + 0.5f) * -0.25f;
 
         itemState = WorldItemState.SPAWNING;
     }

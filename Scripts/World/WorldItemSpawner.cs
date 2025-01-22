@@ -12,16 +12,9 @@ public partial class WorldItemSpawner : Node2D
     private double spawningTime = 0;
     private bool isSpawning = false;
 
-    public WorldItemSpawner(params WorldItemSpawnerItemData[] itemsToSpawn)
+    public WorldItemSpawner(WorldItemSpawnerItemData[] itemsToSpawn)
     {
-        worldItemScene = GD.Load<PackedScene>(WORLD_ITEM_SCENE);
-        spawningTime = SPAWN_INTERVAL;
-
-        foreach (var itemData in itemsToSpawn)
-        {
-            itemData.InsertIntoQueue(toSpawn);
-        }
-        isSpawning = true;
+        SetItems(itemsToSpawn);
     }
 
     public override void _Process(double delta)
@@ -52,5 +45,17 @@ public partial class WorldItemSpawner : Node2D
             worldItem.GlobalPosition = GlobalPosition;
             worldItem.Spawn();
         }
+    }
+
+    public void SetItems(WorldItemSpawnerItemData[] itemsToSpawn)
+    {
+        worldItemScene = GD.Load<PackedScene>(WORLD_ITEM_SCENE);
+        spawningTime = SPAWN_INTERVAL;
+
+        foreach (var itemData in itemsToSpawn)
+        {
+            itemData.InsertIntoQueue(toSpawn);
+        }
+        isSpawning = true;
     }
 }

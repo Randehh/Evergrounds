@@ -140,7 +140,9 @@ public partial class InventoryUI : Control
                 }
                 else
                 {
-                    WorldItemSpawner itemSpawner = new WorldItemSpawner(new WorldItemSpawnerItemData(draggingItem.definition, draggingItem.CurrentStackSize, draggingItem.CurrentStackSize, 1));
+                    WorldItemSpawner itemSpawner = new WorldItemSpawner(new WorldItemSpawnerItemData[] {
+                        new WorldItemSpawnerItemData(draggingItem.definition, draggingItem.CurrentStackSize, draggingItem.CurrentStackSize, 1)
+                    });
                     PlayerCharacter.Instance.AddChild(itemSpawner);
                     itemSpawner.GlobalPosition = PlayerCharacter.Instance.GlobalPosition;
                     DragAndDrop.Instance.StopDragging();
