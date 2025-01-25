@@ -1,10 +1,17 @@
 using Godot;
+using Godot.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using static WorldMapTileDisplay;
 
 [GlobalClass]
 public partial class WorldMap : Node2D, IWorldSaveable
 {
+    private const string SAVE_KEY_MAP_DATA = "MapData";
+    private const string SAVE_KEY_GENERATED_CHUNKS = "GeneratedChunks";
+    private const string SAVE_KEY_X = "X";
+    private const string SAVE_KEY_Y = "Y";
+
     public const int GRID_SIZE = 16;
     public const int CHUNK_SIZE = 5;
     public const int CHUNK_GENERATION_RANGE_X = 4;
@@ -23,7 +30,7 @@ public partial class WorldMap : Node2D, IWorldSaveable
 
     private WorldMapData worldMapData;
     private List<WorldMapChunk> chunks = new();
-    private Dictionary<Vector2I, WorldMapChunk> chunkLookup = new();
+    private System.Collections.Generic.Dictionary<Vector2I, WorldMapChunk> chunkLookup = new();
 
     private AtlasMaterial selectedMaterial;
 
@@ -35,7 +42,9 @@ public partial class WorldMap : Node2D, IWorldSaveable
     private Queue<(WorldMapChunk, Vector2I, Vector2I)> chunkMovementQueue = new();
     private List<WorldMapChunk> lockedChunks = new();
 
-    private Dictionary<Vector2I, WorldMapTileDisplayEdge> edgeLookup = new()
+    private HashSet<Vector2I> generatedChunkCoords = new();
+
+    private System.Collections.Generic.Dictionary<Vector2I, WorldMapTileDisplayEdge> edgeLookup = new()
     {
         { new(-1, 0), WorldMapTileDisplayEdge.LEFT },
         { new(1, 0), WorldMapTileDisplayEdge.RIGHT },
@@ -85,7 +94,11 @@ public partial class WorldMap : Node2D, IWorldSaveable
             Vector2I chunkPosition = (chunkArrayPosition * CHUNK_SIZE) / CHUNK_SIZE;
             chunkLookup[chunkPosition] = nextChunk;
 
-            generator.GenerateChunk(worldMapData, chunkArrayPosition);
+            if(!generatedChunkCoords.Contains(chunkArrayPosition))
+            {
+                generator.GenerateChunk(worldMapData, chunkArrayPosition);
+                generatedChunkCoords.Add(chunkArrayPosition);
+            }
 
             Vector2I chunkTilePosition = chunkArrayPosition * CHUNK_SIZE;
             Vector2I chunkPixelPosition = chunkTilePosition * GRID_SIZE;
@@ -280,12 +293,37 @@ public partial class WorldMap : Node2D, IWorldSaveable
 
     public Godot.Collections.Dictionary<string, Variant> GetSaveData()
     {
-        return worldMapData.GetSaveData();
+        Godot.Collections.Dictionary<string, Variant> data = new();
+        
+        data.Add(SAVE_KEY_MAP_DATA, worldMapData.GetSaveData());
+
+        Godot.Collections.Array<Variant> chunkCoordsGenerated = new();
+        data.Add(SAVE_KEY_GENERATED_CHUNKS, chunkCoordsGenerated);
+
+        foreach (Vector2I coords in generatedChunkCoords)
+        {
+            Godot.Collections.Dictionary<string, Variant> chunkCoordDict = new()
+            {
+                { SAVE_KEY_X, coords.X },
+                { SAVE_KEY_Y, coords.Y },
+            };
+            chunkCoordsGenerated.Add(chunkCoordDict);
+        }
+
+        return data;
     }
 
     public void SetSaveData(Godot.Collections.Dictionary<string, Variant> data)
     {
-        worldMapData.SetSaveData(data);
+        worldMapData.SetSaveData(data[SAVE_KEY_MAP_DATA].AsGodotDictionary<string, Variant>());
+
+        foreach (Godot.Collections.Dictionary<string, Variant> chunkDict in data[SAVE_KEY_GENERATED_CHUNKS].AsGodotArray<Godot.Collections.Dictionary<string, Variant>>())
+        {
+            generatedChunkCoords.Add(new Vector2I(
+                chunkDict[SAVE_KEY_X].AsInt32(),
+                chunkDict[SAVE_KEY_Y].AsInt32()
+                ));
+        }
 
         foreach (var chunk in chunks)
         {

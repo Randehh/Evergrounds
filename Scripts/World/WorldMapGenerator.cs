@@ -18,8 +18,6 @@ public partial class WorldMapGenerator : Node
     private AtlasMaterial defaultMaterial = AtlasMaterial.SOFT_SURFACE;
     private AtlasMaterial soilMaterial = AtlasMaterial.SOIL;
 
-    private HashSet<Vector2I> generatedChunkCoords = new();
-
     private Vector2I gridSize;
     private Vector2I gridSizeHalf;
 
@@ -40,11 +38,6 @@ public partial class WorldMapGenerator : Node
 
     public void GenerateChunk(WorldMapData mapData, Vector2I chunkCoords)
     {
-        if(generatedChunkCoords.Contains(chunkCoords))
-        {
-            return;
-        }
-
         for (int y = -1; y < WorldMap.CHUNK_SIZE + 1; y++)
         {
             for (int x = -1; x < WorldMap.CHUNK_SIZE + 1; x++)
@@ -52,8 +45,6 @@ public partial class WorldMapGenerator : Node
                 GenerateTile(mapData, chunkCoords, new Vector2I(x, y), x != -1 && x != WorldMap.CHUNK_SIZE && y != -1 && y != CHUNK_SIZE);
             }
         }
-
-        generatedChunkCoords.Add(chunkCoords);
     }
 
     private void GenerateTile(WorldMapData mapData, Vector2I chunkCoords, Vector2I tileCoord, bool placeNode)
