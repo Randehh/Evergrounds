@@ -94,7 +94,9 @@ public partial class WorldMap : Node2D, IWorldSaveable
             Vector2I chunkPosition = (chunkArrayPosition * CHUNK_SIZE) / CHUNK_SIZE;
             chunkLookup[chunkPosition] = nextChunk;
 
-            if(!generatedChunkCoords.Contains(chunkArrayPosition))
+            worldMapData.SpawnNodes(chunkPosition);
+
+            if (!generatedChunkCoords.Contains(chunkArrayPosition))
             {
                 generator.GenerateChunk(worldMapData, chunkArrayPosition);
                 generatedChunkCoords.Add(chunkArrayPosition);
@@ -103,7 +105,6 @@ public partial class WorldMap : Node2D, IWorldSaveable
             Vector2I chunkTilePosition = chunkArrayPosition * CHUNK_SIZE;
             Vector2I chunkPixelPosition = chunkTilePosition * GRID_SIZE;
             nextChunk.SetChunkPosition(chunkTilePosition, chunkPixelPosition);
-
 
             if(edgeLookup.TryGetValue(movementDirection, out WorldMapTileDisplayEdge edge) &&
                 chunkLookup.TryGetValue(chunkPosition - movementDirection, out WorldMapChunk edgeChunk))
@@ -130,7 +131,7 @@ public partial class WorldMap : Node2D, IWorldSaveable
                 chunks.Add(newChunk);
                 chunkLookup.Add(chunkArrayPosition, newChunk);
 
-                generator.GenerateChunk(worldMapData, chunkArrayPosition);
+                //generator.GenerateChunk(worldMapData, chunkArrayPosition);
             }
         }
     }
@@ -276,7 +277,7 @@ public partial class WorldMap : Node2D, IWorldSaveable
 
     public Vector2I GetGridChunkPosition(Vector2 position) => GetGridPosition(position, GRID_SIZE * CHUNK_SIZE, 1, false) / (GRID_SIZE * CHUNK_SIZE);
 
-    public void AddWorldNode(Node2D node, bool replaceParent)
+    public void AddWorldNode(Node2D node, bool replaceParent, Vector2 replaceParentPosition)
     {
         if(replaceParent)
         {
@@ -286,6 +287,7 @@ public partial class WorldMap : Node2D, IWorldSaveable
             }
 
             AddChild(node);
+            node.GlobalPosition = replaceParentPosition;
         }
 
         worldMapData.AddWorldNode(node);

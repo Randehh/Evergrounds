@@ -37,12 +37,13 @@ public partial class PlayerDespawnableHandler : Area2D
     }
 
     private void OnAreaExited(Area2D area) {
-        if (area is not IWorldDespawnableNode interactable || !despawnables.Contains(interactable))
+        if (area is not IWorldDespawnableNode interactable || !despawnables.Contains(interactable) || area.IsQueuedForDeletion())
         {
             return;
         }
 
         despawnables.Remove(interactable);
+        ServiceLocator.GameNotificationService.OnNodeDespawned.Execute(area);
         area.QueueFree();
     }
 

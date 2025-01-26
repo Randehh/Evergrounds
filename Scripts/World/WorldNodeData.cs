@@ -4,10 +4,10 @@ using System;
 
 public class WorldNodeData : IWorldSaveable
 {
-    public static bool TryCreateFromLiveInstance(Node2D node, Action<Node2D> onReleaseCallback, out WorldNodeData worldNodeData)
+    public static bool TryCreateFromLiveInstance(Node2D node, out WorldNodeData worldNodeData)
     {
         worldNodeData = new WorldNodeData();
-        bool succeeded = worldNodeData.SetLiveNodeReference(node, onReleaseCallback);
+        bool succeeded = worldNodeData.SetLiveNodeReference(node);
         return succeeded;
     }
 
@@ -19,9 +19,11 @@ public class WorldNodeData : IWorldSaveable
     private const string SAVE_KEY_CHUNK_Y = "ChunkY";
     private const string SAVE_KEY_METADATA = "Metadata";
 
+    public Vector2I NodeChunkCoordinate => liveNodeReference != null ? WorldMap.Instance.GetGridChunkPosition(liveNodeReference.Position) : lastKnownChunk;
+
     private Node2D liveNodeReference;
     private IWorldSaveable liveWorldSaveable;
-    private Action<Node2D> onRelease;
+    private Action<Node2D, bool> onRelease;
 
     private string sceneFilePath;
     private string parentPath;
@@ -29,7 +31,7 @@ public class WorldNodeData : IWorldSaveable
     private Vector2I lastKnownChunk;
     private Dictionary<string, Variant> metadata;
 
-    public bool TrySpawn(Action<Node2D> onReleaseCallback, out Node2D spawnedNode)
+    public bool TrySpawn(out Node2D spawnedNode)
     {
         spawnedNode = null;
 
@@ -45,12 +47,12 @@ public class WorldNodeData : IWorldSaveable
 
         (spawnedNode as IWorldSaveable).SetSaveData(metadata);
 
-        SetLiveNodeReference(spawnedNode, onReleaseCallback);
+        SetLiveNodeReference(spawnedNode);
 
         return true;
     }
 
-    public bool SetLiveNodeReference(Node2D liveNode, Action<Node2D> onReleaseCallback)
+    public bool SetLiveNodeReference(Node2D liveNode)
     {
         if(liveNode is not IWorldSaveable saveable)
         {
@@ -60,24 +62,14 @@ public class WorldNodeData : IWorldSaveable
 
         liveNodeReference = liveNode;
         liveWorldSaveable = saveable;
-        onRelease = onReleaseCallback;
 
         sceneFilePath = liveNode.SceneFilePath;
         parentPath = liveNode.GetParent().GetPath();
 
-        liveNodeReference.TreeExiting += OnLiveNodeReleased;
-
         return true;
     }
 
-    public void OnLiveNodeReleased()
-    {
-        TrySetSaveData();
-
-        onRelease?.Invoke(liveNodeReference);
-    }
-
-    private void TrySetSaveData()
+    public void TrySetSaveData()
     {
         if(liveNodeReference == null || !GodotObject.IsInstanceValid(liveNodeReference))
         {
@@ -114,6 +106,11 @@ public class WorldNodeData : IWorldSaveable
 
     public void SetSaveData(Dictionary<string, Variant> data)
     {
+        if(metadata == null)
+        {
+            return;
+        }
+
         sceneFilePath = data[SAVE_KEY_FILEPATH].AsString();
         parentPath = data[SAVE_KEY_PARENT].AsString();
 

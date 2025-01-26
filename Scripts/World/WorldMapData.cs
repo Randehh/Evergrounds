@@ -1,5 +1,7 @@
 using Godot;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using static WorldMap;
 
 public class WorldMapData : IWorldSaveable
@@ -8,14 +10,24 @@ public class WorldMapData : IWorldSaveable
     private const string SAVE_KEY_WORLD_NODE_DATA = "WorldNodeData";
 
     private Dictionary<WorldMapDataLayerType, WorldMapDataLayer> layers = new ();
-    private List<WorldNodeData> worldNodes = new ();
+    private HashSet<WorldNodeData> worldNodes = new ();
 
     private Dictionary<Node2D, WorldNodeData> liveNodes = new ();
+    private Dictionary<WorldNodeData, Node2D> liveNodesInverse = new();
 
     public WorldMapData()
     {
         layers[WorldMapDataLayerType.BASE] = new WorldMapDataLayer(AtlasMaterial.SOFT_SURFACE);
         layers[WorldMapDataLayerType.TILLING] = new WorldMapDataLayer(AtlasMaterial.NONE);
+
+        ServiceLocator.GameNotificationService.OnNodeDestroyed.OnFire += OnNodeDestroyed;
+        ServiceLocator.GameNotificationService.OnNodeDespawned.OnFire += OnNodeDespawned;
+    }
+
+    ~WorldMapData()
+    {
+        ServiceLocator.GameNotificationService.OnNodeDestroyed.OnFire -= OnNodeDestroyed;
+        ServiceLocator.GameNotificationService.OnNodeDespawned.OnFire -= OnNodeDespawned;
     }
 
     public bool SetMaterial(Vector2I coords, AtlasMaterial material, WorldMapDataLayerType layer) => layers[layer].SetMaterial(coords, material);
@@ -23,38 +35,113 @@ public class WorldMapData : IWorldSaveable
 
     public IEnumerable<Vector2I> GetAllUsedCoords(WorldMapDataLayerType layer) => layers[layer].GetAllUsedCoords();
 
+    private Dictionary<Vector2I, HashSet<WorldNodeData>> worldNodesInChunk = new();
+
     public void AddWorldNode(Node2D node)
     {
-        if(!WorldNodeData.TryCreateFromLiveInstance(node, RemoveWorldNode, out var worldNodeData))
+        if(!WorldNodeData.TryCreateFromLiveInstance(node, out var worldNodeData))
         {
             return;
         }
 
         worldNodes.Add(worldNodeData);
         liveNodes.Add(node, worldNodeData);
+        liveNodesInverse.Add(worldNodeData, node);
+
+        AddNodeToChunk(worldNodeData);
     }
 
-    public void AddWorldNode(WorldNodeData worldNodeData)
+    public void AddWorldNode(WorldNodeData worldNodeData, bool addToNodesInChunk)
     {
         worldNodes.Add(worldNodeData);
 
-        if (!worldNodeData.TrySpawn(RemoveWorldNode, out Node2D spawnedNode))
+        if(addToNodesInChunk)
+        {
+            AddNodeToChunk(worldNodeData);
+        }
+
+        if (!worldNodeData.TrySpawn(out Node2D spawnedNode))
         {
             return;
         }
 
         liveNodes.Add(spawnedNode, worldNodeData);
+        liveNodesInverse.Add(worldNodeData, spawnedNode);
     }
 
-    public void RemoveWorldNode(Node2D node)
+    private void OnNodeDestroyed(Node2D node)
     {
-        if(!liveNodes.ContainsKey(node))
+        if(!TryRemoveLiveNode(node, out WorldNodeData worldNodeDataRemoved))
         {
             return;
         }
 
-        worldNodes.Remove(liveNodes[node]);
+        Vector2I chunkCoordinate = worldNodeDataRemoved.NodeChunkCoordinate;
+        if (worldNodesInChunk.TryGetValue(chunkCoordinate, out HashSet<WorldNodeData> nodeDatas) && nodeDatas.Contains(worldNodeDataRemoved))
+        {
+            nodeDatas.Remove(worldNodeDataRemoved);
+        }
+    }
+
+    private void OnNodeDespawned(Node2D node)
+    {
+        if (!TryRemoveLiveNode(node, out WorldNodeData worldNodeDataRemoved))
+        {
+            return;
+        }
+
+        worldNodeDataRemoved.TrySetSaveData();
+    }
+
+    private bool TryRemoveLiveNode(Node2D node, out WorldNodeData worldNodeDataRemoved)
+    {
+        worldNodeDataRemoved = null;
+        if (!liveNodes.ContainsKey(node))
+        {
+            return false;
+        }
+
+        worldNodeDataRemoved = liveNodes[node];
+
+        worldNodes.Remove(worldNodeDataRemoved);
         liveNodes.Remove(node);
+        liveNodesInverse.Remove(worldNodeDataRemoved);
+        return true;
+    }
+
+    public void SpawnNodes(Vector2I chunkPosition)
+    {
+        if (!worldNodesInChunk.TryGetValue(chunkPosition, out HashSet<WorldNodeData> nodeDatas))
+        {
+            return;
+        }
+
+        foreach (WorldNodeData nodeData in nodeDatas)
+        {
+            if(liveNodesInverse.ContainsKey(nodeData))
+            {
+                continue;
+            }
+
+            AddWorldNode(nodeData, false);
+        }
+    }
+
+    private void AddNodeToChunk(WorldNodeData nodeData)
+    {
+        Vector2I chunkCoordinate = nodeData.NodeChunkCoordinate;
+        if (!worldNodesInChunk.TryGetValue(chunkCoordinate, out HashSet<WorldNodeData> nodeDatas))
+        {
+            nodeDatas = new HashSet<WorldNodeData>();
+            worldNodesInChunk.Add(chunkCoordinate, nodeDatas);
+        }
+
+        if (nodeDatas.Contains(nodeData))
+        {
+            return;
+        }
+
+        nodeDatas.Add(nodeData);
     }
 
     public Godot.Collections.Dictionary<string, Variant> GetSaveData()
@@ -80,6 +167,10 @@ public class WorldMapData : IWorldSaveable
 
     public void SetSaveData(Godot.Collections.Dictionary<string, Variant> data)
     {
+        liveNodes.Clear();
+        liveNodesInverse.Clear();
+        worldNodesInChunk.Clear();
+
         Godot.Collections.Dictionary<int, Variant> layerSaveData = data[SAVE_KEY_LAYER_DATA].AsGodotDictionary<int, Variant>();
         foreach(KeyValuePair<int, Variant> layerData in layerSaveData)
         {
@@ -94,7 +185,7 @@ public class WorldMapData : IWorldSaveable
             WorldNodeData worldNodeData = new WorldNodeData();
             worldNodeData.SetSaveData(worldNodeSaveData);
             
-            AddWorldNode(worldNodeData);
+            AddWorldNode(worldNodeData, true);
         }
     }
 

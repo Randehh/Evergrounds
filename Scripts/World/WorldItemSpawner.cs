@@ -40,9 +40,8 @@ public partial class WorldItemSpawner : Node2D
             spawningTime -= SPAWN_INTERVAL;
 
             WorldItem worldItem = worldItemScene.Instantiate<WorldItem>();
-            WorldMap.Instance.AddWorldNode(worldItem, true);
+            WorldMap.Instance.AddWorldNode(worldItem, true, GlobalPosition);
             worldItem.Initialize(toSpawn.Dequeue(), 1);
-            worldItem.GlobalPosition = GlobalPosition;
             worldItem.Spawn();
         }
     }

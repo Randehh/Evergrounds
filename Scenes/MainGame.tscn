@@ -34,16 +34,16 @@ script = ExtResource("1_u5mee")
 [node name="WorldData" type="Node" parent="."]
 script = ExtResource("1_rxiwr")
 
+[node name="DragAndDrop" type="Node" parent="."]
+script = ExtResource("2_n5ome")
+
+[node name="Map" parent="." instance=ExtResource("2_be0ya")]
+
 [node name="GameSetup" type="Node" parent="." node_paths=PackedStringArray("map")]
 script = ExtResource("1_4si5g")
 map = NodePath("../Map")
 cameraScene = ExtResource("4_1vx5r")
 characterScene = ExtResource("4_hyjsw")
-
-[node name="DragAndDrop" type="Node" parent="."]
-script = ExtResource("2_n5ome")
-
-[node name="Map" parent="." instance=ExtResource("2_be0ya")]
 
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
 

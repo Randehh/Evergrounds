@@ -1,16 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://cevqvlshxo84w"]
+[gd_scene load_steps=8 format=3 uid="uid://cevqvlshxo84w"]
 
 [ext_resource type="Script" path="res://Scripts/World/WorldMap.cs" id="1_1x1iq"]
 [ext_resource type="Script" path="res://Scripts/World/WorldMapGenerator.cs" id="2_pbtj7"]
 [ext_resource type="PackedScene" uid="uid://cv78ude3j44mx" path="res://Scenes/World/Interactables/interactable_chest.tscn" id="4_b7prb"]
 [ext_resource type="Script" path="res://Scripts/World/WorldMapGeneratorNodePlacementData.cs" id="4_xlhxp"]
-[ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="5_rudrl"]
-[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="7_vig5y"]
-[ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="8_i6jss"]
 [ext_resource type="PackedScene" uid="uid://bmu70m6spkl83" path="res://Scenes/World/Interactables/interactable_tree_yellow.tscn" id="9_56mls"]
-[ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_761cn"]
-[ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="10_pekgq"]
-[ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="11_dnerq"]
 
 [sub_resource type="Resource" id="Resource_826ao"]
 script = ExtResource("4_xlhxp")
@@ -25,41 +19,6 @@ scene = ExtResource("4_b7prb")
 minThreshold = 0.8
 maxThreshold = 1.0
 chance = 0.005
-
-[sub_resource type="Resource" id="Resource_nxwyw"]
-script = ExtResource("7_vig5y")
-item = ExtResource("5_rudrl")
-minimumCount = 1
-maximumCount = 1
-baseChance = 1.0
-
-[sub_resource type="Resource" id="Resource_61s83"]
-script = ExtResource("7_vig5y")
-item = ExtResource("8_i6jss")
-minimumCount = 1
-maximumCount = 1
-baseChance = 1.0
-
-[sub_resource type="Resource" id="Resource_1ppvw"]
-script = ExtResource("7_vig5y")
-item = ExtResource("9_761cn")
-minimumCount = 1
-maximumCount = 1
-baseChance = 1.0
-
-[sub_resource type="Resource" id="Resource_31mgo"]
-script = ExtResource("7_vig5y")
-item = ExtResource("10_pekgq")
-minimumCount = 10
-maximumCount = 25
-baseChance = 1.0
-
-[sub_resource type="Resource" id="Resource_wkhgm"]
-script = ExtResource("7_vig5y")
-item = ExtResource("11_dnerq")
-minimumCount = 10
-maximumCount = 20
-baseChance = 1.0
 
 [node name="Map" type="Node2D" node_paths=PackedStringArray("generator", "mapChunkParent")]
 y_sort_enabled = true
@@ -76,17 +35,3 @@ placementDatas = Array[Object]([SubResource("Resource_826ao"), SubResource("Reso
 
 [node name="MapChunks" type="Node2D" parent="."]
 position = Vector2(-8, -8)
-
-[node name="Chest" parent="." instance=ExtResource("4_b7prb")]
-
-[node name="InteractEventSpawnItem" parent="Chest" index="4"]
-itemsToSpawn = Array[Object]([SubResource("Resource_nxwyw"), SubResource("Resource_61s83"), SubResource("Resource_1ppvw")])
-
-[node name="Chest5" parent="." instance=ExtResource("4_b7prb")]
-position = Vector2(34, -16)
-
-[node name="InteractEventSpawnItem" parent="Chest5" index="4"]
-itemsToSpawn = Array[Object]([SubResource("Resource_31mgo"), SubResource("Resource_wkhgm")])
-
-[editable path="Chest"]
-[editable path="Chest5"]

@@ -32,8 +32,7 @@ public partial class WorldMapGeneratorNodePlacementData : Resource
         }
 
         Node2D placedNode = scene.Instantiate<Node2D>();
-        WorldMap.Instance.AddWorldNode(placedNode, true);
-        placedNode.GlobalPosition = globalTileCoord;
+        WorldMap.Instance.AddWorldNode(placedNode, true, globalTileCoord);
         return true;
     }
 }

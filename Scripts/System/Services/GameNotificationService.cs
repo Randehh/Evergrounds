@@ -1,9 +1,12 @@
 ﻿
+using Godot;
 using System;
 
 public class GameNotificationService : IService
 {
     public GameNotification<WorldData> OnLoadWorld = new();
+    public GameNotification<Node2D> OnNodeDespawned = new();
+    public GameNotification<Node2D> OnNodeDestroyed = new();
 
     public void OnInit()
     {
@@ -29,6 +32,6 @@ public class GameNotification<T> where T : class
         OnFire(payload);
     }
 
-    public Action<T> OnPreFire {  get; set; }
-    public Action<T> OnFire { get; set; }
+    public Action<T> OnPreFire {  get; set; } = delegate { };
+    public Action<T> OnFire { get; set; } = delegate { };
 }
