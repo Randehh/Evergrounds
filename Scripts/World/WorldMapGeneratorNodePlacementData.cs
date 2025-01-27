@@ -15,6 +15,9 @@ public partial class WorldMapGeneratorNodePlacementData : Resource
     [Export]
     public float chance = 0.2f;
 
+    [Export]
+    public float offsetVariance = 0;
+
     public WorldMapGeneratorNodePlacementData() { }
 
     internal bool TryPlace(Vector2I globalTileCoord, float noiseValue)
@@ -32,7 +35,15 @@ public partial class WorldMapGeneratorNodePlacementData : Resource
         }
 
         Node2D placedNode = scene.Instantiate<Node2D>();
-        WorldMap.Instance.AddWorldNode(placedNode, true, globalTileCoord);
+        Vector2 placementPosition = globalTileCoord + GetRandomOffset();
+        WorldMap.Instance.AddWorldNode(placedNode, true, placementPosition);
         return true;
+    }
+
+    private Vector2 GetRandomOffset()
+    {
+        return new Vector2I(
+            Mathf.RoundToInt(((GD.Randf() * 2) - 1) * offsetVariance),
+            Mathf.RoundToInt(((GD.Randf() * 2) - 1) * offsetVariance));
     }
 }

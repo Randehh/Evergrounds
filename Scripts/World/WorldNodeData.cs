@@ -23,7 +23,6 @@ public class WorldNodeData : IWorldSaveable
 
     private Node2D liveNodeReference;
     private IWorldSaveable liveWorldSaveable;
-    private Action<Node2D, bool> onRelease;
 
     private string sceneFilePath;
     private string parentPath;
@@ -119,9 +118,9 @@ public class WorldNodeData : IWorldSaveable
             data[SAVE_KEY_CHUNK_Y].AsInt32()
             );
 
-        lastKnownPosition = new Vector2I(
-            data[SAVE_KEY_POS_X].AsInt32(),
-            data[SAVE_KEY_POS_Y].AsInt32()
+        lastKnownPosition = new Vector2(
+            (float)data[SAVE_KEY_POS_X].AsDouble(),
+            (float)data[SAVE_KEY_POS_Y].AsDouble()
             );
 
         metadata = data[SAVE_KEY_METADATA].AsGodotDictionary<string, Variant>();

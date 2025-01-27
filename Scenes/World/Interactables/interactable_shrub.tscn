@@ -1,0 +1,69 @@
+[gd_scene load_steps=15 format=3 uid="uid://dccf66b3ov4w2"]
+
+[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_743uh"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_w8uy6"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_y1dbr"]
+[ext_resource type="Resource" uid="uid://bkuersrsvb7ty" path="res://Resources/Items/item_wood.tres" id="4_qff8m"]
+[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_sl2o6"]
+[ext_resource type="Resource" uid="uid://dkneqfx24g3j5" path="res://Resources/Items/item_leaf.tres" id="6_0uwgn"]
+[ext_resource type="Resource" uid="uid://p4innrlpa2cc" path="res://Resources/Items/item_acorn.tres" id="7_c6ads"]
+[ext_resource type="Texture2D" uid="uid://dpycdtxh4x02" path="res://Art/World/Interactables/Interactable_Shrub.png" id="8_8wtfg"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="10_pwo2d"]
+
+[sub_resource type="Resource" id="Resource_1wpgf"]
+script = ExtResource("2_w8uy6")
+interactType = 0
+minimumLevel = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_04bqn"]
+
+[sub_resource type="Resource" id="Resource_wvy2i"]
+script = ExtResource("5_sl2o6")
+item = ExtResource("4_qff8m")
+minimumCount = 1
+maximumCount = 1
+baseChance = 0.2
+
+[sub_resource type="Resource" id="Resource_85462"]
+script = ExtResource("5_sl2o6")
+item = ExtResource("6_0uwgn")
+minimumCount = 2
+maximumCount = 3
+baseChance = 0.5
+
+[sub_resource type="Resource" id="Resource_3crmo"]
+script = ExtResource("5_sl2o6")
+item = ExtResource("7_c6ads")
+minimumCount = 1
+maximumCount = 1
+baseChance = 0.1
+
+[node name="Shrub" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
+y_sort_enabled = true
+collision_layer = 5
+script = ExtResource("1_743uh")
+interactPoint = NodePath("Shape")
+interactShape = NodePath("Shape")
+selectArrowAnchor = NodePath("ArrowAnchor")
+interactRequirement = SubResource("Resource_1wpgf")
+interactEvents = []
+interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode")]
+mainSprite = NodePath("ShrubSprite")
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_04bqn")
+
+[node name="ArrowAnchor" type="Node2D" parent="."]
+position = Vector2(0, -9)
+
+[node name="InteractEventSpawnItem" type="Node2D" parent="."]
+script = ExtResource("3_y1dbr")
+itemsToSpawn = Array[Object]([SubResource("Resource_wvy2i"), SubResource("Resource_85462"), SubResource("Resource_3crmo")])
+
+[node name="ShrubSprite" type="Sprite2D" parent="."]
+texture = ExtResource("8_8wtfg")
+offset = Vector2(0, -5)
+
+[node name="InteractEventDestroyNode" type="Node2D" parent="." node_paths=PackedStringArray("toDestroy")]
+script = ExtResource("10_pwo2d")
+toDestroy = NodePath("..")
