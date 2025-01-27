@@ -1,7 +1,16 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://grcak8uagcau"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://grcak8uagcau"]
 
 [ext_resource type="FontFile" uid="uid://0km3vn2tywnt" path="res://Fonts/Kenney Pixel.ttf" id="1_4vdcy"]
+[ext_resource type="Texture2D" uid="uid://cqp6i62kk37i4" path="res://Art/UI/UI_Inventory_Slot.png" id="2_u5jja"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_74xsu"]
+texture = ExtResource("2_u5jja")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
 
 [resource]
 Label/constants/outline_size = 4
 Label/fonts/font = ExtResource("1_4vdcy")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_74xsu")

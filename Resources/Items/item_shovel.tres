@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_a1drs")
 displayName = "Shovel"
-description = ""
+description = " Remove everything from the earth!"
 usageText = "Turn grass to dirt"
 itemType = 1
 itemSprite = ExtResource("1_mprqx")
@@ -17,3 +17,4 @@ interactLevel = 1
 worldShadowScale = 0.5
 gridPlacementScene = ""
 tileMaterial = 1
+validTilePlacementMaterials = []

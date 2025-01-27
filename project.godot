@@ -26,6 +26,7 @@ project/assembly_name="Evergrounds"
 
 [gui]
 
+theme/custom="res://Themes/Theme_Default.tres"
 theme/custom_font="res://Fonts/Kenney Pixel.ttf"
 
 [input]

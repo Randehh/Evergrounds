@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_dp16n")
 displayName = "Axe"
-description = ""
+description = "The basic tool for any self-respecting farmer."
 usageText = "Chop down trees"
 itemType = 2
 itemSprite = ExtResource("1_m0s1t")
@@ -17,3 +17,4 @@ interactLevel = 1
 worldShadowScale = 0.5
 gridPlacementScene = ""
 tileMaterial = 0
+validTilePlacementMaterials = []

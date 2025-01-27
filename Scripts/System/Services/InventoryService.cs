@@ -19,7 +19,7 @@ public class InventoryService : IService, IWorldSaveable
     private InventoryItem[] inventoryItems = new InventoryItem[INVENTORY_SIZE];
     private int quickSelectEquipped = 0;
 
-    private System.Collections.Generic.Dictionary<InventoryItemType, List<int>> itemLookup = new();
+    private System.Collections.Generic.Dictionary<InventoryItemDefinition, List<int>> itemLookup = new();
     private System.Collections.Generic.Dictionary<InventoryItem, int> itemInstanceLookup = new();
 
     public void OnInit()
@@ -51,7 +51,7 @@ public class InventoryService : IService, IWorldSaveable
     public bool AddItem(InventoryItemDefinition item, int count)
     {
         // Try to stack first
-        if (item.isStackable && itemLookup.TryGetValue(item.itemType, out List<int> existingIndexes))
+        if (item.isStackable && itemLookup.TryGetValue(item, out List<int> existingIndexes))
         {
             foreach (int existingIndex in existingIndexes)
             {
@@ -88,10 +88,10 @@ public class InventoryService : IService, IWorldSaveable
 
         // Update lookups
         List<int> lookupList;
-        if (!itemLookup.TryGetValue(itemDefinition.itemType, out lookupList))
+        if (!itemLookup.TryGetValue(itemDefinition, out lookupList))
         {
             lookupList = new List<int>();
-            itemLookup.Add(itemDefinition.itemType, lookupList);
+            itemLookup.Add(itemDefinition, lookupList);
         }
         lookupList.Add(index);
 
@@ -132,7 +132,7 @@ public class InventoryService : IService, IWorldSaveable
 
     public bool RemoveItem(InventoryItemDefinition itemDefinition, int count)
     {
-        if(!itemLookup.TryGetValue(itemDefinition.itemType, out var lookupList))
+        if (!itemLookup.TryGetValue(itemDefinition, out var lookupList))
         {
             return false;
         }
@@ -143,27 +143,38 @@ public class InventoryService : IService, IWorldSaveable
         {
             int inventoryIndex = lookupList[i];
             InventoryItem item = inventoryItems[inventoryIndex];
-            if(item.CurrentStackSize <= count)
+            if (item.CurrentStackSize <= count)
             {
                 indexesToRemove.Add(inventoryIndex);
                 count -= item.CurrentStackSize;
                 continue;
             }
+            else
+            {
+                if (item.CurrentStackSize == count)
+                {
+                    RemoveItem(inventoryIndex);
+                    return true;
+                }
+            }
 
             finalIndex = inventoryIndex;
         }
 
-        if(finalIndex == -1 && count != 0)
+        if (finalIndex == -1 && count != 0)
         {
             return false;
         }
 
-        foreach(int indexToRemove in indexesToRemove)
+        foreach (int indexToRemove in indexesToRemove)
         {
             RemoveItem(indexToRemove);
         }
 
-        inventoryItems[finalIndex].CurrentStackSize -= count;
+        if (finalIndex != -1)
+        {
+            inventoryItems[finalIndex].CurrentStackSize -= count;
+        }
 
         return true;
     }
@@ -181,7 +192,7 @@ public class InventoryService : IService, IWorldSaveable
 
         // Update lookups
         List<int> lookupList;
-        if (itemLookup.TryGetValue(itemToRemove.definition.itemType, out lookupList))
+        if (itemLookup.TryGetValue(itemToRemove.definition, out lookupList))
         {
             lookupList.Remove(index);
         }
@@ -205,6 +216,22 @@ public class InventoryService : IService, IWorldSaveable
         InventoryItem cachedItem = inventoryItems[index2];
         inventoryItems[index2] = inventoryItems[index1];
         inventoryItems[index1] = cachedItem;
+    }
+
+    public bool HasItem(InventoryItemDefinition itemType, int count)
+    {
+        if(!itemLookup.TryGetValue(itemType, out List<int> itemIndexes))
+        {
+            return false;
+        }
+
+        int totalCount = 0;
+        foreach (int itemIndex in itemIndexes)
+        {
+            totalCount += GetItem(itemIndex).CurrentStackSize;
+        }
+
+        return totalCount >= count;
     }
 
     public void EquipSlotNext() => EquipSlot(quickSelectEquipped + 1);

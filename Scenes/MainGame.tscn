@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=20 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="Script" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="6_3kt0a"]
 [ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="6_c26d2"]
 [ext_resource type="Script" path="res://Scripts/UI/CursorUI.cs" id="8_4ge1w"]
+[ext_resource type="PackedScene" uid="uid://c0ykpj48sr63t" path="res://Scenes/UI/crafting_canvas.tscn" id="9_gh0qo"]
 [ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
 [ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="10_821fs"]
 [ext_resource type="Texture2D" uid="uid://bbms8e28hb43t" path="res://Art/UI/UI_Cursor_Grab.png" id="11_cpyry"]
@@ -46,6 +47,8 @@ cameraScene = ExtResource("4_1vx5r")
 characterScene = ExtResource("4_hyjsw")
 
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
+
+[node name="CraftingCanvas" parent="." instance=ExtResource("9_gh0qo")]
 
 [node name="DragAndDropCanvas" type="CanvasLayer" parent="."]
 layer = 5

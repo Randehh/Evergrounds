@@ -1,0 +1,53 @@
+[gd_scene load_steps=11 format=3 uid="uid://pswa61xj7a1p"]
+
+[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_cujf6"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_efkqt"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_ipuka"]
+[ext_resource type="Resource" uid="uid://madlj01uhxfs" path="res://Resources/Items/item_stone.tres" id="4_sqt0u"]
+[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_bucmb"]
+[ext_resource type="Texture2D" uid="uid://yfmh7j7fcuwt" path="res://Art/World/Interactables/Interactable_Rock.png" id="6_jr00o"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="9_igt7a"]
+
+[sub_resource type="Resource" id="Resource_1wpgf"]
+script = ExtResource("2_efkqt")
+interactType = 0
+minimumLevel = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_04bqn"]
+
+[sub_resource type="Resource" id="Resource_wvy2i"]
+script = ExtResource("5_bucmb")
+item = ExtResource("4_sqt0u")
+minimumCount = 1
+maximumCount = 2
+baseChance = 1.0
+
+[node name="Rock" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
+y_sort_enabled = true
+collision_layer = 5
+script = ExtResource("1_cujf6")
+interactPoint = NodePath("Shape")
+interactShape = NodePath("Shape")
+selectArrowAnchor = NodePath("ArrowAnchor")
+interactRequirement = SubResource("Resource_1wpgf")
+interactEvents = []
+interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode")]
+mainSprite = NodePath("ShrubSprite")
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_04bqn")
+
+[node name="ArrowAnchor" type="Node2D" parent="."]
+position = Vector2(0, -9)
+
+[node name="InteractEventSpawnItem" type="Node2D" parent="."]
+script = ExtResource("3_ipuka")
+itemsToSpawn = Array[Object]([SubResource("Resource_wvy2i")])
+
+[node name="ShrubSprite" type="Sprite2D" parent="."]
+texture = ExtResource("6_jr00o")
+offset = Vector2(0, -5)
+
+[node name="InteractEventDestroyNode" type="Node2D" parent="." node_paths=PackedStringArray("toDestroy")]
+script = ExtResource("9_igt7a")
+toDestroy = NodePath("..")

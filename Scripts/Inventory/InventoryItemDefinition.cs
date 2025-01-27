@@ -16,9 +16,6 @@ public partial class InventoryItemDefinition : Resource
     public string usageText;
 
     [Export]
-    public InventoryItemType itemType;
-
-    [Export]
     public Texture2D itemSprite;
 
     [Export]

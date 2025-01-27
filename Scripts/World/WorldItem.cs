@@ -10,7 +10,7 @@ public partial class WorldItem : Area2D, IWorldDespawnableNode, IWorldSaveable
 
     private const float VACUUM_SPEED = 15;
 
-    public bool CanBeVacuumed => currentTime >= 2f;
+    public bool CanBeVacuumed => currentTime >= 1.5f;
 
     [Export]
     private Sprite2D sprite;

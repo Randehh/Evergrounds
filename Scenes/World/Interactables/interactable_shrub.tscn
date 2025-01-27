@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_743uh"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_w8uy6"]
 [ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_y1dbr"]
-[ext_resource type="Resource" uid="uid://bkuersrsvb7ty" path="res://Resources/Items/item_wood.tres" id="4_qff8m"]
+[ext_resource type="Resource" uid="uid://ds2rdh8u3kqm0" path="res://Resources/Items/item_stick.tres" id="4_lkajd"]
 [ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_sl2o6"]
 [ext_resource type="Resource" uid="uid://dkneqfx24g3j5" path="res://Resources/Items/item_leaf.tres" id="6_0uwgn"]
 [ext_resource type="Resource" uid="uid://p4innrlpa2cc" path="res://Resources/Items/item_acorn.tres" id="7_c6ads"]
@@ -19,10 +19,10 @@ minimumLevel = 1
 
 [sub_resource type="Resource" id="Resource_wvy2i"]
 script = ExtResource("5_sl2o6")
-item = ExtResource("4_qff8m")
+item = ExtResource("4_lkajd")
 minimumCount = 1
-maximumCount = 1
-baseChance = 0.2
+maximumCount = 2
+baseChance = 0.25
 
 [sub_resource type="Resource" id="Resource_85462"]
 script = ExtResource("5_sl2o6")

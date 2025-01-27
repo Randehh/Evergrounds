@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://ds2rdh8u3kqm0"]
+
+[ext_resource type="Texture2D" uid="uid://q4dmvr8tm1eb" path="res://Art/Items/Resources/Resource_Stick.png" id="1_7gv04"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_wdgb3"]
+
+[resource]
+script = ExtResource("2_wdgb3")
+displayName = "Stick"
+description = ""
+usageText = "Crafting material"
+itemType = 9
+itemSprite = ExtResource("1_7gv04")
+stackSize = 100
+useAnimation = 0
+interactType = 0
+interactLevel = 0
+worldShadowScale = 0.25
+gridPlacementScene = ""
+tileMaterial = 0
+validTilePlacementMaterials = []

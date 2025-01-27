@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://cevqvlshxo84w"]
+[gd_scene load_steps=13 format=3 uid="uid://cevqvlshxo84w"]
 
 [ext_resource type="Script" path="res://Scripts/World/WorldMap.cs" id="1_1x1iq"]
 [ext_resource type="Script" path="res://Scripts/World/WorldMapGenerator.cs" id="2_pbtj7"]
 [ext_resource type="PackedScene" uid="uid://cv78ude3j44mx" path="res://Scenes/World/Interactables/interactable_chest.tscn" id="4_b7prb"]
 [ext_resource type="Script" path="res://Scripts/World/WorldMapGeneratorNodePlacementData.cs" id="4_xlhxp"]
 [ext_resource type="PackedScene" uid="uid://dccf66b3ov4w2" path="res://Scenes/World/Interactables/interactable_shrub.tscn" id="5_2gngj"]
+[ext_resource type="PackedScene" uid="uid://pswa61xj7a1p" path="res://Scenes/World/Interactables/interactable_rock.tscn" id="6_odr6j"]
 [ext_resource type="PackedScene" uid="uid://bmu70m6spkl83" path="res://Scenes/World/Interactables/interactable_tree_yellow.tscn" id="9_56mls"]
 
 [sub_resource type="Resource" id="Resource_826ao"]
@@ -31,6 +32,14 @@ maxThreshold = 0.6
 chance = 0.25
 offsetVariance = 3.0
 
+[sub_resource type="Resource" id="Resource_nv623"]
+script = ExtResource("4_xlhxp")
+scene = ExtResource("6_odr6j")
+minThreshold = 0.95
+maxThreshold = 1.0
+chance = 0.15
+offsetVariance = 3.0
+
 [sub_resource type="Resource" id="Resource_g6bnd"]
 script = ExtResource("4_xlhxp")
 scene = ExtResource("4_b7prb")
@@ -50,7 +59,7 @@ metadata/_edit_lock_ = true
 [node name="WorldMapGenerator" type="Node" parent="."]
 script = ExtResource("2_pbtj7")
 seed = 2425
-placementDatas = Array[Object]([SubResource("Resource_826ao"), SubResource("Resource_6rp2r"), SubResource("Resource_svcrr"), SubResource("Resource_g6bnd")])
+placementDatas = Array[Object]([SubResource("Resource_826ao"), SubResource("Resource_6rp2r"), SubResource("Resource_svcrr"), SubResource("Resource_nv623"), SubResource("Resource_g6bnd")])
 
 [node name="MapChunks" type="Node2D" parent="."]
 position = Vector2(-8, -8)

@@ -104,7 +104,7 @@ public partial class InventoryUI : Control
                     var itemInSlot = inventory.GetItem(slotMouseOver);
                     if (itemInSlot != null)
                     {
-                        if (itemInSlot.definition.itemType == draggingItem.definition.itemType &&
+                        if (itemInSlot.definition == draggingItem.definition &&
                             itemInSlot.CurrentStackSize < itemInSlot.definition.stackSize)
                         {
                             int spaceRemaining = itemInSlot.definition.stackSize - itemInSlot.CurrentStackSize;

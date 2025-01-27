@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=7 format=3 uid="uid://baiquj15jhsb2"]
+
+[ext_resource type="Resource" uid="uid://ds2rdh8u3kqm0" path="res://Resources/Items/item_stick.tres" id="1_2jk4y"]
+[ext_resource type="Script" path="res://Scripts/System/Crafting/CraftingRecipeItem.cs" id="2_cjcjp"]
+[ext_resource type="Resource" uid="uid://bkuersrsvb7ty" path="res://Resources/Items/item_wood.tres" id="3_xdsdo"]
+[ext_resource type="Script" path="res://Scripts/System/Crafting/CraftingRecipe.cs" id="5_ybyj6"]
+
+[sub_resource type="Resource" id="Resource_6y8vi"]
+script = ExtResource("2_cjcjp")
+item = ExtResource("1_2jk4y")
+count = 10
+
+[sub_resource type="Resource" id="Resource_7akgb"]
+script = ExtResource("2_cjcjp")
+item = ExtResource("3_xdsdo")
+count = 1
+
+[resource]
+script = ExtResource("5_ybyj6")
+result = SubResource("Resource_7akgb")
+requiredItems = [SubResource("Resource_6y8vi")]
