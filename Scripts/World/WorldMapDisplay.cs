@@ -46,7 +46,7 @@ public class WorldMapDisplay
         standardTileMap.UpdateSelectedMaterial(mouseMapPosition);
         tillingTileMap.UpdateSelectedMaterial(mouseMapPosition);
 
-        selectedMaterial = GetSelectedTileMaterial();
+        selectedMaterial = GetPriorityMaterial(standardTileMap.SelectedTileMaterial, tillingTileMap.SelectedTileMaterial);
     }
 
     public bool TryGetSelectedMaterial(out AtlasMaterial material)
@@ -55,15 +55,23 @@ public class WorldMapDisplay
         return true;
     }
 
-    private AtlasMaterial GetSelectedTileMaterial()
+    public AtlasMaterial GetMaterialAt(Vector2I gridPosition)
     {
-        if (tillingTileMap.SelectedTileMaterial != AtlasMaterial.NONE)
+        AtlasMaterial standardMaterial = standardTileMap.GetMaterialAt(gridPosition);
+        AtlasMaterial tillingMaterial = tillingTileMap.GetMaterialAt(gridPosition);
+
+        return GetPriorityMaterial(standardMaterial, tillingMaterial);
+    }
+
+    private AtlasMaterial GetPriorityMaterial(AtlasMaterial standardMaterial, AtlasMaterial tillingMaterial)
+    {
+        if (tillingMaterial != AtlasMaterial.NONE)
         {
-            return tillingTileMap.SelectedTileMaterial;
+            return tillingMaterial;
         }
         else
         {
-            return standardTileMap.SelectedTileMaterial;
+            return standardMaterial;
         }
     }
 

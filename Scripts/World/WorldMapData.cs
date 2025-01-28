@@ -1,7 +1,5 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using static WorldMap;
 
 public class WorldMapData : IWorldSaveable
@@ -14,6 +12,9 @@ public class WorldMapData : IWorldSaveable
 
     private Dictionary<Node2D, WorldNodeData> liveNodes = new ();
     private Dictionary<WorldNodeData, Node2D> liveNodesInverse = new();
+
+    private Dictionary<Vector2I, WorldNodeData> occupiedGridSpaces = new ();
+    private Dictionary<WorldNodeData, List<Vector2I>> occupiedGridSpacesInverse = new();
 
     public WorldMapData()
     {
@@ -106,6 +107,19 @@ public class WorldMapData : IWorldSaveable
         worldNodes.Remove(worldNodeDataRemoved);
         liveNodes.Remove(node);
         liveNodesInverse.Remove(worldNodeDataRemoved);
+
+        if(occupiedGridSpacesInverse.TryGetValue(worldNodeDataRemoved, out List<Vector2I> worldNodeSpaces))
+        {
+            foreach (Vector2I nodeSpace in worldNodeSpaces)
+            {
+                if (occupiedGridSpaces.ContainsKey(nodeSpace))
+                {
+                    occupiedGridSpaces.Remove(nodeSpace);
+                }
+            }
+
+            occupiedGridSpacesInverse.Remove(worldNodeDataRemoved);
+        }
         return true;
     }
 
@@ -142,6 +156,46 @@ public class WorldMapData : IWorldSaveable
         }
 
         nodeDatas.Add(nodeData);
+
+        if(nodeData.LiveNode != null && nodeData.LiveNode is IWorldGridNode gridNode)
+        {
+            Vector2I nodeGridCoordinate = WorldMap.Instance.GetGridCoordinates(nodeData.LiveNode.Position);
+            List<Vector2I> nodeSpaces = new();
+            foreach(Vector2I gridOffsetPosition in gridNode.gridOffsetPositions)
+            {
+                Vector2I nodeSpace = nodeGridCoordinate + gridOffsetPosition;
+
+                occupiedGridSpaces.Add(nodeSpace, nodeData);
+                nodeSpaces.Add(nodeSpace);
+
+
+            }
+            occupiedGridSpacesInverse.Add(nodeData, nodeSpaces);
+        }
+    }
+
+    public bool CanPlaceNode(IWorldGridNode worldGridNode, Vector2I gridPosition)
+    {
+        foreach (Vector2I tileOffset in worldGridNode.gridOffsetPositions)
+        {
+            Vector2I gridOffsetPosition = gridPosition + tileOffset;
+
+            if(occupiedGridSpaces.ContainsKey(gridOffsetPosition))
+            {
+                return false;
+            }
+
+            if (worldGridNode.placementMaterials.Count > 0)
+            {
+                AtlasMaterial material = WorldMap.Instance.GetMaterialAt(gridOffsetPosition);
+                if (!worldGridNode.placementMaterials.Contains(material))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public Godot.Collections.Dictionary<string, Variant> GetSaveData()

@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System;
 
 public class WorldNodeData : IWorldSaveable
 {
@@ -19,6 +18,7 @@ public class WorldNodeData : IWorldSaveable
     private const string SAVE_KEY_CHUNK_Y = "ChunkY";
     private const string SAVE_KEY_METADATA = "Metadata";
 
+    public Node2D LiveNode => liveNodeReference;
     public Vector2I NodeChunkCoordinate => liveNodeReference != null ? WorldMap.Instance.GetGridChunkPosition(liveNodeReference.Position) : lastKnownChunk;
 
     private Node2D liveNodeReference;

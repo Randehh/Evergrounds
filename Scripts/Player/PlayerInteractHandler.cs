@@ -34,6 +34,7 @@ public partial class PlayerInteractHandler : Node2D
     private string currentLoadedScenePath = string.Empty;
     private PackedScene currentlyLoadedPackedScene;
     private Node2D currentLoadedScene;
+    private IWorldGridNode currentlyLoadedWorldGridNode;
     private Vector2 gridPreviewNodeOffset = Vector2.Zero;
     private double alphaTimer;
 
@@ -91,7 +92,7 @@ public partial class PlayerInteractHandler : Node2D
                 break;
 
             case InteractType.GRID_SELECT_HALF:
-                HandleGridSelection(itemInHand, 2);
+                HandleGridSelection(itemInHand, 1);
 
                 if (activateIndicator)
                 {
@@ -190,15 +191,18 @@ public partial class PlayerInteractHandler : Node2D
                 return;
             }
 
-            previewSprite.Texture = gridNode.gridPlacementPreviewSprite.Texture;
-            gridPreviewNodeOffset = gridNode.gridPlacementOffset;
+            currentlyLoadedWorldGridNode = gridNode;
+
+            previewSprite.Texture = currentlyLoadedWorldGridNode.gridPlacementPreviewSprite.Texture;
+            gridPreviewNodeOffset = currentlyLoadedWorldGridNode.gridPlacementOffset;
         }
 
-        Vector2I gridPosition = WorldMap.Instance.GetMouseCoordinates(gridDivision, true);
-        currentGridPosition = gridPosition;
+        Vector2I worldPosition = WorldMap.Instance.GetMouseCoordinates(gridDivision, true);
+        currentGridPosition = worldPosition;
         previewSprite.GlobalPosition = currentGridPosition + gridPreviewNodeOffset;
 
-        bool canPlace = itemInHand.definition.validTilePlacementMaterials.Contains(WorldMap.Instance.GetSelectedMaterial());
+        Vector2I gridPosition = WorldMap.Instance.GetGridCoordinates(currentGridPosition);
+        bool canPlace = WorldMap.Instance.CanPlaceNode(currentlyLoadedWorldGridNode, gridPosition);
         previewSprite.Modulate = (canPlace ? colorValid : colorInvalid).WithAlpha(SinBetween(0.25f, 0.75f));
 
         if(IsUseHoldablePressed() && canPlace)

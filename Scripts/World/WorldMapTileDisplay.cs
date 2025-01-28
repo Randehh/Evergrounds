@@ -93,6 +93,11 @@ public class WorldMapTileDisplay
         SelectedTileMaterial = mapData.GetMaterial(mouseGridPosition, layerType);
     }
 
+    public AtlasMaterial GetMaterialAt(Vector2I gridPosition)
+    {
+        return mapData.GetMaterial(gridPosition, layerType);
+    }
+
     public bool SetTile(Vector2I coords, bool asTypeOne)
     {
         bool isUpdated = mapData.SetMaterial(coords, asTypeOne ? typeOne : typeTwo, layerType);

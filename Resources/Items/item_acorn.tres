@@ -17,4 +17,3 @@ interactLevel = 0
 worldShadowScale = 0.25
 gridPlacementScene = "res://Scenes/World/Interactables/interactable_tree_yellow.tscn"
 tileMaterial = 0
-validTilePlacementMaterials = [0, 1]

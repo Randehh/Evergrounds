@@ -39,9 +39,6 @@ public partial class InventoryItemDefinition : Resource
     [Export(hintString: "Defines which material to change the tile to in tile material events, or on which tile the item can be placed")]
     public AtlasMaterial tileMaterial;
 
-    [Export(hintString: "Defines on which tiles the item can be placed")]
-    public Array<AtlasMaterial> validTilePlacementMaterials = new();
-
     public bool isStackable => stackSize > 1;
 
     public InventoryItemDefinition() { }

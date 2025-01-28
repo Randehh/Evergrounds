@@ -16,4 +16,3 @@ interactLevel = 0
 worldShadowScale = 0.25
 gridPlacementScene = "res://Scenes/World/Interactables/interactable_seeds.tscn"
 tileMaterial = 0
-validTilePlacementMaterials = [2]

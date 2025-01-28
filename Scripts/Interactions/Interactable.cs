@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using static WorldMap;
 
 [GlobalClass]
 public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNode, IWorldSaveable
@@ -30,11 +31,21 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
     [Export]
     private Sprite2D mainSprite;
 
+    [Export(hintString: "Defines which tiles this item will occupy")]
+    public Array<Vector2I> placementTiles = new() { Vector2I.Zero };
+
+    [Export(hintString: "Defines on which tiles the item can be placed")]
+    public Array<AtlasMaterial> validTilePlacementMaterials = new();
+
     private int interactCountRemaining;
 
     public Sprite2D gridPlacementPreviewSprite => mainSprite;
 
     public Vector2 gridPlacementOffset => (gridPlacementPreviewSprite.GlobalPosition - GlobalPosition) + gridPlacementPreviewSprite.Offset;
+
+    public Array<Vector2I> gridOffsetPositions => placementTiles;
+
+    public Array<AtlasMaterial> placementMaterials => validTilePlacementMaterials;
 
     public override void _Ready()
     {
@@ -74,7 +85,7 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
     {
         var inventoryItemDefinition = inventoryItem?.definition;
 
-        if (interactCountRemaining <= 0)
+        if (interactCountRemaining != -1 && interactCountRemaining <= 0)
         {
             return InteractResult.NO_INTERACTABLE;
         }

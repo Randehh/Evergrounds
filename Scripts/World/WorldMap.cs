@@ -1,8 +1,5 @@
 using Godot;
-using Godot.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using static WorldMapTileDisplay;
 
 [GlobalClass]
@@ -154,6 +151,11 @@ public partial class WorldMap : Node2D, IWorldSaveable
         return worldMapDisplay.SelectedMaterial;
     }
 
+    public AtlasMaterial GetMaterialAt(Vector2I coord)
+    {
+        return worldMapDisplay.GetMaterialAt(coord);
+    }
+
     public void SetSelectedTile(AtlasMaterial material, bool updateAllChunks = false)
     {
         bool updateVisuals = worldMapDisplay.SetSelectedTile(material);
@@ -193,6 +195,11 @@ public partial class WorldMap : Node2D, IWorldSaveable
         return GetGridPosition(globalMousePosition, GRID_SIZE, divisions, addHalfSizeOffset);
     }
 
+    public Vector2I GetGridCoordinates(Vector2 position)
+    {
+        return GetGridPosition(position, GRID_SIZE, 1, false) / GRID_SIZE;
+    }
+
     private Vector2I GetGridPosition(Vector2 position, int gridSize, int divisions, bool addHalfSizeOffset)
     {
         int size = gridSize / divisions;
@@ -225,6 +232,8 @@ public partial class WorldMap : Node2D, IWorldSaveable
 
         worldMapData.AddWorldNode(node);
     }
+
+    public bool CanPlaceNode(IWorldGridNode worldGridNode, Vector2I gridPosition) => worldMapData.CanPlaceNode(worldGridNode, gridPosition);
 
     public Godot.Collections.Dictionary<string, Variant> GetSaveData()
     {

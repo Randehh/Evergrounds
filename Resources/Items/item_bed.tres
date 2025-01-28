@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://fadv7oug8tkk"]
+
+[ext_resource type="Texture2D" uid="uid://dy4eflo03nenh" path="res://Art/Items/Furniture/Furniture_Bed.png" id="1_eo2v0"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_gudii"]
+
+[resource]
+script = ExtResource("2_gudii")
+displayName = "Bed"
+description = "Nothing better after a hard day's work."
+usageText = "Get some rest"
+itemSprite = ExtResource("1_eo2v0")
+stackSize = 1
+useAnimation = 0
+interactType = 4
+interactLevel = 0
+worldShadowScale = 0.25
+gridPlacementScene = "res://Scenes/World/Interactables/interactable_bed.tscn"
+tileMaterial = -1

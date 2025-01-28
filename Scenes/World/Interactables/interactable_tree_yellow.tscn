@@ -132,6 +132,7 @@ interactEvents = [NodePath("InteractEventPlayAnimation")]
 interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode")]
 interactCount = 3
 mainSprite = NodePath("TreeSprite")
+validTilePlacementMaterials = [0, 1]
 
 [node name="TreeAnimator" type="AnimationPlayer" parent="."]
 libraries = {
