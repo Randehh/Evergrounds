@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using static WorldMapTileDisplay;
 
@@ -29,8 +30,10 @@ public partial class WorldMap : Node2D, IWorldSaveable
     private Node2D mapChunkParent;
 
     private WorldMapData worldMapData;
-    private List<WorldMapChunk> chunks = new();
-    private System.Collections.Generic.Dictionary<Vector2I, WorldMapChunk> chunkLookup = new();
+    private WorldMapDisplay worldMapDisplay;
+    private HashSet<Vector2I> currentChunks = new ();
+    private Queue<Vector2I> chunksToHide = new  ();
+    private Queue<Vector2I> chunksToShow = new  ();
 
     private AtlasMaterial selectedMaterial;
 
@@ -38,9 +41,6 @@ public partial class WorldMap : Node2D, IWorldSaveable
     private Vector2I chunkGenerationSize;
     private Vector2I baseChunkOffset = new Vector2I(CHUNK_GENERATION_RANGE_X, CHUNK_GENERATION_RANGE_Y);
     private bool initialChunksSet = false;
-
-    private Queue<(WorldMapChunk, Vector2I, Vector2I)> chunkMovementQueue = new();
-    private List<WorldMapChunk> lockedChunks = new();
 
     private HashSet<Vector2I> generatedChunkCoords = new();
 
@@ -65,17 +65,13 @@ public partial class WorldMap : Node2D, IWorldSaveable
     {
         AddToGroup(WorldData.RecreateSaveGroup);
 
-        CreateChunks();
+        worldMapDisplay = new WorldMapDisplay(mapChunkParent, worldMapData);
     }
 
     public override void _Process(double delta)
     {
-
         Vector2I mouseGridPosition = GetMouseCoordinates(1, true);
-        foreach (WorldMapChunk chunk in chunks)
-        {
-            chunk.UpdateSelectedMaterial(mouseGridPosition);
-        }
+        worldMapDisplay.UpdateSelectedMaterial(mouseGridPosition);
 
         selectedMaterial = GetSelectedMaterial();
 
@@ -85,172 +81,109 @@ public partial class WorldMap : Node2D, IWorldSaveable
             RecenterMap(nextMapCenter);
         }
 
-        if(chunkMovementQueue.TryDequeue(out var chunkData))
+        if(chunksToHide.TryDequeue(out Vector2I toHide))
         {
-            var nextChunk = chunkData.Item1;
-            var chunkArrayPosition = chunkData.Item2;
-            var movementDirection = chunkData.Item3;
-
-            Vector2I chunkPosition = (chunkArrayPosition * CHUNK_SIZE) / CHUNK_SIZE;
-            chunkLookup[chunkPosition] = nextChunk;
-
-            worldMapData.SpawnNodes(chunkPosition);
-
-            if (!generatedChunkCoords.Contains(chunkArrayPosition))
-            {
-                generator.GenerateChunk(worldMapData, chunkArrayPosition);
-                generatedChunkCoords.Add(chunkArrayPosition);
-            }
-
-            Vector2I chunkTilePosition = chunkArrayPosition * CHUNK_SIZE;
-            Vector2I chunkPixelPosition = chunkTilePosition * GRID_SIZE;
-            nextChunk.SetChunkPosition(chunkTilePosition, chunkPixelPosition);
-
-            if(edgeLookup.TryGetValue(movementDirection, out WorldMapTileDisplayEdge edge) &&
-                chunkLookup.TryGetValue(chunkPosition - movementDirection, out WorldMapChunk edgeChunk))
-            {
-                edgeChunk.UpdateEdgeVisuals(edge);
-            }
-
-            if (lockedChunks.Contains(nextChunk))
-            {
-                lockedChunks.Remove(nextChunk);
-            }
+            worldMapDisplay.HideChunk(toHide);
         }
-    }
 
-    private void CreateChunks()
-    {
-        for (int x = 0; x < chunkGenerationSize.X; x++)
+        if (chunksToShow.TryDequeue(out Vector2I toShow))
         {
-            for (int y = 0; y < chunkGenerationSize.Y; y++)
+            if (!generatedChunkCoords.Contains(toShow))
             {
-                Vector2I chunkArrayPosition = new Vector2I(x, y) - baseChunkOffset;
-
-                WorldMapChunk newChunk = new WorldMapChunk(mapChunkParent, worldMapData);
-                chunks.Add(newChunk);
-                chunkLookup.Add(chunkArrayPosition, newChunk);
-
-                //generator.GenerateChunk(worldMapData, chunkArrayPosition);
+                generator.GenerateChunk(worldMapData, toShow);
+                generatedChunkCoords.Add(toShow);
             }
+
+            worldMapDisplay.DisplayChunk(toShow);
+            worldMapData.SpawnNodes(toShow);
         }
     }
 
     private void RecenterMap(Vector2I position)
     {
-        List<WorldMapChunk> freeChunks = new List<WorldMapChunk>(chunks);
-        HashSet<Vector2I> filledSpaces = new HashSet<Vector2I>();
+        Vector2I mapMovement = (position - currentMapCenter);
 
-        foreach(WorldMapChunk chunk in chunks)
+        if (initialChunksSet == true && mapMovement.Equals(Vector2I.Zero))
         {
-            Vector2I chunkPosition = chunk.ChunkTilePosition / CHUNK_SIZE;
-            bool isInRange =
-                chunkPosition.X >= position.X - baseChunkOffset.X &&
-                chunkPosition.X <= position.X + baseChunkOffset.X &&
-                chunkPosition.Y >= position.Y - baseChunkOffset.Y &&
-                chunkPosition.Y <= position.Y + baseChunkOffset.Y;
-
-            if(isInRange && chunk.isSet)
-            {
-                freeChunks.Remove(chunk);
-            }
-
-            if (initialChunksSet)
-            {
-                filledSpaces.Add(chunkPosition);
-            }
+            return;
         }
 
-        Vector2I movementDirection = (position - currentMapCenter);
+        HashSet<Vector2I> nextChunks = GetChunksAroundPoint(position);
 
+        // To remove...
+        foreach (Vector2I chunk in GetChunkCoordinatesDelta(currentChunks, nextChunks))
+        {
+            chunksToHide.Enqueue(chunk);
+        }
+
+        // To add
+        foreach (Vector2I chunk in GetChunkCoordinatesDelta(nextChunks, currentChunks))
+        {
+            chunksToShow.Enqueue(chunk);
+        }
+
+        currentMapCenter = position;
+        currentChunks = nextChunks;
+        initialChunksSet = true;
+    }
+
+    private HashSet<Vector2I> GetChunksAroundPoint(Vector2I point)
+    {
+        HashSet<Vector2I> chunks = new();
         for (int x = 0; x < chunkGenerationSize.X; x++)
         {
             for (int y = 0; y < chunkGenerationSize.Y; y++)
             {
-                Vector2I chunkArrayPosition = new Vector2I(x, y) - baseChunkOffset + position;
-
-                if (filledSpaces.Contains(chunkArrayPosition))
-                {
-                    continue;
-                }
-
-                WorldMapChunk nextChunk = freeChunks[0];
-                if (lockedChunks.Contains(nextChunk))
-                {
-                    continue;
-                }
-
-                freeChunks.RemoveAt(0);
-
-                chunkMovementQueue.Enqueue((nextChunk, chunkArrayPosition, movementDirection));
-
-                Vector2I chunkPosition = nextChunk.ChunkTilePosition / CHUNK_SIZE;
-                chunkLookup.Remove(chunkPosition);
-
-                lockedChunks.Add(nextChunk);
+                Vector2I chunkArrayPosition = new Vector2I(x, y) - baseChunkOffset + point;
+                chunks.Add(chunkArrayPosition);
             }
         }
 
-        currentMapCenter = position;
-        initialChunksSet = true;
+        return chunks;
+    }
+
+    private IEnumerable<Vector2I> GetChunkCoordinatesDelta(HashSet<Vector2I> currentChunks, HashSet<Vector2I> nextChunks)
+    {
+        HashSet<Vector2I> toRemove = new HashSet<Vector2I>(currentChunks);
+        toRemove.RemoveWhere(c => nextChunks.Contains(c));
+        return toRemove;
     }
 
     public AtlasMaterial GetSelectedMaterial()
     {
-        return GetSelectedChunk()?.SelectedMaterial ?? AtlasMaterial.NONE;
+        return worldMapDisplay.SelectedMaterial;
     }
 
     public void SetSelectedTile(AtlasMaterial material, bool updateAllChunks = false)
     {
-        WorldMapChunk selectedChunk = GetSelectedChunk();
-        bool updateVisuals = selectedChunk?.SetSelectedTile(material) ?? false;
+        bool updateVisuals = worldMapDisplay.SetSelectedTile(material);
         if (!updateVisuals)
         {
             return;
         }
 
-        Vector2I mouseMapPosition = selectedChunk.MouseMapPosition;
-
+        Vector2I mouseMapPosition = worldMapDisplay.MouseMapPosition;
 
         if (updateAllChunks)
         {
-            foreach (var item in chunks)
+            for (int x = -1; x <= 1; x++)
             {
-
-                for (int x = -1; x <= 1; x++)
+                for (int y = -1; y <= 1; y++)
                 {
-                    for (int y = -1; y <= 1; y++)
-                    {
-                        Vector2I v = new Vector2I(x, y);
-                        item.UpdateTileVisuals(mouseMapPosition + v);
-                    }
+                    Vector2I v = new Vector2I(x, y);
+                    worldMapDisplay.UpdateTileVisuals(mouseMapPosition + v);
                 }
             }
         }
         else
         {
-            selectedChunk.UpdateTileVisuals(mouseMapPosition);
+            worldMapDisplay.UpdateTileVisuals(mouseMapPosition);
         }
     }
 
     public bool CanChangeToTileMaterial(AtlasMaterial targetMaterial)
     {
-        return GetSelectedChunk()?.CanChangeToTileMaterial(targetMaterial) ?? false;
-    }
-
-    public WorldMapChunk GetSelectedChunk()
-    {
-        foreach (WorldMapChunk chunk in chunks)
-        {
-            if (!chunk.IsMouseInChunk)
-            {
-                continue;
-            }
-
-            return chunk;
-        }
-
-        return null;
+        return worldMapDisplay.CanChangeToTileMaterial(targetMaterial);
     }
 
 
@@ -327,10 +260,7 @@ public partial class WorldMap : Node2D, IWorldSaveable
                 ));
         }
 
-        foreach (var chunk in chunks)
-        {
-            chunk.ReplaceMapData(worldMapData);
-        }
+        worldMapDisplay.ReplaceMapData(worldMapData, GetChunksAroundPoint(Vector2I.Zero));
     }
 
     public enum AtlasMaterial

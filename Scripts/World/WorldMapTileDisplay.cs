@@ -1,6 +1,7 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using static WorldMap;
 using static WorldMapData;
 
@@ -48,16 +49,41 @@ public class WorldMapTileDisplay
         };
     }
 
-    public void ReplaceMapData(WorldMapData worldMapData, Vector2I chunkTilePosition)
+    public void ReplaceMapData(WorldMapData worldMapData, HashSet<Vector2I> chunks)
     {
         mapData = worldMapData;
 
+        foreach(Vector2I chunk in chunks)
+        {
+            DisplayChunk(chunk);
+        }
+    }
+
+    public void DisplayChunk(Vector2I chunkCoord)
+    {
+        foreach (Vector2I tileCoord in GetTilesOfChunk(chunkCoord))
+        {
+            SetDisplayTile(tileCoord);
+        }
+    }
+
+    public void HideChunk(Vector2I chunkCoord)
+    {
+        foreach (Vector2I tileCoord in GetTilesOfChunk(chunkCoord))
+        {
+            DisplayLayer.EraseCell(tileCoord);
+        }
+    }
+
+    private IEnumerable<Vector2I> GetTilesOfChunk(Vector2I chunkCoord)
+    {
+        Vector2I chunkWorldPosition = chunkCoord * WorldMap.CHUNK_SIZE;
         for (int x = 0; x < WorldMap.CHUNK_SIZE; x++)
         {
-            for(int y = 0; y < WorldMap.CHUNK_SIZE; y++)
+            for (int y = 0; y < WorldMap.CHUNK_SIZE; y++)
             {
-                Vector2I coord = new Vector2I(chunkTilePosition.X + x, chunkTilePosition.Y + y);
-                SetDisplayTile(coord);
+                Vector2I coord = new Vector2I(chunkWorldPosition.X + x, chunkWorldPosition.Y + y);
+                yield return coord;
             }
         }
     }
@@ -65,27 +91,6 @@ public class WorldMapTileDisplay
     public void UpdateSelectedMaterial(Vector2I mouseGridPosition)
     {
         SelectedTileMaterial = mapData.GetMaterial(mouseGridPosition, layerType);
-    }
-
-    public void ResetEdge(Vector2I chunkTilePosition, WorldMapTileDisplayEdge edge)
-    {
-        bool isHorizontal = edge == WorldMapTileDisplayEdge.UP || edge == WorldMapTileDisplayEdge.DOWN;
-        bool oppositeSide = edge == WorldMapTileDisplayEdge.DOWN || edge == WorldMapTileDisplayEdge.RIGHT;
-        for (int i = 0; i < WorldMap.CHUNK_SIZE; i++)
-        {
-            Vector2I coord = new Vector2I(
-                chunkTilePosition.X + (isHorizontal ? i : (oppositeSide ? WorldMap.CHUNK_SIZE : 0)),
-                chunkTilePosition.Y + (isHorizontal ? i : (oppositeSide ? WorldMap.CHUNK_SIZE : 0))
-            );
-
-            SetDisplayTile(coord);
-        }
-
-        for(int x = 0; x < WorldMap.CHUNK_SIZE; x++)
-        {
-            Vector2I coord = new Vector2I(chunkTilePosition.X + x, chunkTilePosition.Y);
-            SetDisplayTile(coord);
-        }
     }
 
     public bool SetTile(Vector2I coords, bool asTypeOne)

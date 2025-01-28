@@ -1,31 +1,26 @@
 using Godot;
+using System.Collections.Generic;
 using static WorldMap;
 using static WorldMapTileDisplay;
 
-public class WorldMapChunk
+public class WorldMapDisplay
 {
     private const string DISPLAY_TILE_MAP_SCENE_PATH = @"res://Scenes/World/display_tile_map.tscn";
 
     public AtlasMaterial SelectedMaterial => selectedMaterial;
-    public bool IsMouseInChunk => isMouseInChunk;
     public Vector2I MouseMapPosition => mouseMapPosition;
-    public Vector2I ChunkTilePosition => chunkTilePosition;
-    public Vector2I ChunkPixelPosition => chunkPixelPosition;
 
     public WorldMapTileDisplay standardTileMap;
     private WorldMapTileDisplay tillingTileMap;
 
     public bool isSet = false;
 
-    private Vector2I chunkTilePosition;
-    private Vector2I chunkPixelPosition;
     private AtlasMaterial selectedMaterial;
-    private bool isMouseInChunk;
     private Vector2I mouseMapPosition;
 
     private PackedScene displayTileMapPackedScene;
 
-    public WorldMapChunk(Node2D mapParent, WorldMapData mapData)
+    public WorldMapDisplay(Node2D mapParent, WorldMapData mapData)
     {
         displayTileMapPackedScene = GD.Load<PackedScene>(DISPLAY_TILE_MAP_SCENE_PATH);
 
@@ -42,49 +37,9 @@ public class WorldMapChunk
         return new WorldMapTileDisplay(mapData, mapLayer, materialOne, materialTwo, layerType, atlasId);
     }
 
-    public void SetChunkPosition(Vector2I chunkTilePosition, Vector2I chunkPixelPosition)
-    {
-        this.chunkTilePosition = chunkTilePosition;
-        this.chunkPixelPosition = chunkPixelPosition;
-
-        standardTileMap.DisplayLayer.Position = Vector2.Zero;
-        tillingTileMap.DisplayLayer.Position = Vector2.Zero;
-
-        standardTileMap.DisplayLayer.Clear();
-        tillingTileMap.DisplayLayer.Clear();
-
-        int startIndexX = chunkTilePosition.X;
-        int endIndexX = startIndexX + WorldMap.CHUNK_SIZE;
-        int startIndexY = chunkTilePosition.Y;
-        int endIndexY = startIndexY + WorldMap.CHUNK_SIZE;
-
-        for(int x = chunkTilePosition.X; x < endIndexX; x++)
-        {
-            for (int y = chunkTilePosition.Y; y < endIndexY; y++)
-            {
-                Vector2I coord = new Vector2I(x, y);
-                standardTileMap.SetDisplayTile(coord);
-                tillingTileMap.SetDisplayTile(coord);
-            }
-        }
-
-        isSet = true;
-    }
-
     public void UpdateSelectedMaterial(Vector2I mouseGridPosition)
     {
         selectedMaterial = AtlasMaterial.NONE;
-
-        isMouseInChunk =
-            mouseGridPosition.X >= chunkPixelPosition.X &&
-            mouseGridPosition.X < chunkPixelPosition.X + (WorldMap.CHUNK_SIZE * WorldMap.GRID_SIZE) &&
-            mouseGridPosition.Y >= chunkPixelPosition.Y &&
-            mouseGridPosition.Y < chunkPixelPosition.Y + (WorldMap.CHUNK_SIZE * WorldMap.GRID_SIZE);
-
-        if (!isMouseInChunk)
-        {
-            return;
-        }
 
         mouseMapPosition = standardTileMap.DisplayLayer.LocalToMap(mouseGridPosition);
 
@@ -96,13 +51,6 @@ public class WorldMapChunk
 
     public bool TryGetSelectedMaterial(out AtlasMaterial material)
     {
-        material = AtlasMaterial.NONE;
-
-        if (!isMouseInChunk)
-        {
-            return false;
-        }
-
         material = selectedMaterial;
         return true;
     }
@@ -138,11 +86,6 @@ public class WorldMapChunk
 
     public bool SetSelectedTile(AtlasMaterial targetMaterial)
     {
-        if(!IsMouseInChunk)
-        {
-            return false;
-        }
-
         return SetTile(mouseMapPosition, targetMaterial);
     }
 
@@ -172,6 +115,18 @@ public class WorldMapChunk
         return true;
     }
 
+    public void DisplayChunk(Vector2I chunkCoord)
+    {
+        standardTileMap.DisplayChunk(chunkCoord);
+        tillingTileMap.DisplayChunk(chunkCoord);
+    }
+
+    public void HideChunk(Vector2I chunkCoord)
+    {
+        standardTileMap.HideChunk(chunkCoord);
+        tillingTileMap.HideChunk(chunkCoord);
+    }
+
     public void UpdateTileVisuals(Vector2I coord)
     {
         standardTileMap.SetDisplayTile(coord);
@@ -180,13 +135,13 @@ public class WorldMapChunk
 
     public void UpdateEdgeVisuals(WorldMapTileDisplayEdge edge)
     {
-        standardTileMap.ResetEdge(chunkTilePosition, edge);
-        tillingTileMap.ResetEdge(chunkTilePosition, edge);
+        //standardTileMap.ResetEdge(chunkTilePosition, edge);
+        //tillingTileMap.ResetEdge(chunkTilePosition, edge);
     }
 
-    public void ReplaceMapData(WorldMapData worldMapData)
+    public void ReplaceMapData(WorldMapData worldMapData, HashSet<Vector2I> chunks)
     {
-        standardTileMap.ReplaceMapData(worldMapData, chunkTilePosition);
-        tillingTileMap.ReplaceMapData(worldMapData, chunkTilePosition);
+        standardTileMap.ReplaceMapData(worldMapData, chunks);
+        tillingTileMap.ReplaceMapData(worldMapData, chunks);
     }
 }

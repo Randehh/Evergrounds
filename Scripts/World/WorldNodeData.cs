@@ -105,11 +105,6 @@ public class WorldNodeData : IWorldSaveable
 
     public void SetSaveData(Dictionary<string, Variant> data)
     {
-        if(metadata == null)
-        {
-            return;
-        }
-
         sceneFilePath = data[SAVE_KEY_FILEPATH].AsString();
         parentPath = data[SAVE_KEY_PARENT].AsString();
 
