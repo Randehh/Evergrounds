@@ -6,9 +6,8 @@
 [resource]
 script = ExtResource("2_k0gam")
 displayName = "Carrot seed"
-description = ""
+description = "Plant to grow crunchy carrots!"
 usageText = "Plant carrots"
-itemType = 7
 itemSprite = ExtResource("1_ejlg2")
 stackSize = 100
 useAnimation = 0

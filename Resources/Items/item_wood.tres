@@ -6,9 +6,8 @@
 [resource]
 script = ExtResource("2_5xii6")
 displayName = "Wood"
-description = ""
+description = "Versatile as any material can be."
 usageText = "Crafting material"
-itemType = 4
 itemSprite = ExtResource("1_t0800")
 stackSize = 100
 useAnimation = 0
@@ -17,3 +16,4 @@ interactLevel = 0
 worldShadowScale = 0.25
 gridPlacementScene = ""
 tileMaterial = 0
+validTilePlacementMaterials = []

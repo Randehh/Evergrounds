@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("2_d6mj5")
 displayName = "Acorn"
-description = ""
+description = "For the future of woodkind.
+"
 usageText = "Plant trees"
-itemType = 6
 itemSprite = ExtResource("1_fd8hf")
 stackSize = 100
 useAnimation = 0

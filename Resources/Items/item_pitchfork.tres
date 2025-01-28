@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("2_t6tb7")
 displayName = "Rake"
-description = ""
+description = "Time to make yourself brekkie.
+"
 usageText = "Turn dirt into tilled soil"
-itemType = 3
 itemSprite = ExtResource("1_vfib3")
 stackSize = 1
 useAnimation = 0
@@ -17,3 +17,4 @@ interactLevel = 1
 worldShadowScale = 0.5
 gridPlacementScene = ""
 tileMaterial = 2
+validTilePlacementMaterials = []

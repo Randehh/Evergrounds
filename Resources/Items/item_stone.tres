@@ -6,9 +6,8 @@
 [resource]
 script = ExtResource("2_65or0")
 displayName = "Stone"
-description = ""
+description = "Hard and gray."
 usageText = "Crafting material"
-itemType = 8
 itemSprite = ExtResource("1_1pqbm")
 stackSize = 100
 useAnimation = 0

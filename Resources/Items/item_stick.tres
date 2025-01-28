@@ -6,9 +6,8 @@
 [resource]
 script = ExtResource("2_wdgb3")
 displayName = "Stick"
-description = ""
+description = "Every boy's dream weapon."
 usageText = "Crafting material"
-itemType = 9
 itemSprite = ExtResource("1_7gv04")
 stackSize = 100
 useAnimation = 0
