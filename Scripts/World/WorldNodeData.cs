@@ -20,6 +20,7 @@ public class WorldNodeData : IWorldSaveable
 
     public Node2D LiveNode => liveNodeReference;
     public Vector2I NodeChunkCoordinate => liveNodeReference != null ? WorldMap.Instance.GetGridChunkPosition(liveNodeReference.Position) : lastKnownChunk;
+    public bool IsValid => isValid;
 
     private Node2D liveNodeReference;
     private IWorldSaveable liveWorldSaveable;
@@ -29,6 +30,7 @@ public class WorldNodeData : IWorldSaveable
     private Vector2 lastKnownPosition;
     private Vector2I lastKnownChunk;
     private Dictionary<string, Variant> metadata;
+    private bool isValid = true;
 
     public bool TrySpawn(out Node2D spawnedNode)
     {
@@ -68,15 +70,21 @@ public class WorldNodeData : IWorldSaveable
         return true;
     }
 
+    public void Invalidate()
+    {
+        isValid = false;
+    }
+
     public void TrySetSaveData()
     {
-        if(liveNodeReference == null || !GodotObject.IsInstanceValid(liveNodeReference))
+        if (liveNodeReference == null || !GodotObject.IsInstanceValid(liveNodeReference))
         {
             return;
         }
 
         lastKnownPosition = liveNodeReference.Position;
         lastKnownChunk = WorldMap.Instance.GetGridChunkPosition(lastKnownPosition);
+
         metadata = liveWorldSaveable.GetSaveData();
     }
 

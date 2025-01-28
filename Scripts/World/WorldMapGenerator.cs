@@ -9,6 +9,9 @@ public partial class WorldMapGenerator : Node
     private const float NOISE_SIZE = 5f;
 
     [Export]
+    private bool randomSeed = true;
+
+    [Export]
     private int seed;
 
     [Export]
@@ -33,7 +36,7 @@ public partial class WorldMapGenerator : Node
         gridSize = new (WorldMap.GRID_SIZE, WorldMap.GRID_SIZE);
         gridSizeHalf = gridSize / 2;
 
-        noise.Seed = seed;
+        noise.Seed = randomSeed ? (int)Time.GetUnixTimeFromSystem() : seed;
     }
 
     public void GenerateChunk(WorldMapData mapData, Vector2I chunkCoords)

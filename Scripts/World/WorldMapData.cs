@@ -16,6 +16,8 @@ public class WorldMapData : IWorldSaveable
     private Dictionary<Vector2I, WorldNodeData> occupiedGridSpaces = new ();
     private Dictionary<WorldNodeData, List<Vector2I>> occupiedGridSpacesInverse = new();
 
+    private Dictionary<Vector2I, HashSet<WorldNodeData>> worldNodesInChunk = new();
+
     public WorldMapData()
     {
         layers[WorldMapDataLayerType.BASE] = new WorldMapDataLayer(AtlasMaterial.SOFT_SURFACE);
@@ -35,8 +37,6 @@ public class WorldMapData : IWorldSaveable
     public AtlasMaterial GetMaterial(Vector2I coords, WorldMapDataLayerType layer) => layers[layer].GetMaterial(coords);
 
     public IEnumerable<Vector2I> GetAllUsedCoords(WorldMapDataLayerType layer) => layers[layer].GetAllUsedCoords();
-
-    private Dictionary<Vector2I, HashSet<WorldNodeData>> worldNodesInChunk = new();
 
     public void AddWorldNode(Node2D node)
     {
@@ -77,11 +77,7 @@ public class WorldMapData : IWorldSaveable
             return;
         }
 
-        Vector2I chunkCoordinate = worldNodeDataRemoved.NodeChunkCoordinate;
-        if (worldNodesInChunk.TryGetValue(chunkCoordinate, out HashSet<WorldNodeData> nodeDatas) && nodeDatas.Contains(worldNodeDataRemoved))
-        {
-            nodeDatas.Remove(worldNodeDataRemoved);
-        }
+        worldNodeDataRemoved.Invalidate();
     }
 
     private void OnNodeDespawned(Node2D node)
@@ -130,14 +126,26 @@ public class WorldMapData : IWorldSaveable
             return;
         }
 
+        List<WorldNodeData> invalidNodes = new();
         foreach (WorldNodeData nodeData in nodeDatas)
         {
-            if(liveNodesInverse.ContainsKey(nodeData))
+            if (!nodeData.IsValid)
+            {
+                invalidNodes.Add(nodeData);
+                continue;
+            }
+
+            if (liveNodesInverse.ContainsKey(nodeData))
             {
                 continue;
             }
 
             AddWorldNode(nodeData, false);
+        }
+
+        foreach (WorldNodeData nodeData in invalidNodes)
+        {
+            nodeDatas.Remove(nodeData);
         }
     }
 
@@ -167,8 +175,6 @@ public class WorldMapData : IWorldSaveable
 
                 occupiedGridSpaces.Add(nodeSpace, nodeData);
                 nodeSpaces.Add(nodeSpace);
-
-
             }
             occupiedGridSpacesInverse.Add(nodeData, nodeSpaces);
         }
