@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=24 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="Script" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
@@ -12,10 +12,14 @@
 [ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="6_3kt0a"]
 [ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="6_c26d2"]
 [ext_resource type="Script" path="res://Scripts/UI/CursorUI.cs" id="8_4ge1w"]
+[ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="8_onj47"]
 [ext_resource type="PackedScene" uid="uid://c0ykpj48sr63t" path="res://Scenes/UI/crafting_canvas.tscn" id="9_gh0qo"]
+[ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_gieg4"]
 [ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
 [ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="10_821fs"]
+[ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="10_u4gyu"]
 [ext_resource type="Texture2D" uid="uid://bbms8e28hb43t" path="res://Art/UI/UI_Cursor_Grab.png" id="11_cpyry"]
+[ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="11_if80u"]
 [ext_resource type="Script" path="res://Scripts/UI/DebugUI.cs" id="12_i1bcf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
@@ -45,6 +49,7 @@ script = ExtResource("1_4si5g")
 map = NodePath("../Map")
 cameraScene = ExtResource("4_1vx5r")
 characterScene = ExtResource("4_hyjsw")
+itemsToGive = [ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("8_onj47"), ExtResource("8_onj47")]
 
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
 

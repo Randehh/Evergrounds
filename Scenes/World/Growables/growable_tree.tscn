@@ -1,0 +1,43 @@
+[gd_scene load_steps=10 format=3 uid="uid://bjiwcp5ftltt2"]
+
+[ext_resource type="Script" path="res://Scripts/World/WorldNodeGrowable.cs" id="1_qx1ed"]
+[ext_resource type="PackedScene" uid="uid://bmu70m6spkl83" path="res://Scenes/World/Interactables/interactable_tree_yellow.tscn" id="2_fxx2l"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_6prou"]
+[ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="4_hd2w6"]
+[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_171w2"]
+[ext_resource type="Texture2D" uid="uid://dclbjpr4ne38e" path="res://Art/World/Growables/Growable_Tree.png" id="6_fpneq"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="7_h85gp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k8f8h"]
+
+[sub_resource type="Resource" id="Resource_urmos"]
+script = ExtResource("5_171w2")
+item = ExtResource("4_hd2w6")
+minimumCount = 1
+maximumCount = 2
+baseChance = 0.25
+
+[node name="Tree" type="Area2D" node_paths=PackedStringArray("mainSprite")]
+y_sort_enabled = true
+collision_layer = 5
+script = ExtResource("1_qx1ed")
+onFinishedGrowingScene = ExtResource("2_fxx2l")
+mainSprite = NodePath("TreeSprite")
+validTilePlacementMaterials = [0, 1]
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_k8f8h")
+
+[node name="ArrowAnchor" type="Node2D" parent="."]
+position = Vector2(0, -30)
+
+[node name="InteractEventSpawnItem" type="Node2D" parent="."]
+script = ExtResource("3_6prou")
+itemsToSpawn = Array[Object]([SubResource("Resource_urmos")])
+
+[node name="TreeSprite" type="Sprite2D" parent="."]
+texture = ExtResource("6_fpneq")
+offset = Vector2(0, -8)
+
+[node name="InteractEventDestroyNode" type="Node2D" parent="."]
+script = ExtResource("7_h85gp")

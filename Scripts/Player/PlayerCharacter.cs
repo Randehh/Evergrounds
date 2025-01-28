@@ -74,6 +74,11 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 		Position += currentSpeed * (float)delta;
 
 		interactHandler.ProcessInteraction(character.CurrentlyHolding, delta);
+
+		if(Input.IsActionJustPressed("next_day"))
+		{
+			ServiceLocator.TimeService.TriggerNextDay();
+		}
 	}
 
     public override void _PhysicsProcess(double delta)

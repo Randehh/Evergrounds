@@ -8,6 +8,7 @@ public class ServiceLocator
 
     public static InventoryService InventoryService => Instance.GetService<InventoryService>(true);
     public static GameNotificationService GameNotificationService => Instance.GetService<GameNotificationService>(true);
+    public static TimeService TimeService => Instance.GetService<TimeService>(true);
 
     private Dictionary<Type, IService> services = new ();
 

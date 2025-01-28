@@ -227,7 +227,7 @@ public partial class WorldMap : Node2D, IWorldSaveable
             }
 
             AddChild(node);
-            node.GlobalPosition = replaceParentPosition;
+            node.Position = replaceParentPosition;
         }
 
         worldMapData.AddWorldNode(node);

@@ -67,6 +67,8 @@ public class WorldNodeData : IWorldSaveable
         sceneFilePath = liveNode.SceneFilePath;
         parentPath = liveNode.GetParent().GetPath();
 
+        ServiceLocator.GameNotificationService.OnNodeSpawned.Execute(this);
+
         return true;
     }
 

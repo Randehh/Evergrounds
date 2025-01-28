@@ -72,12 +72,21 @@ public class WorldMapData : IWorldSaveable
 
     private void OnNodeDestroyed(Node2D node)
     {
-        if(!TryRemoveLiveNode(node, out WorldNodeData worldNodeDataRemoved))
+        if (!TryRemoveLiveNode(node, out WorldNodeData worldNodeDataRemoved))
         {
             return;
         }
 
-        worldNodeDataRemoved.Invalidate();
+
+        Vector2I chunkCoordinate = worldNodeDataRemoved.NodeChunkCoordinate;
+        if (worldNodesInChunk.TryGetValue(chunkCoordinate, out HashSet<WorldNodeData> nodeDatas) && nodeDatas.Contains(worldNodeDataRemoved))
+        {
+            nodeDatas.Remove(worldNodeDataRemoved);
+        }
+        else
+        {
+            worldNodeDataRemoved.Invalidate();
+        }
     }
 
     private void OnNodeDespawned(Node2D node)

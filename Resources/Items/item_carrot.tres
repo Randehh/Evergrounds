@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://du6v1pv2pj6bu"]
+
+[ext_resource type="Texture2D" uid="uid://dl6rjpljq5n0v" path="res://Art/Items/Resources/Resource_Carrot.png" id="1_3ukmq"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_d7qdn"]
+
+[resource]
+script = ExtResource("2_d7qdn")
+displayName = "Carrot"
+description = "Crunchy and sweet!"
+usageText = "Crafting material"
+itemSprite = ExtResource("1_3ukmq")
+stackSize = 100
+useAnimation = 0
+interactType = 0
+interactLevel = 0
+worldShadowScale = 0.25
+gridPlacementScene = ""
+tileMaterial = 0

@@ -14,5 +14,5 @@ useAnimation = 0
 interactType = 4
 interactLevel = 0
 worldShadowScale = 0.25
-gridPlacementScene = "res://Scenes/World/Interactables/interactable_seeds.tscn"
+gridPlacementScene = "res://Scenes/World/Growables/growable_seeds.tscn"
 tileMaterial = 0

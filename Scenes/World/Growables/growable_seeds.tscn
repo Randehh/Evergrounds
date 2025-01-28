@@ -1,0 +1,42 @@
+[gd_scene load_steps=10 format=3 uid="uid://7s4ij62v280g"]
+
+[ext_resource type="Script" path="res://Scripts/World/WorldNodeGrowable.cs" id="1_k23cj"]
+[ext_resource type="PackedScene" uid="uid://hnncnqeulgog" path="res://Scenes/World/Interactables/interactable_seeds.tscn" id="2_5xcty"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_d8k13"]
+[ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="4_rfuco"]
+[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_rnp4a"]
+[ext_resource type="Texture2D" uid="uid://blqcsw7wgk6xx" path="res://Art/World/Growables/Growable_Seeds.png" id="6_kb4e1"]
+[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="7_rr68x"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k8f8h"]
+
+[sub_resource type="Resource" id="Resource_urmos"]
+script = ExtResource("5_rnp4a")
+item = ExtResource("4_rfuco")
+minimumCount = 1
+maximumCount = 2
+baseChance = 0.25
+
+[node name="Seeds" type="Area2D" node_paths=PackedStringArray("mainSprite")]
+y_sort_enabled = true
+collision_layer = 5
+script = ExtResource("1_k23cj")
+onFinishedGrowingScene = ExtResource("2_5xcty")
+mainSprite = NodePath("SeedsSprite")
+validTilePlacementMaterials = [2]
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_k8f8h")
+
+[node name="ArrowAnchor" type="Node2D" parent="."]
+position = Vector2(0, -30)
+
+[node name="InteractEventSpawnItem" type="Node2D" parent="."]
+script = ExtResource("3_d8k13")
+itemsToSpawn = Array[Object]([SubResource("Resource_urmos")])
+
+[node name="SeedsSprite" type="Sprite2D" parent="."]
+texture = ExtResource("6_kb4e1")
+
+[node name="InteractEventDestroyNode" type="Node2D" parent="."]
+script = ExtResource("7_rr68x")

@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 [GlobalClass]
 public partial class GameSetup : Node
@@ -12,6 +13,9 @@ public partial class GameSetup : Node
     [Export]
     private PackedScene characterScene;
 
+    [Export]
+    private Array<InventoryItemDefinition> itemsToGive = new();
+
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Hidden;
@@ -23,5 +27,10 @@ public partial class GameSetup : Node
         map.AddWorldNode(character, true, Vector2.Zero);
 
         camera.toFollow = character;
+
+        foreach (InventoryItemDefinition item in itemsToGive)
+        {
+            ServiceLocator.InventoryService.AddItem(item, 1);
+        }
     }
 }

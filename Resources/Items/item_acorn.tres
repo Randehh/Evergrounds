@@ -15,5 +15,5 @@ useAnimation = 0
 interactType = 5
 interactLevel = 0
 worldShadowScale = 0.25
-gridPlacementScene = "res://Scenes/World/Interactables/interactable_tree_yellow.tscn"
+gridPlacementScene = "res://Scenes/World/Growables/growable_tree.tscn"
 tileMaterial = 0

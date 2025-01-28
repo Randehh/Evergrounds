@@ -4,9 +4,16 @@ using System;
 
 public class GameNotificationService : IService
 {
+    // Saving and loading
     public GameNotification<WorldData> OnLoadWorld = new();
+
+    // Nodes
+    public GameNotification<WorldNodeData> OnNodeSpawned = new();
     public GameNotification<Node2D> OnNodeDespawned = new();
     public GameNotification<Node2D> OnNodeDestroyed = new();
+
+    // Time
+    public GameNotification<int> OnNextDay = new();
 
     public void OnInit()
     {
@@ -24,7 +31,7 @@ public class GameNotificationService : IService
     }
 }
 
-public class GameNotification<T> where T : class
+public class GameNotification<T>
 {
     public void Execute(T payload)
     {
