@@ -56,7 +56,7 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
 
     public void Interact()
     {
-        if(interactCountRemaining <= 0)
+        if(interactCountRemaining == 0)
         {
             return;
         }
@@ -66,11 +66,17 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
             interactEvent.Execute();
         }
 
-        interactCountRemaining--;
+        if (interactCountRemaining != -1)
+        {
+            interactCountRemaining--;
+        }
 
         if (interactCountRemaining <= 0)
         {
-            SetCollisionLayerValue(1, false);
+            if (interactCountRemaining != -1)
+            {
+                SetCollisionLayerValue(1, false);
+            }
 
             foreach (var interactEvent in interactCompleteEvents)
             {
@@ -85,7 +91,7 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
     {
         var inventoryItemDefinition = inventoryItem?.definition;
 
-        if (interactCountRemaining != -1 && interactCountRemaining <= 0)
+        if (interactCountRemaining == 0)
         {
             return InteractResult.NO_INTERACTABLE;
         }

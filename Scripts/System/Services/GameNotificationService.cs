@@ -15,6 +15,7 @@ public class GameNotificationService : IService
     // Time
     public GameNotification<int> OnNextDay = new();
     public GameNotification<TimeUpdatePayload> OnTimeUpdated = new();
+    public GameNotification<Action> OnTriggerDayTransition = new();
 
     public void OnInit()
     {

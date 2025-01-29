@@ -77,7 +77,7 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 
 		if(Input.IsActionJustPressed("next_day"))
 		{
-			ServiceLocator.TimeService.TriggerNextDay();
+			ServiceLocator.TimeService.TriggerNextDay(true);
 		}
 	}
 

@@ -11,6 +11,7 @@ public class TimeService : IService, IWorldSaveable
     // 10 minutes = 1 day
     private const float TIME_MULTIPLIER = 24 * (60 / 10);
     private const int SECONDS_IN_DAY = 86400;
+    private const int DAY_START_TIME = (SECONDS_IN_DAY / 24) * 6;
 
     public int currentDay = 1;
 
@@ -20,7 +21,7 @@ public class TimeService : IService, IWorldSaveable
 
     public void OnInit()
     {
-
+        currentTime = DAY_START_TIME;
     }
 
     public void OnReady()
@@ -43,7 +44,7 @@ public class TimeService : IService, IWorldSaveable
 
         if(currentTime >= SECONDS_IN_DAY)
         {
-            TriggerNextDay();
+            TriggerNextDay(false);
             currentTime -= SECONDS_IN_DAY;
         }
 
@@ -56,9 +57,16 @@ public class TimeService : IService, IWorldSaveable
         });
     }
 
-    public void TriggerNextDay()
+    public void TriggerNextDay(bool useTransition)
     {
+        if(useTransition)
+        {
+            ServiceLocator.GameNotificationService.OnTriggerDayTransition.Execute(() => TriggerNextDay(false));
+            return;
+        }
+
         currentDay++;
+        currentTime = DAY_START_TIME;
 
         foreach (IWorldTimeListener timeListener in worldTimeListeners)
         {
