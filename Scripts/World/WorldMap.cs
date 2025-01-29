@@ -54,14 +54,13 @@ public partial class WorldMap : Node2D, IWorldSaveable
         Instance = this;
 
         chunkGenerationSize = new Vector2I(1 + (CHUNK_GENERATION_RANGE_X * 2), 1 + (CHUNK_GENERATION_RANGE_Y * 2));
-
-        worldMapData = new WorldMapData();
     }
 
     public override void _Ready()
     {
         AddToGroup(WorldData.RecreateSaveGroup);
 
+        worldMapData = new WorldMapData();
         worldMapDisplay = new WorldMapDisplay(mapChunkParent, worldMapData);
     }
 

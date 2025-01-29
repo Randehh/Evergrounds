@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=26 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="Script" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
@@ -21,6 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://bbms8e28hb43t" path="res://Art/UI/UI_Cursor_Grab.png" id="11_cpyry"]
 [ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="11_if80u"]
 [ext_resource type="Script" path="res://Scripts/UI/DebugUI.cs" id="12_i1bcf"]
+[ext_resource type="Script" path="res://Scripts/System/Services/ServiceLocator.cs" id="12_ucx2n"]
+[ext_resource type="PackedScene" uid="uid://cwkqdyaqwc88q" path="res://Scenes/UI/general_canvas.tscn" id="14_qhyv2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
 line_spacing = 5.0
@@ -35,6 +37,9 @@ font_size = 10
 
 [node name="ServiceSerializer" type="Node" parent="."]
 script = ExtResource("1_u5mee")
+
+[node name="ServiceLocator" type="Node" parent="."]
+script = ExtResource("12_ucx2n")
 
 [node name="WorldData" type="Node" parent="."]
 script = ExtResource("1_rxiwr")
@@ -54,6 +59,8 @@ itemsToGive = [ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
 
 [node name="CraftingCanvas" parent="." instance=ExtResource("9_gh0qo")]
+
+[node name="GeneralCanvas" parent="." instance=ExtResource("14_qhyv2")]
 
 [node name="DragAndDropCanvas" type="CanvasLayer" parent="."]
 layer = 5

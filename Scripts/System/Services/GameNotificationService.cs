@@ -14,6 +14,7 @@ public class GameNotificationService : IService
 
     // Time
     public GameNotification<int> OnNextDay = new();
+    public GameNotification<TimeUpdatePayload> OnTimeUpdated = new();
 
     public void OnInit()
     {

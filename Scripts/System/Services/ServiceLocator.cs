@@ -2,15 +2,34 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class ServiceLocator
+[GlobalClass]
+public partial class ServiceLocator : Node
 {
-    private static ServiceLocator Instance = new();
+    private static ServiceLocator Instance;
 
     public static InventoryService InventoryService => Instance.GetService<InventoryService>(true);
     public static GameNotificationService GameNotificationService => Instance.GetService<GameNotificationService>(true);
     public static TimeService TimeService => Instance.GetService<TimeService>(true);
 
     private Dictionary<Type, IService> services = new ();
+
+    public override void _EnterTree()
+    {
+        Instance = this;
+    }
+
+    public override void _Ready()
+    {
+        RegisterService(new TimeService());
+    }
+
+    public override void _Process(double delta)
+    {
+        foreach (IService service in services.Values)
+        {
+            service.Process(delta);
+        }
+    }
 
     public T GetService<T>(bool createIfNotExists) where T : class, IService
     {
