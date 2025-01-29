@@ -114,7 +114,7 @@ _data = {
 radius = 30.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u6o11"]
-radius = 30.0
+radius = 35.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vfjf2"]
 radius = 400.0
@@ -156,7 +156,6 @@ texture = ExtResource("3_d6q47")
 
 [node name="InteractableDetector" type="Area2D" parent="."]
 script = ExtResource("4_faxxo")
-interactRadius = 30.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="InteractableDetector"]
 shape = SubResource("CircleShape2D_kovjw")

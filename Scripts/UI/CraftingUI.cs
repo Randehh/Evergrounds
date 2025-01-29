@@ -63,7 +63,11 @@ public partial class CraftingUI : Control
         ReloadUI();
 
         // We can be smarter here and track which indexes are being used in components, but we're cavemanning it until it stops working
-        inventory.OnUpdateSlot += (_) => SetSelectedCraftingSlot(currentlySelected);
+        inventory.OnUpdateSlot += (_) =>
+        {
+            ReloadUI();
+            SetSelectedCraftingSlot(currentlySelected);
+        };
     }   
 
     private void CraftButton_Pressed()
@@ -136,6 +140,9 @@ public partial class CraftingUI : Control
                     slot.Texture = slotBackground;
                 }
             };
+
+            bool canCraftItem = CanCraftRecipe(recipe);
+            slot.Modulate = canCraftItem ? COLOR_WHITE : COLOR_TRANSPARENT;
         }
 
         foldedY = -310;
@@ -176,7 +183,7 @@ public partial class CraftingUI : Control
         }
 
         CraftingRecipe recipe = recipeContainer.recipes[slot];
-        bool canCraftItem = true;
+        bool canCraftItem = CanCraftRecipe(recipe);
 
         recipeTitleLabel.Text = recipe.result.item.displayName;
         recipeDescriptionLabel.Text = recipe.result.item.description;
@@ -198,14 +205,27 @@ public partial class CraftingUI : Control
             componentView.Modulate = hasItem ? COLOR_WHITE : COLOR_TRANSPARENT;
 
             recipeComponentContainer.AddChild(componentView);
-            
-            if(!hasItem)
+        }
+
+        craftButton.Disabled = !canCraftItem;
+    }
+
+    private bool CanCraftRecipe(CraftingRecipe recipe)
+    {
+        bool canCraftItem = true;
+
+        foreach (CraftingRecipeItem requiredItem in recipe.requiredItems)
+        {
+            InventoryItemDefinition item = requiredItem.item;
+
+            bool hasItem = inventory.HasItem(item, requiredItem.count);
+            if (!hasItem)
             {
                 canCraftItem = false;
             }
         }
 
-        craftButton.Disabled = !canCraftItem;
+        return canCraftItem;
     }
 
     private struct ButtonData

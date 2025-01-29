@@ -1,15 +1,11 @@
 using Godot;
 using System.Collections.Generic;
-using System.Linq;
 
 [GlobalClass]
 public partial class PlayerInteractDetector : Area2D
 {
     public Interactable SelectedInteractable => IsInstanceValid(selectedInteractable) ? selectedInteractable : null;
     public bool IsInRange { get; private set; }
-
-    [Export]
-    private float interactRadius = 25;
 
     private Node2D parent;
     private Interactable selectedInteractable;
@@ -57,7 +53,7 @@ public partial class PlayerInteractDetector : Area2D
         }
 
         selectedInteractable = interactables[closestIndex];
-        IsInRange = SelectedInteractable.GlobalPosition.DistanceTo(parent.GlobalPosition) <= interactRadius;
+        IsInRange = SelectedInteractable.GlobalPosition.DistanceTo(parent.GlobalPosition) <= PlayerInteractHandler.INTERACT_RADIUS;
     }
 
     private void OnAreaEntered(Area2D area) {

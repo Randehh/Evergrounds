@@ -21,6 +21,6 @@ public partial class TimeUI : Control
     {
         dayLabel.Text = $"Day {payload.day}";
         timeLabel.Text = payload.displayString;
-        dial.RotationDegrees = (float)(360 / payload.normalizedTime) - 180;
+        dial.RotationDegrees = (float)(360 / -payload.normalizedTime) - 180;
     }
 }

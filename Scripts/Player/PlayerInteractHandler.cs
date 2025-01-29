@@ -4,6 +4,8 @@ using System;
 [GlobalClass]
 public partial class PlayerInteractHandler : Node2D
 {
+    public const float INTERACT_RADIUS = 30;
+
     private readonly Color colorWhite = new Color(1, 1, 1, 1);
     private readonly Color colorHalfAlpha = new Color(1, 1, 1, 0.5f);
 
@@ -120,14 +122,16 @@ public partial class PlayerInteractHandler : Node2D
 
         if (interactDetector.IsInRange)
         {
-            selectArrow.Modulate = colorWhite;
             currentInteractResult = currentInteracable.GetInteractResult(character.CurrentlyHolding);
         }
         else
         {
-            selectArrow.Modulate = colorHalfAlpha;
             currentInteractResult = InteractResult.OUT_OF_RANGE;
         }
+
+        float alpha = 1 - ((currentInteracable.Position.DistanceTo(PlayerCharacter.Instance.Position) - INTERACT_RADIUS) / INTERACT_RADIUS * 0.5f);
+        alpha = Mathf.Clamp(alpha, 0, 1);
+        selectArrow.Modulate = colorWhite.WithAlpha(alpha);
 
         selectArrow.GlobalPosition = currentInteracable.GetArrowAnchor();
         selectArrow.Visible = true;
@@ -151,8 +155,22 @@ public partial class PlayerInteractHandler : Node2D
     {
         bool canChangeMaterial = WorldMap.Instance.CanChangeToTileMaterial(itemInHand.definition.tileMaterial);
 
-        gridTileView.GlobalPosition = WorldMap.Instance.GetMouseCoordinates(1, true);
-        gridTileView.Modulate = (canChangeMaterial ? colorValid : colorInvalid).WithAlpha(SinBetween(0.25f, 0.75f));
+        Vector2 gridPosition = WorldMap.Instance.GetMouseCoordinates(1, true);
+        gridTileView.GlobalPosition = gridPosition;
+
+        Color previewColorBase = canChangeMaterial ? colorValid : colorInvalid;
+        float alphaMin = 0.4f;
+        float alphaMax = 0.75f;
+        if ((gridPosition).DistanceTo(PlayerCharacter.Instance.Position) >= INTERACT_RADIUS)
+        {
+            canChangeMaterial = false;
+
+            alphaMin = 0.1f;
+            alphaMax = 0.25f;
+        }
+
+        Color previewColor = previewColorBase.WithAlpha(SinBetween(alphaMin, alphaMax));
+        gridTileView.Modulate = previewColor;
 
         if (canChangeMaterial && IsUseHoldablePressed())
         {
@@ -203,9 +221,23 @@ public partial class PlayerInteractHandler : Node2D
 
         Vector2I gridPosition = WorldMap.Instance.GetGridCoordinates(currentGridPosition);
         bool canPlace = WorldMap.Instance.CanPlaceNode(currentlyLoadedWorldGridNode, gridPosition);
-        previewSprite.Modulate = (canPlace ? colorValid : colorInvalid).WithAlpha(SinBetween(0.25f, 0.75f));
 
-        if(IsUseHoldablePressed() && canPlace)
+        Color previewColorBase = canPlace ? colorValid : colorInvalid;
+        float alphaMin = 0.4f;
+        float alphaMax = 0.75f;
+        if(((Vector2)currentGridPosition).DistanceTo(PlayerCharacter.Instance.Position) >= INTERACT_RADIUS)
+        {
+            canPlace = false;
+
+            alphaMin = 0.1f;
+            alphaMax = 0.25f;
+        }
+
+        Color previewColor = previewColorBase.WithAlpha(SinBetween(alphaMin, alphaMax));
+
+        previewSprite.Modulate = previewColor;
+
+        if (IsUseHoldablePressed() && canPlace)
         {
             Node2D placedNode = currentlyLoadedPackedScene.Instantiate<Node2D>();
             WorldMap.Instance.AddWorldNode(placedNode, true, currentGridPosition);
