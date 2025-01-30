@@ -12,6 +12,8 @@ public class InventoryService : IService, IWorldSaveable
 
     public Action<int> OnSelectQuickslot = delegate { };
     public Action<int> OnUpdateSlot = delegate { };
+    public Action<InventoryItem> OnItemAdded = delegate { };
+    public Action<InventoryItem> OnItemRemoved = delegate { };
 
     public const int QUICK_SELECT_COUNT = 10;
     public const int INVENTORY_SIZE = 50;
@@ -59,12 +61,14 @@ public class InventoryService : IService, IWorldSaveable
                 if (existingItem.CurrentStackSize + count <= item.stackSize)
                 {
                     existingItem.CurrentStackSize += count;
+                    OnItemAdded.Invoke(existingItem);
                     return true;
                 }
                 else
                 {
                     count = (existingItem.CurrentStackSize + count) - item.stackSize;
                     existingItem.CurrentStackSize = item.stackSize;
+                    OnItemAdded.Invoke(existingItem);
                 }
             }
         }
@@ -99,6 +103,8 @@ public class InventoryService : IService, IWorldSaveable
 
         item.onStackSizeUpdated += OnStackSizeUpdated;
 
+        OnItemAdded.Invoke(item);
+
         RefreshInventorySlot(index);
     }
 
@@ -122,9 +128,13 @@ public class InventoryService : IService, IWorldSaveable
         int inventoryIndex = itemInstanceLookup[item];
 
         item.CurrentStackSize -= count;
-        if(item.CurrentStackSize <= 0)
+        if (item.CurrentStackSize <= 0)
         {
             RemoveItem(inventoryIndex);
+        }
+        else
+        {
+            OnItemRemoved(item);
         }
 
         return true;
@@ -174,6 +184,7 @@ public class InventoryService : IService, IWorldSaveable
         if (finalIndex != -1)
         {
             inventoryItems[finalIndex].CurrentStackSize -= count;
+            OnItemRemoved(inventoryItems[finalIndex]);
         }
 
         return true;
@@ -200,6 +211,8 @@ public class InventoryService : IService, IWorldSaveable
         itemInstanceLookup.Remove(itemToRemove);
 
         itemToRemove.onStackSizeUpdated -= OnStackSizeUpdated;
+
+        OnItemRemoved(itemToRemove);
 
         RefreshInventorySlot(index);
 
@@ -252,6 +265,24 @@ public class InventoryService : IService, IWorldSaveable
 
         int nextButtonIndex = slot;
         OnSelectQuickslot.Invoke(nextButtonIndex);
+    }
+
+    public bool CanCraftRecipe(CraftingRecipe recipe)
+    {
+        bool canCraftItem = true;
+
+        foreach (CraftingRecipeItem requiredItem in recipe.requiredItems)
+        {
+            InventoryItemDefinition item = requiredItem.item;
+
+            bool hasItem = HasItem(item, requiredItem.count);
+            if (!hasItem)
+            {
+                canCraftItem = false;
+            }
+        }
+
+        return canCraftItem;
     }
 
     public Godot.Collections.Dictionary<string, Variant> GetSaveData()

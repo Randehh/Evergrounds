@@ -39,7 +39,7 @@ public partial class InventoryUI : Control
 
     private InventoryService inventory;
     private int currentlyEquipped = 0;
-    private List<ButtonData> inventoryButtons = new();
+    private List<ItemSlotComponent> inventoryButtons = new();
     private int slotMouseOver = -1;
 
     private float foldedY;
@@ -179,21 +179,21 @@ public partial class InventoryUI : Control
                 inventoryRowContainer.AddChild(row);
             }
 
-            TextureRect slot = inventorySlotScene.Instantiate<TextureRect>();
+            ItemSlotComponent slot = inventorySlotScene.Instantiate<ItemSlotComponent>();
             row.AddChild(slot);
 
-            ButtonData buttonData = new ButtonData(slot);
-            inventoryButtons.Add(buttonData);
+            inventoryButtons.Add(slot);
 
-            buttonData.stackCountLabel.Visible = false;
+            slot.stackCountLabel.Visible = false;
 
             if (i < 10)
             {
-                buttonData.label.Text = GetEquipmentSlotDisplayIndex(i).ToString();
+                slot.quickSelectLabel.Text = GetEquipmentSlotDisplayIndex(i).ToString();
+                slot.quickSelectLabel.Visible = true;
             }
             else
             {
-                buttonData.label.Visible = false;
+                slot.quickSelectLabel.Visible = false;
             }
 
             int slotIndex = i;
@@ -201,9 +201,9 @@ public partial class InventoryUI : Control
             {
                 slotMouseOver = slotIndex;
 
-                if (slot.Texture != slotBackgroundSelected)
+                if (currentlyEquipped != slotIndex)
                 {
-                    slot.Texture = slotBackgroundHover;
+                    slot.SetBackgroundStateHover();
                 }
 
                 SetQuickInfo(slotMouseOver);
@@ -213,9 +213,9 @@ public partial class InventoryUI : Control
             {
                 slotMouseOver = -1;
 
-                if (slot.Texture != slotBackgroundSelected)
+                if (currentlyEquipped != slotIndex)
                 {
-                    slot.Texture = slotBackground;
+                    slot.SetBackgroundStateDefault();
                 }
 
                 SetQuickInfo(currentlyEquipped);
@@ -228,20 +228,15 @@ public partial class InventoryUI : Control
 
     private void SetSlot(int slot)
     {
-        ButtonData buttonData = inventoryButtons[slot];
+        ItemSlotComponent buttonData = inventoryButtons[slot];
         InventoryItem inventoryItem = inventory.GetItem(slot);
-        InventoryItemRarity rarity = inventoryItem != null ? inventoryItem.definition.rarity : InventoryItemRarity.COMMON;
-
-        buttonData.buttonRect.SelfModulate = rarity.GetSlotColor();
-        buttonData.textureRect.Texture = inventoryItem?.definition.itemSprite;
-        buttonData.stackCountLabel.Text = inventoryItem?.CurrentStackSize.ToString();
-        buttonData.stackCountLabel.Visible = inventoryItem?.definition.isStackable ?? false;
+        buttonData.SetItem(inventoryItem);
     }
 
     private void EquipSlot(int slot)
     {
-        inventoryButtons[currentlyEquipped].buttonRect.Texture = slotBackground;
-        inventoryButtons[slot].buttonRect.Texture = slotBackgroundSelected;
+        inventoryButtons[currentlyEquipped].SetBackgroundStateDefault();
+        inventoryButtons[slot].SetBackgroundStateSelected();
 
         currentlyEquipped = slot;
 
@@ -266,21 +261,5 @@ public partial class InventoryUI : Control
         }
 
         return buttonIndex;
-    }
-
-    private struct ButtonData
-    {
-        public TextureRect buttonRect;
-        public TextureRect textureRect;
-        public Label label;
-        public Label stackCountLabel;
-
-        public ButtonData(TextureRect buttonRect)
-        {
-            this.buttonRect = buttonRect;
-            textureRect = buttonRect.GetNode("ItemSprite") as TextureRect;
-            label = buttonRect.GetNode("NumberLabel") as Label;
-            stackCountLabel = buttonRect.GetNode("StackCountLabel") as Label;
-        }
     }
 }

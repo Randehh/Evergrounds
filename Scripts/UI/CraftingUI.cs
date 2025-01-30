@@ -46,7 +46,7 @@ public partial class CraftingUI : Control
     private InventoryService inventory;
     private CraftingRecipeContainer recipeContainer;
     private int slotMouseOver = -1;
-    private List<ButtonData> inventoryButtons = new();
+    private List<CraftingItemSlotComponent> inventoryButtons = new();
     private int currentlySelected = -1;
 
     private float foldedY;
@@ -65,7 +65,6 @@ public partial class CraftingUI : Control
         // We can be smarter here and track which indexes are being used in components, but we're cavemanning it until it stops working
         inventory.OnUpdateSlot += (_) =>
         {
-            ReloadUI();
             SetSelectedCraftingSlot(currentlySelected);
         };
     }   
@@ -112,11 +111,9 @@ public partial class CraftingUI : Control
         for (int i = 0; i < defaultCraftingRecipeContainer.recipes.Count; i++)
         {
             CraftingRecipe recipe = defaultCraftingRecipeContainer.recipes[i];
-            TextureRect slot = inventorySlotScene.Instantiate<TextureRect>();
+            CraftingItemSlotComponent slot = inventorySlotScene.Instantiate<CraftingItemSlotComponent>();
             slotContainer.AddChild(slot);
-
-            ButtonData buttonData = new ButtonData(slot);
-            inventoryButtons.Add(buttonData);
+            inventoryButtons.Add(slot);
 
             SetSlot(i);
 
@@ -125,9 +122,9 @@ public partial class CraftingUI : Control
             {
                 slotMouseOver = slotIndex;
 
-                if (slot.Texture != slotBackgroundSelected)
+                if (currentlySelected != slotIndex)
                 {
-                    slot.Texture = slotBackgroundHover;
+                    slot.SetBackgroundStateHover();
                 }
             };
 
@@ -135,14 +132,11 @@ public partial class CraftingUI : Control
             {
                 slotMouseOver = -1;
 
-                if (slot.Texture != slotBackgroundSelected)
+                if (currentlySelected != slotIndex)
                 {
-                    slot.Texture = slotBackground;
+                    slot.SetBackgroundStateDefault();
                 }
             };
-
-            bool canCraftItem = CanCraftRecipe(recipe);
-            slot.SelfModulate = recipe.result.item.rarity.GetSlotColor().WithAlpha(canCraftItem ? 1 : 0.5f);
         }
 
         foldedY = -310;
@@ -151,14 +145,11 @@ public partial class CraftingUI : Control
         SetSelectedCraftingSlot(0);
     }
 
-    private void SetSlot(int slot)
+    private void SetSlot(int slotIndex)
     {
-        ButtonData buttonData = inventoryButtons[slot];
-        CraftingRecipe recipe = defaultCraftingRecipeContainer.recipes[slot];
-        buttonData.label.Visible = false;
-        buttonData.textureRect.Texture = recipe.result.item.itemSprite;
-        buttonData.stackCountLabel.Text = recipe.result.count.ToString();
-        buttonData.stackCountLabel.Visible = recipe.result.count > 1;
+        CraftingItemSlotComponent slot = inventoryButtons[slotIndex];
+        CraftingRecipe recipe = defaultCraftingRecipeContainer.recipes[slotIndex];
+        slot.SetRecipe(recipe);
     }
 
     private void SetSelectedCraftingSlot(int slot)
@@ -170,10 +161,10 @@ public partial class CraftingUI : Control
 
         if(currentlySelected >= 0)
         {
-            inventoryButtons[currentlySelected].buttonRect.Texture = slotBackground;
+            inventoryButtons[currentlySelected].SetBackgroundStateDefault();
         }
 
-        inventoryButtons[slot].buttonRect.Texture = slotBackgroundSelected;
+        inventoryButtons[slot].SetBackgroundStateSelected();
 
         currentlySelected = slot;
 
@@ -183,12 +174,11 @@ public partial class CraftingUI : Control
         }
 
         CraftingRecipe recipe = recipeContainer.recipes[slot];
-        bool canCraftItem = CanCraftRecipe(recipe);
 
         recipeTitleLabel.Text = recipe.result.item.displayName;
         recipeDescriptionLabel.Text = recipe.result.item.description;
 
-        foreach (CraftingRecipeItem requiredItem in recipeContainer.recipes[slot].requiredItems)
+        foreach (CraftingRecipeItem requiredItem in recipe.requiredItems)
         {
             InventoryItemDefinition item = requiredItem.item;
 
@@ -197,12 +187,8 @@ public partial class CraftingUI : Control
             nameLabel.Text = item.displayName;
             nameLabel.Modulate = item.rarity.GetTextColor();
 
-            ButtonData slotData = new ButtonData(componentView.FindChild("InventorySlot") as TextureRect);
-            slotData.label.Visible = false;
-            slotData.buttonRect.SelfModulate = item.rarity.GetSlotColor();
-            slotData.textureRect.Texture = item.itemSprite;
-            slotData.stackCountLabel.Text = requiredItem.count.ToString();
-            slotData.stackCountLabel.Visible = requiredItem.count > 1;
+            ItemSlotComponent slotData = componentView.FindChild("InventorySlot") as ItemSlotComponent;
+            slotData.SetItem(item, requiredItem.count);
 
             bool hasItem = inventory.HasItem(item, requiredItem.count);
             componentView.Modulate = hasItem ? COLOR_WHITE : COLOR_TRANSPARENT;
@@ -210,40 +196,7 @@ public partial class CraftingUI : Control
             recipeComponentContainer.AddChild(componentView);
         }
 
+        bool canCraftItem = inventory.CanCraftRecipe(recipe);
         craftButton.Disabled = !canCraftItem;
-    }
-
-    private bool CanCraftRecipe(CraftingRecipe recipe)
-    {
-        bool canCraftItem = true;
-
-        foreach (CraftingRecipeItem requiredItem in recipe.requiredItems)
-        {
-            InventoryItemDefinition item = requiredItem.item;
-
-            bool hasItem = inventory.HasItem(item, requiredItem.count);
-            if (!hasItem)
-            {
-                canCraftItem = false;
-            }
-        }
-
-        return canCraftItem;
-    }
-
-    private struct ButtonData
-    {
-        public TextureRect buttonRect;
-        public TextureRect textureRect;
-        public Label label;
-        public Label stackCountLabel;
-
-        public ButtonData(TextureRect buttonRect)
-        {
-            this.buttonRect = buttonRect;
-            textureRect = buttonRect.GetNode("ItemSprite") as TextureRect;
-            label = buttonRect.GetNode("NumberLabel") as Label;
-            stackCountLabel = buttonRect.GetNode("StackCountLabel") as Label;
-        }
     }
 }

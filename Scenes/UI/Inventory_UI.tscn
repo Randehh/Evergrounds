@@ -25,6 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_wutvs")
 script = ExtResource("1_gpbcs")
 inventorySlotScene = ExtResource("1_boum4")
@@ -45,18 +46,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="AllRows" type="VBoxContainer" parent="InventoryUi/Pivot"]
 layout_mode = 2
+mouse_filter = 2
 alignment = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="InventoryUi/Pivot/AllRows"]
 layout_mode = 2
 size_flags_horizontal = 4
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_rpwul")
 
 [node name="MarginContainer" type="MarginContainer" parent="InventoryUi/Pivot/AllRows/PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 2
@@ -64,11 +69,13 @@ theme_override_constants/margin_bottom = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="InventoryUi/Pivot/AllRows/PanelContainer/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="ItemTextureRect" type="TextureRect" parent="InventoryUi/Pivot/AllRows/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 texture = ExtResource("6_arafo")
 
 [node name="Title" type="Label" parent="InventoryUi/Pivot/AllRows/PanelContainer/MarginContainer/HBoxContainer"]
@@ -79,3 +86,4 @@ label_settings = ExtResource("8_8uj7v")
 
 [node name="InventorySlots" type="VBoxContainer" parent="InventoryUi/Pivot/AllRows"]
 layout_mode = 2
+mouse_filter = 2
