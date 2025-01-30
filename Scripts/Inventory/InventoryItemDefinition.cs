@@ -31,6 +31,9 @@ public partial class InventoryItemDefinition : Resource
     public int interactLevel = 1;
 
     [Export]
+    public InventoryItemRarity rarity;
+
+    [Export]
     public float worldShadowScale = 0.5f;
 
     [Export(hintString: "Defines what is placed on the grid with grid-based interaction types")]

@@ -103,7 +103,7 @@ public class TimeService : IService, IWorldSaveable
     public void SetSaveData(Godot.Collections.Dictionary<string, Variant> data)
     {
         currentDay = data[SAVE_KEY_DAY].AsInt32();
-        currentTime = data[SAVE_KEY_DAY].AsDouble();
+        currentTime = (float)data[SAVE_KEY_TIME];
     }
 }
 

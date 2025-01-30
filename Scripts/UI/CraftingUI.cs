@@ -142,7 +142,7 @@ public partial class CraftingUI : Control
             };
 
             bool canCraftItem = CanCraftRecipe(recipe);
-            slot.Modulate = canCraftItem ? COLOR_WHITE : COLOR_TRANSPARENT;
+            slot.SelfModulate = recipe.result.item.rarity.GetSlotColor().WithAlpha(canCraftItem ? 1 : 0.5f);
         }
 
         foldedY = -310;
@@ -193,10 +193,13 @@ public partial class CraftingUI : Control
             InventoryItemDefinition item = requiredItem.item;
 
             HBoxContainer componentView = craftingComponentScene.Instantiate<HBoxContainer>();
-            (componentView.FindChild("Name") as Label).Text = item.displayName;
+            Label nameLabel = (componentView.FindChild("Name") as Label);
+            nameLabel.Text = item.displayName;
+            nameLabel.Modulate = item.rarity.GetTextColor();
 
             ButtonData slotData = new ButtonData(componentView.FindChild("InventorySlot") as TextureRect);
             slotData.label.Visible = false;
+            slotData.buttonRect.SelfModulate = item.rarity.GetSlotColor();
             slotData.textureRect.Texture = item.itemSprite;
             slotData.stackCountLabel.Text = requiredItem.count.ToString();
             slotData.stackCountLabel.Visible = requiredItem.count > 1;

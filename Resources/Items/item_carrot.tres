@@ -13,6 +13,7 @@ stackSize = 100
 useAnimation = 0
 interactType = 0
 interactLevel = 0
+rarity = 1
 worldShadowScale = 0.25
 gridPlacementScene = ""
 tileMaterial = 0

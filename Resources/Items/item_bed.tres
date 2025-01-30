@@ -13,6 +13,7 @@ stackSize = 1
 useAnimation = 0
 interactType = 4
 interactLevel = 0
+rarity = 1
 worldShadowScale = 0.25
 gridPlacementScene = "res://Scenes/World/Interactables/interactable_bed.tscn"
 tileMaterial = -1

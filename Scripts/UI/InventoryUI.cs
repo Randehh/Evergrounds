@@ -230,6 +230,9 @@ public partial class InventoryUI : Control
     {
         ButtonData buttonData = inventoryButtons[slot];
         InventoryItem inventoryItem = inventory.GetItem(slot);
+        InventoryItemRarity rarity = inventoryItem != null ? inventoryItem.definition.rarity : InventoryItemRarity.COMMON;
+
+        buttonData.buttonRect.SelfModulate = rarity.GetSlotColor();
         buttonData.textureRect.Texture = inventoryItem?.definition.itemSprite;
         buttonData.stackCountLabel.Text = inventoryItem?.CurrentStackSize.ToString();
         buttonData.stackCountLabel.Visible = inventoryItem?.definition.isStackable ?? false;
@@ -250,6 +253,7 @@ public partial class InventoryUI : Control
         InventoryItem itemInfo = inventory.GetItem(slot);
         itemInfoParent.Modulate = itemInfo != null ? COLOR_WHITE : COLOR_TRANSPARENT;
         itemInfoTexture.Texture = itemInfo?.definition.itemSprite;
+        itemInfoLabel.SelfModulate = itemInfo != null ? itemInfo.definition.rarity.GetTextColor() : COLOR_WHITE;
         itemInfoLabel.Text = $"{itemInfo?.definition.displayName} - {itemInfo?.definition.usageText}";
     }
 
