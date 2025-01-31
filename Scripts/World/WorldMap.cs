@@ -277,5 +277,6 @@ public partial class WorldMap : Node2D, IWorldSaveable
         SOFT_SURFACE = 0,
         SOIL = 1,
         TILLED = 2,
+        WALL = 3,
     }
 }

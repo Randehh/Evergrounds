@@ -62,4 +62,5 @@ seed = 2425
 placementDatas = Array[Object]([SubResource("Resource_826ao"), SubResource("Resource_6rp2r"), SubResource("Resource_svcrr"), SubResource("Resource_nv623"), SubResource("Resource_g6bnd")])
 
 [node name="MapChunks" type="Node2D" parent="."]
+y_sort_enabled = true
 position = Vector2(-8, -8)

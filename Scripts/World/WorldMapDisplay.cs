@@ -1,7 +1,6 @@
 using Godot;
 using System.Collections.Generic;
 using static WorldMap;
-using static WorldMapTileDisplay;
 
 public class WorldMapDisplay
 {
@@ -10,8 +9,11 @@ public class WorldMapDisplay
     public AtlasMaterial SelectedMaterial => selectedMaterial;
     public Vector2I MouseMapPosition => mouseMapPosition;
 
-    public WorldMapTileDisplay standardTileMap;
+    private WorldMapTileDisplay standardTileMap;
     private WorldMapTileDisplay tillingTileMap;
+    private WorldMapTileDisplay wallsTileMap;
+
+    private WorldMapTileDisplay[] tileDisplays;
 
     public bool isSet = false;
 
@@ -26,6 +28,14 @@ public class WorldMapDisplay
 
         standardTileMap = CreateTileDisplay(mapParent, mapData, AtlasMaterial.SOFT_SURFACE, AtlasMaterial.SOIL, WorldMapData.WorldMapDataLayerType.BASE, 0);
         tillingTileMap = CreateTileDisplay(mapParent, mapData, AtlasMaterial.NONE, AtlasMaterial.TILLED, WorldMapData.WorldMapDataLayerType.TILLING, 2);
+        wallsTileMap = CreateTileDisplay(mapParent, mapData, AtlasMaterial.NONE, AtlasMaterial.WALL, WorldMapData.WorldMapDataLayerType.WALLS, 3);
+
+        tileDisplays = new WorldMapTileDisplay[3]
+        {
+            standardTileMap,
+            tillingTileMap,
+            wallsTileMap
+        };
     }
 
     private WorldMapTileDisplay CreateTileDisplay(Node2D mapParent, WorldMapData mapData, AtlasMaterial materialOne,  AtlasMaterial materialTwo, WorldMapData.WorldMapDataLayerType layerType, int atlasId)
@@ -43,8 +53,10 @@ public class WorldMapDisplay
 
         mouseMapPosition = standardTileMap.DisplayLayer.LocalToMap(mouseGridPosition);
 
-        standardTileMap.UpdateSelectedMaterial(mouseMapPosition);
-        tillingTileMap.UpdateSelectedMaterial(mouseMapPosition);
+        foreach(WorldMapTileDisplay mapLayer in tileDisplays)
+        {
+            mapLayer.UpdateSelectedMaterial(mouseMapPosition);
+        }
 
         selectedMaterial = GetPriorityMaterial(standardTileMap.SelectedTileMaterial, tillingTileMap.SelectedTileMaterial);
     }
@@ -87,6 +99,9 @@ public class WorldMapDisplay
 
             case AtlasMaterial.TILLED:
                 return standardTileMap.SelectedTileMaterial == AtlasMaterial.SOIL && tillingTileMap.SelectedTileMaterial == AtlasMaterial.NONE;
+
+            case AtlasMaterial.WALL:
+                return tillingTileMap.SelectedTileMaterial == AtlasMaterial.NONE;
         }
 
         return false;
@@ -118,6 +133,10 @@ public class WorldMapDisplay
             case AtlasMaterial.TILLED:
                 tillingTileMap.SetTile(mouseGridPosition, asTypeOne: false);
                 break;
+
+            case AtlasMaterial.WALL:
+                wallsTileMap.SetTile(mouseGridPosition, asTypeOne: false);
+                break;
         }
 
         return true;
@@ -125,31 +144,33 @@ public class WorldMapDisplay
 
     public void DisplayChunk(Vector2I chunkCoord)
     {
-        standardTileMap.DisplayChunk(chunkCoord);
-        tillingTileMap.DisplayChunk(chunkCoord);
+        foreach (WorldMapTileDisplay mapLayer in tileDisplays)
+        {
+            mapLayer.DisplayChunk(chunkCoord);
+        }
     }
 
     public void HideChunk(Vector2I chunkCoord)
     {
-        standardTileMap.HideChunk(chunkCoord);
-        tillingTileMap.HideChunk(chunkCoord);
+        foreach (WorldMapTileDisplay mapLayer in tileDisplays)
+        {
+            mapLayer.HideChunk(chunkCoord);
+        }
     }
 
     public void UpdateTileVisuals(Vector2I coord)
     {
-        standardTileMap.SetDisplayTile(coord);
-        tillingTileMap.SetDisplayTile(coord);
-    }
-
-    public void UpdateEdgeVisuals(WorldMapTileDisplayEdge edge)
-    {
-        //standardTileMap.ResetEdge(chunkTilePosition, edge);
-        //tillingTileMap.ResetEdge(chunkTilePosition, edge);
+        foreach (WorldMapTileDisplay mapLayer in tileDisplays)
+        {
+            mapLayer.SetDisplayTile(coord);
+        }
     }
 
     public void ReplaceMapData(WorldMapData worldMapData, HashSet<Vector2I> chunks)
     {
-        standardTileMap.ReplaceMapData(worldMapData, chunks);
-        tillingTileMap.ReplaceMapData(worldMapData, chunks);
+        foreach (WorldMapTileDisplay mapLayer in tileDisplays)
+        {
+            mapLayer.ReplaceMapData(worldMapData, chunks);
+        }
     }
 }

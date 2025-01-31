@@ -3,5 +3,5 @@
 [ext_resource type="TileSet" uid="uid://c1k01p45fhnsg" path="res://TileSets/Terrains.tres" id="1_pqi2p"]
 
 [node name="DisplayTileMap" type="TileMapLayer"]
-z_index = -500
+y_sort_enabled = true
 tile_set = ExtResource("1_pqi2p")

@@ -22,6 +22,7 @@ public class WorldMapData : IWorldSaveable
     {
         layers[WorldMapDataLayerType.BASE] = new WorldMapDataLayer(AtlasMaterial.SOFT_SURFACE);
         layers[WorldMapDataLayerType.TILLING] = new WorldMapDataLayer(AtlasMaterial.NONE);
+        layers[WorldMapDataLayerType.WALLS] = new WorldMapDataLayer(AtlasMaterial.NONE);
 
         ServiceLocator.GameNotificationService.OnNodeDestroyed.OnFire += OnNodeDestroyed;
         ServiceLocator.GameNotificationService.OnNodeDespawned.OnFire += OnNodeDespawned;
@@ -261,7 +262,8 @@ public class WorldMapData : IWorldSaveable
     public enum WorldMapDataLayerType
     {
         BASE,
-        TILLING
+        TILLING,
+        WALLS,
     }
 
     private class WorldMapDataLayer

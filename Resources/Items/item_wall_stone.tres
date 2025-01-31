@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://c0t6l1cukeovf"]
+
+[ext_resource type="Texture2D" uid="uid://dd300pbj5g24m" path="res://Art/Items/Resources/Resource_Stone.png" id="1_2a8od"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_acwwn"]
+
+[resource]
+script = ExtResource("2_acwwn")
+displayName = "Wall - Stone"
+description = "Stonewalled"
+usageText = "Place a wall"
+itemSprite = ExtResource("1_2a8od")
+stackSize = 100
+useAnimation = 0
+interactType = 6
+interactLevel = 0
+rarity = 1
+worldShadowScale = 0.25
+gridPlacementScene = ""
+tileMaterial = 3
