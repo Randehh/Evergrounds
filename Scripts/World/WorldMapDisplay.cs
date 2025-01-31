@@ -13,8 +13,9 @@ public class WorldMapDisplay
     private WorldMapTileDisplay standardTileMap;
     private WorldMapTileDisplay tillingTileMap;
     private WorldMapTileDisplay wallsTileMap;
+    private WorldMapTileDisplaySimple floorsTileMap;
 
-    private WorldMapTileDisplay[] tileDisplays;
+    private IWorldMapTileDisplay[] tileDisplays;
 
     public bool isSet = false;
 
@@ -29,17 +30,19 @@ public class WorldMapDisplay
 
         standardTileMap = CreateTileDisplay(mapParent, mapData, AtlasMaterial.SOFT_SURFACE, AtlasMaterial.SOIL, WorldMapData.WorldMapDataLayerType.BASE, 0);
         tillingTileMap = CreateTileDisplay(mapParent, mapData, AtlasMaterial.NONE, AtlasMaterial.TILLED, WorldMapData.WorldMapDataLayerType.TILLING, 2);
+        floorsTileMap = CreateTileDisplaySimple(mapParent, mapData, WorldMapDataLayerType.FLOORS, 4);
         wallsTileMap = CreateTileDisplay(mapParent, mapData, AtlasMaterial.NONE, AtlasMaterial.WALL, WorldMapData.WorldMapDataLayerType.WALLS, 3);
 
-        tileDisplays = new WorldMapTileDisplay[3]
+        tileDisplays = new IWorldMapTileDisplay[4]
         {
             standardTileMap,
             tillingTileMap,
-            wallsTileMap
+            wallsTileMap,
+            floorsTileMap
         };
     }
 
-    private WorldMapTileDisplay CreateTileDisplay(Node2D mapParent, WorldMapData mapData, AtlasMaterial materialOne,  AtlasMaterial materialTwo, WorldMapData.WorldMapDataLayerType layerType, int atlasId)
+    private WorldMapTileDisplay CreateTileDisplay(Node2D mapParent, WorldMapData mapData, AtlasMaterial materialOne,  AtlasMaterial materialTwo, WorldMapDataLayerType layerType, int atlasId)
     {
         TileMapLayer mapLayer = displayTileMapPackedScene.Instantiate<TileMapLayer>();
         mapParent.AddChild(mapLayer);
@@ -48,11 +51,20 @@ public class WorldMapDisplay
         return new WorldMapTileDisplay(mapData, mapLayer, materialOne, materialTwo, layerType, atlasId);
     }
 
+    private WorldMapTileDisplaySimple CreateTileDisplaySimple(Node2D mapParent, WorldMapData mapData, WorldMapDataLayerType layerType, int atlasId)
+    {
+        TileMapLayer mapLayer = displayTileMapPackedScene.Instantiate<TileMapLayer>();
+        mapParent.AddChild(mapLayer);
+        mapLayer.Position = new Vector2(8, 8);
+
+        return new WorldMapTileDisplaySimple(mapData, mapLayer, layerType, atlasId);
+    }
+
     public void UpdateSelectedMaterial(Vector2I mouseGridPosition)
     {
         mouseMapPosition = standardTileMap.DisplayLayer.LocalToMap(mouseGridPosition);
 
-        foreach(WorldMapTileDisplay mapLayer in tileDisplays)
+        foreach(IWorldMapTileDisplay mapLayer in tileDisplays)
         {
             mapLayer.UpdateSelectedMaterial(mouseMapPosition);
         }
@@ -100,6 +112,7 @@ public class WorldMapDisplay
                 return standardTileMap.SelectedTileData == AtlasMaterial.SOIL && tillingTileMap.SelectedTileData == AtlasMaterial.NONE;
 
             case AtlasMaterial.WALL:
+            case AtlasMaterial.FLOOR_WOOD:
                 return tillingTileMap.SelectedTileData == AtlasMaterial.NONE;
         }
 
@@ -136,6 +149,10 @@ public class WorldMapDisplay
             case AtlasMaterial.WALL:
                 wallsTileMap.SetTile(mouseGridPosition, asTypeOne: false, subTileSet);
                 break;
+
+            case AtlasMaterial.FLOOR_WOOD:
+                floorsTileMap.SetTile(mouseGridPosition, material, subTileSet);
+                break;
         }
 
         return true;
@@ -143,7 +160,7 @@ public class WorldMapDisplay
 
     public void DisplayChunk(Vector2I chunkCoord)
     {
-        foreach (WorldMapTileDisplay mapLayer in tileDisplays)
+        foreach (IWorldMapTileDisplay mapLayer in tileDisplays)
         {
             mapLayer.DisplayChunk(chunkCoord);
         }
@@ -151,7 +168,7 @@ public class WorldMapDisplay
 
     public void HideChunk(Vector2I chunkCoord)
     {
-        foreach (WorldMapTileDisplay mapLayer in tileDisplays)
+        foreach (IWorldMapTileDisplay mapLayer in tileDisplays)
         {
             mapLayer.HideChunk(chunkCoord);
         }
@@ -159,7 +176,7 @@ public class WorldMapDisplay
 
     public void UpdateTileVisuals(Vector2I coord)
     {
-        foreach (WorldMapTileDisplay mapLayer in tileDisplays)
+        foreach (IWorldMapTileDisplay mapLayer in tileDisplays)
         {
             mapLayer.SetDisplayTile(coord);
         }
@@ -167,7 +184,7 @@ public class WorldMapDisplay
 
     public void ReplaceMapData(WorldMapData worldMapData, HashSet<Vector2I> chunks)
     {
-        foreach (WorldMapTileDisplay mapLayer in tileDisplays)
+        foreach (IWorldMapTileDisplay mapLayer in tileDisplays)
         {
             mapLayer.ReplaceMapData(worldMapData, chunks);
         }

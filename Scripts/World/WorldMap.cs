@@ -278,5 +278,7 @@ public partial class WorldMap : Node2D, IWorldSaveable
         SOIL = 1,
         TILLED = 2,
         WALL = 3,
+
+        FLOOR_WOOD = 1000,
     }
 }

@@ -1,12 +1,71 @@
-[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://c1k01p45fhnsg"]
+[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://c1k01p45fhnsg"]
 
 [ext_resource type="Texture2D" uid="uid://c00ch6tm8lf2c" path="res://Art/Tilemaps/Default_Dual_Grid.png" id="1_rnrnl"]
 [ext_resource type="Texture2D" uid="uid://cvyjd8sxcb53x" path="res://Art/Tilemaps/Default_Dual_Grid_Generation.png" id="1_sogxp"]
 [ext_resource type="Texture2D" uid="uid://bl483sb7tgf8u" path="res://Art/Tilemaps/Tilling_Dual_Grid.png" id="3_yahfj"]
 [ext_resource type="Texture2D" uid="uid://c27ab8nntoc8i" path="res://Art/Tilemaps/Tilemap_Walls.png" id="4_x4jgb"]
+[ext_resource type="Texture2D" uid="uid://ce5s5pgv6lw6i" path="res://Art/Tilemaps/Tilemap_Floors.png" id="5_poclu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lx033"]
 texture = ExtResource("1_rnrnl")
+0:0/0 = 0
+0:0/0/z_index = -3
+0:0/0/y_sort_origin = 8
+1:0/0 = 0
+1:0/0/z_index = -3
+1:0/0/y_sort_origin = 8
+2:0/0 = 0
+2:0/0/z_index = -3
+2:0/0/y_sort_origin = 8
+3:0/0 = 0
+3:0/0/z_index = -3
+3:0/0/y_sort_origin = 8
+0:1/0 = 0
+0:1/0/z_index = -3
+0:1/0/y_sort_origin = 8
+1:1/0 = 0
+1:1/0/z_index = -3
+1:1/0/y_sort_origin = 8
+2:1/0 = 0
+2:1/0/z_index = -3
+2:1/0/y_sort_origin = 8
+3:1/0 = 0
+3:1/0/z_index = -3
+3:1/0/y_sort_origin = 8
+0:2/0 = 0
+0:2/0/z_index = -3
+0:2/0/y_sort_origin = 8
+1:2/0 = 0
+1:2/0/z_index = -3
+1:2/0/y_sort_origin = 8
+2:2/0 = 0
+2:2/0/z_index = -3
+2:2/0/y_sort_origin = 8
+3:2/0 = 0
+3:2/0/z_index = -3
+3:2/0/y_sort_origin = 8
+0:3/0 = 0
+0:3/0/z_index = -3
+0:3/0/y_sort_origin = 8
+1:3/0 = 0
+1:3/0/z_index = -3
+1:3/0/y_sort_origin = 8
+2:3/0 = 0
+2:3/0/z_index = -3
+2:3/0/y_sort_origin = 8
+3:3/0 = 0
+3:3/0/z_index = -3
+3:3/0/y_sort_origin = 8
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sur8a"]
+texture = ExtResource("1_sogxp")
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/custom_data_0 = true
+1:0/0/custom_data_1 = 1
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dgt0c"]
+texture = ExtResource("3_yahfj")
 0:0/0 = 0
 0:0/0/z_index = -2
 0:0/0/y_sort_origin = 8
@@ -43,9 +102,6 @@ texture = ExtResource("1_rnrnl")
 3:2/0 = 0
 3:2/0/z_index = -2
 3:2/0/y_sort_origin = 8
-0:3/0 = 0
-0:3/0/z_index = -2
-0:3/0/y_sort_origin = 8
 1:3/0 = 0
 1:3/0/z_index = -2
 1:3/0/y_sort_origin = 8
@@ -55,63 +111,8 @@ texture = ExtResource("1_rnrnl")
 3:3/0 = 0
 3:3/0/z_index = -2
 3:3/0/y_sort_origin = 8
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sur8a"]
-texture = ExtResource("1_sogxp")
-0:0/0 = 0
-1:0/0 = 0
-1:0/0/custom_data_0 = true
-1:0/0/custom_data_1 = 1
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dgt0c"]
-texture = ExtResource("3_yahfj")
-0:0/0 = 0
-0:0/0/z_index = -1
-0:0/0/y_sort_origin = 8
-1:0/0 = 0
-1:0/0/z_index = -1
-1:0/0/y_sort_origin = 8
-2:0/0 = 0
-2:0/0/z_index = -1
-2:0/0/y_sort_origin = 8
-3:0/0 = 0
-3:0/0/z_index = -1
-3:0/0/y_sort_origin = 8
-0:1/0 = 0
-0:1/0/z_index = -1
-0:1/0/y_sort_origin = 8
-1:1/0 = 0
-1:1/0/z_index = -1
-1:1/0/y_sort_origin = 8
-2:1/0 = 0
-2:1/0/z_index = -1
-2:1/0/y_sort_origin = 8
-3:1/0 = 0
-3:1/0/z_index = -1
-3:1/0/y_sort_origin = 8
-0:2/0 = 0
-0:2/0/z_index = -1
-0:2/0/y_sort_origin = 8
-1:2/0 = 0
-1:2/0/z_index = -1
-1:2/0/y_sort_origin = 8
-2:2/0 = 0
-2:2/0/z_index = -1
-2:2/0/y_sort_origin = 8
-3:2/0 = 0
-3:2/0/z_index = -1
-3:2/0/y_sort_origin = 8
-1:3/0 = 0
-1:3/0/z_index = -1
-1:3/0/y_sort_origin = 8
-2:3/0 = 0
-2:3/0/z_index = -1
-2:3/0/y_sort_origin = 8
-3:3/0 = 0
-3:3/0/z_index = -1
-3:3/0/y_sort_origin = 8
 0:3/0 = 0
-0:3/0/z_index = -1
+0:3/0/z_index = -2
 0:3/0/y_sort_origin = 8
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_leyie"]
@@ -168,6 +169,58 @@ texture = ExtResource("4_x4jgb")
 5:3/0 = 0
 4:3/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oevda"]
+texture = ExtResource("5_poclu")
+1:0/0 = 0
+1:0/0/z_index = -1
+1:0/0/y_sort_origin = 8
+1:0/0/custom_data_1 = 1
+2:0/0 = 0
+2:0/0/z_index = -1
+2:0/0/y_sort_origin = 8
+3:0/0 = 0
+3:0/0/z_index = -1
+3:0/0/y_sort_origin = 8
+0:1/0 = 0
+0:1/0/z_index = -1
+0:1/0/y_sort_origin = 8
+1:1/0 = 0
+1:1/0/z_index = -1
+1:1/0/y_sort_origin = 8
+2:1/0 = 0
+2:1/0/z_index = -1
+2:1/0/y_sort_origin = 8
+3:1/0 = 0
+3:1/0/z_index = -1
+3:1/0/y_sort_origin = 8
+0:2/0 = 0
+0:2/0/z_index = -1
+0:2/0/y_sort_origin = 8
+1:2/0 = 0
+1:2/0/z_index = -1
+1:2/0/y_sort_origin = 8
+2:2/0 = 0
+2:2/0/z_index = -1
+2:2/0/y_sort_origin = 8
+3:2/0 = 0
+3:2/0/z_index = -1
+3:2/0/y_sort_origin = 8
+0:3/0 = 0
+0:3/0/z_index = -1
+0:3/0/y_sort_origin = 8
+1:3/0 = 0
+1:3/0/z_index = -1
+1:3/0/y_sort_origin = 8
+2:3/0 = 0
+2:3/0/z_index = -1
+2:3/0/y_sort_origin = 8
+3:3/0 = 0
+3:3/0/z_index = -1
+3:3/0/y_sort_origin = 8
+0:0/0 = 0
+0:0/0/z_index = -1
+0:0/0/y_sort_origin = 8
+
 [resource]
 custom_data_layer_0/name = "is_tillable"
 custom_data_layer_0/type = 1
@@ -177,3 +230,4 @@ sources/2 = SubResource("TileSetAtlasSource_dgt0c")
 sources/1 = SubResource("TileSetAtlasSource_sur8a")
 sources/0 = SubResource("TileSetAtlasSource_lx033")
 sources/3 = SubResource("TileSetAtlasSource_leyie")
+sources/4 = SubResource("TileSetAtlasSource_oevda")

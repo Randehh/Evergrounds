@@ -45,6 +45,9 @@ public partial class InventoryItemDefinition : Resource
     [Export]
     public Vector2I subTileSet = Vector2I.Zero;
 
+    [Export]
+    public bool isSimpleTileMap = false;
+
     public bool isStackable => stackSize > 1;
 
     public InventoryItemDefinition() { }

@@ -1,17 +1,15 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using static WorldMap;
 using static WorldMapData;
 
-public class WorldMapTileDisplay
+public class WorldMapTileDisplay : IWorldMapTileDisplay
 {
     public TileMapLayer DisplayLayer { get; private set; }
     public AtlasMaterial SelectedTileData { get; private set; }
 
     private readonly Dictionary<Tuple<AtlasMaterial, AtlasMaterial, AtlasMaterial, AtlasMaterial>, Vector2I> neighboursToAtlasCoord;
-    private readonly Vector2I[] neighbours = new Vector2I[] { new(0, 0), new(1, 0), new(0, 1), new(1, 1) };
     private readonly AtlasMaterial typeOne;
     private readonly AtlasMaterial typeTwo;
     private readonly WorldMapDataLayerType layerType;
@@ -53,7 +51,7 @@ public class WorldMapTileDisplay
     {
         mapData = worldMapData;
 
-        foreach(Vector2I chunk in chunks)
+        foreach (Vector2I chunk in chunks)
         {
             DisplayChunk(chunk);
         }
@@ -106,12 +104,12 @@ public class WorldMapTileDisplay
 
     public void SetDisplayTile(Vector2I pos)
     {
-        for (int i = 0; i < neighbours.Length; i++)
+        for (int i = 0; i < WorldMapConstants.GridNeighbours.Length; i++)
         {
-            Vector2I newPos = pos + neighbours[i];
+            Vector2I newPos = pos + WorldMapConstants.GridNeighbours[i];
 
             // Skip last row and column
-            if((i == 1 || i == 2 || i == 3) &&
+            if ((i == 1 || i == 2 || i == 3) &&
                 ((newPos.X % 10 == 0 && newPos.X >= pos.X) ||
                 (newPos.Y % 10 == 0 && newPos.Y >= pos.Y)))
             {
@@ -125,10 +123,10 @@ public class WorldMapTileDisplay
     private Vector2I CalculateDisplayTile(Vector2I coords)
     {
         // get 4 world tile neighbours
-        AtlasMaterial botRight = GetWorldTile(coords - neighbours[0]);
-        AtlasMaterial botLeft = GetWorldTile(coords - neighbours[1]);
-        AtlasMaterial topRight = GetWorldTile(coords - neighbours[2]);
-        AtlasMaterial topLeft = GetWorldTile(coords - neighbours[3]);
+        AtlasMaterial botRight = GetWorldTile(coords - WorldMapConstants.GridNeighbours[0]);
+        AtlasMaterial botLeft = GetWorldTile(coords - WorldMapConstants.GridNeighbours[1]);
+        AtlasMaterial topRight = GetWorldTile(coords - WorldMapConstants.GridNeighbours[2]);
+        AtlasMaterial topLeft = GetWorldTile(coords - WorldMapConstants.GridNeighbours[3]);
         Vector2I subTileSet = mapData.GetSubTileSet(coords, layerType);
 
         // return tile (atlas coord) that fits the neighbour rules

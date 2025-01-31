@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://d2vpbbt4a5c3d"]
+
+[ext_resource type="Texture2D" uid="uid://q55tydlriltg" path="res://Art/Items/Floors/Floor_Wood.png" id="1_goc1u"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_6miwx"]
+
+[resource]
+script = ExtResource("2_6miwx")
+displayName = "Wooden floor"
+description = "Clip clap clip clap"
+usageText = "Turn grass to dirt"
+itemSprite = ExtResource("1_goc1u")
+stackSize = 100
+useAnimation = 0
+interactType = 6
+interactLevel = 1
+rarity = 1
+worldShadowScale = 0.5
+gridPlacementScene = ""
+tileMaterial = 1000
+subTileSet = Vector2i(0, 0)
+isSimpleTileMap = true
