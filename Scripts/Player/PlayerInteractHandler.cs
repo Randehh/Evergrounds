@@ -176,6 +176,8 @@ public partial class PlayerInteractHandler : Node2D
         {
             WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial, true);
             character.UseHoldable();
+
+            ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
         }
     }
 
