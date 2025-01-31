@@ -4,7 +4,7 @@ using System;
 [GlobalClass]
 public partial class PlayerInteractHandler : Node2D
 {
-    public const float INTERACT_RADIUS = 30;
+    public const float INTERACT_RADIUS = 40;
 
     private readonly Color colorWhite = new Color(1, 1, 1, 1);
     private readonly Color colorHalfAlpha = new Color(1, 1, 1, 0.5f);
