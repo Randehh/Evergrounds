@@ -22,7 +22,7 @@
 [ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="11_if80u"]
 [ext_resource type="Script" path="res://Scripts/UI/DebugUI.cs" id="12_i1bcf"]
 [ext_resource type="Script" path="res://Scripts/System/Services/ServiceLocator.cs" id="12_ucx2n"]
-[ext_resource type="Resource" uid="uid://c0t6l1cukeovf" path="res://Resources/Items/item_wall_stone.tres" id="13_ltpqv"]
+[ext_resource type="Resource" uid="uid://bp107fjr63j07" path="res://Resources/Items/item_wall_wood.tres" id="13_41jus"]
 [ext_resource type="PackedScene" uid="uid://cwkqdyaqwc88q" path="res://Scenes/UI/general_canvas.tscn" id="14_qhyv2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
@@ -55,7 +55,7 @@ script = ExtResource("1_4si5g")
 map = NodePath("../Map")
 cameraScene = ExtResource("4_1vx5r")
 characterScene = ExtResource("4_hyjsw")
-itemsToGive = [ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("13_ltpqv"), ExtResource("13_ltpqv"), ExtResource("13_ltpqv"), ExtResource("13_ltpqv"), ExtResource("13_ltpqv")]
+itemsToGive = [ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus")]
 
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
 

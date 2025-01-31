@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://bp107fjr63j07"]
+
+[ext_resource type="Texture2D" uid="uid://v0k8qh6vvijp" path="res://Art/Items/Resources/Resource_Wood.png" id="1_ymqf5"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_g2032"]
+
+[resource]
+script = ExtResource("2_g2032")
+displayName = "Wooden wall"
+description = "Stonewalled"
+usageText = "Place a wall"
+itemSprite = ExtResource("1_ymqf5")
+stackSize = 100
+useAnimation = 0
+interactType = 6
+interactLevel = 0
+rarity = 1
+worldShadowScale = 0.25
+gridPlacementScene = ""
+tileMaterial = 3
+subTileSet = Vector2i(1, 0)

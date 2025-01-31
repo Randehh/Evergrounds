@@ -58,7 +58,7 @@ public partial class WorldMapGenerator : Node
         float noiseValue = (noise.GetNoise2D(globalTileCoord.X * NOISE_SIZE, globalTileCoord.Y * NOISE_SIZE) + 1) * 0.5f * 3;
 
         int tileValue = Mathf.RoundToInt(noiseValue - 0.4f);
-        mapData.SetMaterial(globalTileCoord, tileValue == 0 ? defaultMaterial : soilMaterial, WorldMapData.WorldMapDataLayerType.BASE);
+        mapData.SetMaterial(globalTileCoord, tileValue == 0 ? defaultMaterial : soilMaterial, WorldMapData.WorldMapDataLayerType.BASE, Vector2I.Zero);
 
         if(!placeNode)
         {

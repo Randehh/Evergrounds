@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_acwwn")
-displayName = "Wall - Stone"
+displayName = "Stone wall"
 description = "Stonewalled"
 usageText = "Place a wall"
 itemSprite = ExtResource("1_2a8od")
@@ -17,3 +17,4 @@ rarity = 1
 worldShadowScale = 0.25
 gridPlacementScene = ""
 tileMaterial = 3
+subTileSet = Vector2i(0, 0)

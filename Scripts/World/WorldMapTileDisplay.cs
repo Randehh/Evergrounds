@@ -8,7 +8,7 @@ using static WorldMapData;
 public class WorldMapTileDisplay
 {
     public TileMapLayer DisplayLayer { get; private set; }
-    public AtlasMaterial SelectedTileMaterial { get; private set; }
+    public AtlasMaterial SelectedTileData { get; private set; }
 
     private readonly Dictionary<Tuple<AtlasMaterial, AtlasMaterial, AtlasMaterial, AtlasMaterial>, Vector2I> neighboursToAtlasCoord;
     private readonly Vector2I[] neighbours = new Vector2I[] { new(0, 0), new(1, 0), new(0, 1), new(1, 1) };
@@ -90,7 +90,7 @@ public class WorldMapTileDisplay
 
     public void UpdateSelectedMaterial(Vector2I mouseGridPosition)
     {
-        SelectedTileMaterial = mapData.GetMaterial(mouseGridPosition, layerType);
+        SelectedTileData = mapData.GetMaterial(mouseGridPosition, layerType);
     }
 
     public AtlasMaterial GetMaterialAt(Vector2I gridPosition)
@@ -98,9 +98,9 @@ public class WorldMapTileDisplay
         return mapData.GetMaterial(gridPosition, layerType);
     }
 
-    public bool SetTile(Vector2I coords, bool asTypeOne)
+    public bool SetTile(Vector2I coords, bool asTypeOne, Vector2I subTileSet)
     {
-        bool isUpdated = mapData.SetMaterial(coords, asTypeOne ? typeOne : typeTwo, layerType);
+        bool isUpdated = mapData.SetMaterial(coords, asTypeOne ? typeOne : typeTwo, layerType, subTileSet);
         return isUpdated;
     }
 
@@ -129,9 +129,10 @@ public class WorldMapTileDisplay
         AtlasMaterial botLeft = GetWorldTile(coords - neighbours[1]);
         AtlasMaterial topRight = GetWorldTile(coords - neighbours[2]);
         AtlasMaterial topLeft = GetWorldTile(coords - neighbours[3]);
+        Vector2I subTileSet = mapData.GetSubTileSet(coords, layerType);
 
         // return tile (atlas coord) that fits the neighbour rules
-        return neighboursToAtlasCoord[new(topLeft, topRight, botLeft, botRight)];
+        return neighboursToAtlasCoord[new(topLeft, topRight, botLeft, botRight)] + (subTileSet * 4);
     }
 
     private AtlasMaterial GetWorldTile(Vector2I coords)

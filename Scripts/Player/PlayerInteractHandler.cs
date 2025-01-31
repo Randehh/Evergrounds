@@ -174,7 +174,7 @@ public partial class PlayerInteractHandler : Node2D
 
         if (canChangeMaterial && IsUseHoldablePressed())
         {
-            WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial, true);
+            WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial, itemInHand.definition.subTileSet, true);
             character.UseHoldable();
 
             ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);

@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using static WorldMap;
+using static WorldMapData;
 
 public class WorldMapDisplay
 {
@@ -49,8 +50,6 @@ public class WorldMapDisplay
 
     public void UpdateSelectedMaterial(Vector2I mouseGridPosition)
     {
-        selectedMaterial = AtlasMaterial.NONE;
-
         mouseMapPosition = standardTileMap.DisplayLayer.LocalToMap(mouseGridPosition);
 
         foreach(WorldMapTileDisplay mapLayer in tileDisplays)
@@ -58,7 +57,7 @@ public class WorldMapDisplay
             mapLayer.UpdateSelectedMaterial(mouseMapPosition);
         }
 
-        selectedMaterial = GetPriorityMaterial(standardTileMap.SelectedTileMaterial, tillingTileMap.SelectedTileMaterial);
+        selectedMaterial = GetPriorityMaterial(standardTileMap.SelectedTileData, tillingTileMap.SelectedTileData);
     }
 
     public bool TryGetSelectedMaterial(out AtlasMaterial material)
@@ -92,27 +91,27 @@ public class WorldMapDisplay
         switch (targetMaterial)
         {
             case AtlasMaterial.SOFT_SURFACE:
-                return standardTileMap.SelectedTileMaterial == AtlasMaterial.SOIL;
+                return standardTileMap.SelectedTileData == AtlasMaterial.SOIL;
 
             case AtlasMaterial.SOIL:
-                return standardTileMap.SelectedTileMaterial == AtlasMaterial.SOFT_SURFACE || tillingTileMap.SelectedTileMaterial == AtlasMaterial.TILLED;
+                return standardTileMap.SelectedTileData == AtlasMaterial.SOFT_SURFACE || tillingTileMap.SelectedTileData == AtlasMaterial.TILLED;
 
             case AtlasMaterial.TILLED:
-                return standardTileMap.SelectedTileMaterial == AtlasMaterial.SOIL && tillingTileMap.SelectedTileMaterial == AtlasMaterial.NONE;
+                return standardTileMap.SelectedTileData == AtlasMaterial.SOIL && tillingTileMap.SelectedTileData == AtlasMaterial.NONE;
 
             case AtlasMaterial.WALL:
-                return tillingTileMap.SelectedTileMaterial == AtlasMaterial.NONE;
+                return tillingTileMap.SelectedTileData == AtlasMaterial.NONE;
         }
 
         return false;
     }
 
-    public bool SetSelectedTile(AtlasMaterial targetMaterial)
+    public bool SetSelectedTile(AtlasMaterial targetMaterial, Vector2I subTileSet)
     {
-        return SetTile(mouseMapPosition, targetMaterial);
+        return SetTile(mouseMapPosition, targetMaterial, subTileSet);
     }
 
-    public bool SetTile(Vector2I mouseGridPosition, AtlasMaterial material)
+    public bool SetTile(Vector2I mouseGridPosition, AtlasMaterial material, Vector2I subTileSet)
     {
         if (!CanChangeToTileMaterial(material))
         {
@@ -122,20 +121,20 @@ public class WorldMapDisplay
         switch (material)
         {
             case AtlasMaterial.SOFT_SURFACE:
-                standardTileMap.SetTile(mouseGridPosition, asTypeOne: true);
+                standardTileMap.SetTile(mouseGridPosition, asTypeOne: true, subTileSet);
                 break;
 
             case AtlasMaterial.SOIL:
-                standardTileMap.SetTile(mouseGridPosition, asTypeOne: false);
-                tillingTileMap.SetTile(mouseGridPosition, asTypeOne: true);
+                standardTileMap.SetTile(mouseGridPosition, asTypeOne: false, subTileSet);
+                tillingTileMap.SetTile(mouseGridPosition, asTypeOne: true, subTileSet);
                 break;
 
             case AtlasMaterial.TILLED:
-                tillingTileMap.SetTile(mouseGridPosition, asTypeOne: false);
+                tillingTileMap.SetTile(mouseGridPosition, asTypeOne: false, subTileSet);
                 break;
 
             case AtlasMaterial.WALL:
-                wallsTileMap.SetTile(mouseGridPosition, asTypeOne: false);
+                wallsTileMap.SetTile(mouseGridPosition, asTypeOne: false, subTileSet);
                 break;
         }
 

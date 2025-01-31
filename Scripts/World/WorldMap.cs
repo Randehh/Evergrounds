@@ -155,9 +155,9 @@ public partial class WorldMap : Node2D, IWorldSaveable
         return worldMapDisplay.GetMaterialAt(coord);
     }
 
-    public void SetSelectedTile(AtlasMaterial material, bool updateAllChunks = false)
+    public void SetSelectedTile(AtlasMaterial material, Vector2I subTileSet, bool updateAllChunks = false)
     {
-        bool updateVisuals = worldMapDisplay.SetSelectedTile(material);
+        bool updateVisuals = worldMapDisplay.SetSelectedTile(material, subTileSet);
         if (!updateVisuals)
         {
             return;
