@@ -91,6 +91,9 @@ public class WorldMapTileDisplaySimple : IWorldMapTileDisplay
             case AtlasMaterial.FLOOR_WOOD:
                 return new Vector2I(1, 0);
 
+            case AtlasMaterial.FLOOR_STONE:
+                return new Vector2I(2, 0);
+
             default:
                 return Vector2I.Zero;
         }

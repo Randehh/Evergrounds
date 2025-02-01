@@ -7,7 +7,6 @@
 script = ExtResource("2_gudii")
 displayName = "Bed"
 description = "Nothing better after a hard day's work."
-usageText = "Get some rest"
 itemSprite = ExtResource("1_eo2v0")
 stackSize = 1
 useAnimation = 0

@@ -7,7 +7,6 @@
 script = ExtResource("2_g2032")
 displayName = "Wooden wall"
 description = "Stonewalled"
-usageText = "Place a wall"
 itemSprite = ExtResource("1_tpd51")
 stackSize = 100
 useAnimation = 0

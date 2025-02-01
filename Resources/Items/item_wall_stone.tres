@@ -7,7 +7,6 @@
 script = ExtResource("2_acwwn")
 displayName = "Stone wall"
 description = "Stonewalled"
-usageText = "Place a wall"
 itemSprite = ExtResource("1_2af5b")
 stackSize = 100
 useAnimation = 0

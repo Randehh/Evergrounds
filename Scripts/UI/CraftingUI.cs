@@ -67,7 +67,7 @@ public partial class CraftingUI : Control
 
     private void CraftButton_Pressed()
     {
-        CraftingRecipe recipe = defaultCraftingRecipeContainer.recipes[currentlySelected];
+        CraftingRecipe recipe = sortedRecipes[currentlySelected];
         foreach (var item in recipe.requiredItems)
         {
             inventory.RemoveItem(item.item, item.count);
@@ -189,7 +189,7 @@ public partial class CraftingUI : Control
             recipeComponent.Free();
         }
 
-        CraftingRecipe recipe = recipeContainer.recipes[slot];
+        CraftingRecipe recipe = sortedRecipes[slot];
 
         recipeTitleLabel.Text = recipe.result.item.displayName;
         recipeDescriptionLabel.Text = recipe.result.item.description;

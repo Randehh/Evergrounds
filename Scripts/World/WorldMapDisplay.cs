@@ -113,6 +113,7 @@ public class WorldMapDisplay
 
             case AtlasMaterial.WALL:
             case AtlasMaterial.FLOOR_WOOD:
+            case AtlasMaterial.FLOOR_STONE:
                 return tillingTileMap.SelectedTileData == AtlasMaterial.NONE;
         }
 
@@ -151,6 +152,7 @@ public class WorldMapDisplay
                 break;
 
             case AtlasMaterial.FLOOR_WOOD:
+            case AtlasMaterial.FLOOR_STONE:
                 floorsTileMap.SetTile(mouseGridPosition, material, subTileSet);
                 break;
         }
