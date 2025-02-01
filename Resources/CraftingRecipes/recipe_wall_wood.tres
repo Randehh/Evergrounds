@@ -8,7 +8,7 @@
 [sub_resource type="Resource" id="Resource_kffyo"]
 script = ExtResource("2_j51rh")
 item = ExtResource("1_gn1ne")
-count = 4
+count = 2
 
 [sub_resource type="Resource" id="Resource_gbmtc"]
 script = ExtResource("2_j51rh")
@@ -19,3 +19,4 @@ count = 1
 script = ExtResource("4_215m5")
 result = SubResource("Resource_gbmtc")
 requiredItems = [SubResource("Resource_kffyo")]
+recipeType = 3

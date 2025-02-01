@@ -19,3 +19,4 @@ count = 1
 script = ExtResource("5_ybyj6")
 result = SubResource("Resource_7akgb")
 requiredItems = [SubResource("Resource_6y8vi")]
+recipeType = 4

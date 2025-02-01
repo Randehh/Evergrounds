@@ -249,7 +249,7 @@ public partial class InventoryUI : Control
         itemInfoParent.Modulate = itemInfo != null ? COLOR_WHITE : COLOR_TRANSPARENT;
         itemInfoTexture.Texture = itemInfo?.definition.itemSprite;
         itemInfoLabel.SelfModulate = itemInfo != null ? itemInfo.definition.rarity.GetTextColor() : COLOR_WHITE;
-        itemInfoLabel.Text = $"{itemInfo?.definition.displayName} - {itemInfo?.definition.usageText}";
+        itemInfoLabel.Text = itemInfo?.definition.displayName;
     }
 
     private int GetEquipmentSlotDisplayIndex(int slot)

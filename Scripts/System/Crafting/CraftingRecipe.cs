@@ -9,4 +9,7 @@ public partial class CraftingRecipe : Resource
 
     [Export]
     public Array<CraftingRecipeItem> requiredItems = new();
+
+    [Export]
+    public CraftingRecipeType recipeType;
 }

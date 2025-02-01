@@ -17,3 +17,5 @@ rarity = 1
 worldShadowScale = 0.25
 gridPlacementScene = "res://Scenes/World/Growables/growable_seeds.tscn"
 tileMaterial = 0
+subTileSet = Vector2i(0, 0)
+isSimpleTileMap = false

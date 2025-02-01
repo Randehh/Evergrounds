@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 [GlobalClass]
 public partial class CraftingUI : Control
@@ -14,19 +15,13 @@ public partial class CraftingUI : Control
     private PackedScene craftingComponentScene;
 
     [Export]
+    private PackedScene craftingCategory;
+
+    [Export]
+    private VBoxContainer craftingListParent;
+
+    [Export]
     private Control expandParent;
-
-    [Export]
-    private FlowContainer slotContainer;
-
-    [Export]
-    private Texture2D slotBackground;
-
-    [Export]
-    private Texture2D slotBackgroundHover;
-
-    [Export]
-    private Texture2D slotBackgroundSelected;
 
     [Export]
     private Label recipeTitleLabel;
@@ -48,6 +43,7 @@ public partial class CraftingUI : Control
     private int slotMouseOver = -1;
     private List<CraftingItemSlotComponent> inventoryButtons = new();
     private int currentlySelected = -1;
+    private CraftingRecipe[] sortedRecipes;
 
     private float foldedY;
     private float expandedY;
@@ -102,17 +98,35 @@ public partial class CraftingUI : Control
     {
         inventoryButtons.Clear();
 
-        foreach(var child in slotContainer.GetChildren())
+        foreach(var child in craftingListParent.GetChildren())
         {
-            slotContainer.RemoveChild(child);
+            craftingListParent.RemoveChild(child);
             child.Free();
         }
 
-        for (int i = 0; i < defaultCraftingRecipeContainer.recipes.Count; i++)
+        sortedRecipes = defaultCraftingRecipeContainer.recipes.OrderBy(recipe => recipe.recipeType).ThenBy(recipe => recipe.result.item.displayName).ToArray();
+        CraftingRecipeType? lastRecipeType = null;
+        FlowContainer currentFlowContainer = null;
+
+        for (int i = 0; i < sortedRecipes.Length; i++)
         {
-            CraftingRecipe recipe = defaultCraftingRecipeContainer.recipes[i];
+            CraftingRecipe recipe = sortedRecipes[i];
+            if (lastRecipeType == null || lastRecipeType != recipe.recipeType)
+            {
+                MarginContainer category = craftingCategory.Instantiate<MarginContainer>();
+                craftingListParent.AddChild(category);
+
+                currentFlowContainer = category.FindChild("CraftingList") as FlowContainer;
+
+                (category.FindChild("Label") as Label).Text = recipe.recipeType.ToString();
+
+                GD.Print($"Category created for {recipe.recipeType}: {category}, {currentFlowContainer}");
+            }
+
+            GD.Print($"{recipe.recipeType}: {recipe.result.item.displayName}");
+
             CraftingItemSlotComponent slot = inventorySlotScene.Instantiate<CraftingItemSlotComponent>();
-            slotContainer.AddChild(slot);
+            currentFlowContainer.AddChild(slot);
             inventoryButtons.Add(slot);
 
             SetSlot(i);
@@ -137,6 +151,8 @@ public partial class CraftingUI : Control
                     slot.SetBackgroundStateDefault();
                 }
             };
+
+            lastRecipeType = recipe.recipeType;
         }
 
         foldedY = -310;
@@ -148,7 +164,7 @@ public partial class CraftingUI : Control
     private void SetSlot(int slotIndex)
     {
         CraftingItemSlotComponent slot = inventoryButtons[slotIndex];
-        CraftingRecipe recipe = defaultCraftingRecipeContainer.recipes[slotIndex];
+        CraftingRecipe recipe = sortedRecipes[slotIndex];
         slot.SetRecipe(recipe);
     }
 

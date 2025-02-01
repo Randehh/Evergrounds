@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CraftingRecipeContainer" load_steps=11 format=3 uid="uid://cpgju01n7q6hh"]
+[gd_resource type="Resource" script_class="CraftingRecipeContainer" load_steps=12 format=3 uid="uid://cpgju01n7q6hh"]
 
 [ext_resource type="Resource" uid="uid://b5e3i2wt1b4kc" path="res://Resources/CraftingRecipes/recipe_axe.tres" id="1_4ovun"]
 [ext_resource type="Script" path="res://Scripts/System/Crafting/CraftingRecipeContainer.cs" id="1_nldae"]
@@ -10,7 +10,8 @@
 [ext_resource type="Resource" uid="uid://dxthhsxsllp6r" path="res://Resources/CraftingRecipes/recipe_wall_stone.tres" id="7_t8jai"]
 [ext_resource type="Resource" uid="uid://cxynsf4yon2r" path="res://Resources/CraftingRecipes/recipe_wall_wood.tres" id="8_lhpop"]
 [ext_resource type="Resource" uid="uid://dop3oh12nhycu" path="res://Resources/CraftingRecipes/recipe_floor_wood.tres" id="9_5eufn"]
+[ext_resource type="Resource" uid="uid://d2lc2oh6b8w86" path="res://Resources/CraftingRecipes/recipe_floor_stone.tres" id="10_0l78n"]
 
 [resource]
 script = ExtResource("1_nldae")
-recipes = [ExtResource("1_4ovun"), ExtResource("2_o5cn2"), ExtResource("3_aq8uo"), ExtResource("4_gmj16"), ExtResource("5_2000o"), ExtResource("6_8kkq8"), ExtResource("7_t8jai"), ExtResource("8_lhpop"), ExtResource("9_5eufn")]
+recipes = [ExtResource("1_4ovun"), ExtResource("2_o5cn2"), ExtResource("3_aq8uo"), ExtResource("4_gmj16"), ExtResource("5_2000o"), ExtResource("6_8kkq8"), ExtResource("7_t8jai"), ExtResource("8_lhpop"), ExtResource("9_5eufn"), ExtResource("10_0l78n")]

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://bafghmgt2mvug"]
+
+[ext_resource type="Texture2D" uid="uid://yitws74ne1jw" path="res://Art/Items/Floors/Floor_Stone.png" id="1_dblkn"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_b6um0"]
+
+[resource]
+script = ExtResource("2_b6um0")
+displayName = "Wooden floor"
+description = "Clip clap clip clap"
+itemSprite = ExtResource("1_dblkn")
+stackSize = 100
+useAnimation = 0
+interactType = 6
+interactLevel = 1
+rarity = 1
+worldShadowScale = 0.5
+gridPlacementScene = ""
+tileMaterial = 1001
+subTileSet = Vector2i(0, 0)
+isSimpleTileMap = true
