@@ -46,6 +46,8 @@ public partial class InventoryUI : Control
     private float expandedY;
     private bool isExpanded = false;
 
+    private InputState inputState = InputState.WORLD;
+
     public override void _Ready()
     {
         inventory = ServiceLocator.InventoryService;
@@ -58,31 +60,43 @@ public partial class InventoryUI : Control
         inventory.OnUpdateSlot += SetSlot;
 
         inventory.UpdateAllSlots();
+
+        inputState = ServiceLocator.InputStateService.InputState;
+        ServiceLocator.GameNotificationService.OnInputStateChanged.OnFire += OnInputStateChanged;
+    }
+
+    public override void _ExitTree()
+    {
+        ServiceLocator.GameNotificationService.OnInputStateChanged.OnFire -= OnInputStateChanged;
     }
 
     public override void _Process(double delta)
     {
-        for (int i = 0; i < InventoryService.QUICK_SELECT_COUNT; i++)
+        if (inputState == InputState.WORLD)
         {
-            if (Input.IsActionJustPressed($"equip_{i}"))
+
+            for (int i = 0; i < InventoryService.QUICK_SELECT_COUNT; i++)
             {
-                int buttonIndex = i - 1;
-                if (buttonIndex == -1)
+                if (Input.IsActionJustPressed($"equip_{i}"))
                 {
-                    buttonIndex = 9;
+                    int buttonIndex = i - 1;
+                    if (buttonIndex == -1)
+                    {
+                        buttonIndex = 9;
+                    }
+                    ServiceLocator.InventoryService.EquipSlot(buttonIndex);
                 }
-                ServiceLocator.InventoryService.EquipSlot(buttonIndex);
             }
-        }
 
-        if (Input.IsActionJustPressed("equip_next"))
-        {
-            ServiceLocator.InventoryService.EquipSlotNext();
-        }
+            if (Input.IsActionJustPressed("equip_next"))
+            {
+                ServiceLocator.InventoryService.EquipSlotNext();
+            }
 
-        if (Input.IsActionJustPressed("equip_previous"))
-        {
-            ServiceLocator.InventoryService.EquipSlotPrevious();
+            if (Input.IsActionJustPressed("equip_previous"))
+            {
+                ServiceLocator.InventoryService.EquipSlotPrevious();
+            }
         }
 
         if (Input.IsActionJustReleased("click"))
@@ -150,7 +164,7 @@ public partial class InventoryUI : Control
             }
         }
 
-        if(Input.IsActionJustPressed("inventory_toggle"))
+        if (Input.IsActionJustPressed("inventory_toggle"))
         {
             isExpanded = !isExpanded;
         }
@@ -251,6 +265,8 @@ public partial class InventoryUI : Control
         itemInfoLabel.SelfModulate = itemInfo != null ? itemInfo.definition.rarity.GetTextColor() : COLOR_WHITE;
         itemInfoLabel.Text = itemInfo?.definition.displayName;
     }
+
+    private void OnInputStateChanged(InputState state) => inputState = state;
 
     private int GetEquipmentSlotDisplayIndex(int slot)
     {

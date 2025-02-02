@@ -58,7 +58,6 @@ public partial class CraftingUI : Control
 
         ReloadUI();
 
-        // We can be smarter here and track which indexes are being used in components, but we're cavemanning it until it stops working
         inventory.OnUpdateSlot += (_) =>
         {
             SetSelectedCraftingSlot(currentlySelected);
@@ -86,9 +85,18 @@ public partial class CraftingUI : Control
             }
         }
 
-        if(Input.IsActionJustPressed("inventory_toggle"))
+        if (Input.IsActionJustPressed("inventory_toggle"))
         {
             isExpanded = !isExpanded;
+
+            if (isExpanded)
+            {
+                ServiceLocator.InputStateService.PushInputState(InputState.UI);
+            }
+            else
+            {
+                ServiceLocator.InputStateService.PopInputState();
+            }
         }
 
         expandParent.Position = new Vector2(expandParent.Position.X, (float)Mathf.Lerp(expandParent.Position.Y, isExpanded ? expandedY : foldedY, 20 * delta));
@@ -119,11 +127,7 @@ public partial class CraftingUI : Control
                 currentFlowContainer = category.FindChild("CraftingList") as FlowContainer;
 
                 (category.FindChild("Label") as Label).Text = recipe.recipeType.ToString();
-
-                GD.Print($"Category created for {recipe.recipeType}: {category}, {currentFlowContainer}");
             }
-
-            GD.Print($"{recipe.recipeType}: {recipe.result.item.displayName}");
 
             CraftingItemSlotComponent slot = inventorySlotScene.Instantiate<CraftingItemSlotComponent>();
             currentFlowContainer.AddChild(slot);

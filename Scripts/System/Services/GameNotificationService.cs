@@ -4,6 +4,9 @@ using System;
 
 public class GameNotificationService : IService
 {
+    // Gameplay
+    public GameNotification<InputState> OnInputStateChanged = new();
+
     // Saving and loading
     public GameNotification<WorldData> OnLoadWorld = new();
 

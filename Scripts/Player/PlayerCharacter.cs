@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 [GlobalClass]
@@ -28,8 +29,9 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 	private Vector2 currentSpeed = Vector2.Zero;
 
 	private List<WorldItem> vacuumItemsInRadius = new();
+    private InputState inputState;
 
-	public PlayerCharacter()
+    public PlayerCharacter()
 	{
 		Instance = this;
 	}
@@ -41,20 +43,31 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 		OnItemSelected(0);
 
 		PlayerCamera.Instance.toFollow = this;
+
+        inputState = ServiceLocator.InputStateService.InputState;
+        ServiceLocator.GameNotificationService.OnInputStateChanged.OnFire += OnInputStateChanged;
     }
+
+	private void OnInputStateChanged(InputState state) => inputState = state;
 
     public override void _ExitTree()
     {
         ServiceLocator.InventoryService.OnSelectQuickslot -= OnItemSelected;
+        ServiceLocator.GameNotificationService.OnInputStateChanged.OnFire -= OnInputStateChanged;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		Vector2 input = new Vector2(
-			Input.GetAxis("move_left", "move_right"),
-			Input.GetAxis("move_up", "move_down")
-			).Normalized();
+		Vector2 input = Vector2.Zero;
+
+        if (inputState == InputState.WORLD)
+		{
+			input = new Vector2(
+				Input.GetAxis("move_left", "move_right"),
+				Input.GetAxis("move_up", "move_down")
+				).Normalized();
+		}
 
 		currentSpeed += input * acceleration;
 
@@ -73,11 +86,14 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 
 		Position += currentSpeed * (float)delta;
 
-		interactHandler.ProcessInteraction(character.CurrentlyHolding, delta);
-
-		if(Input.IsActionJustPressed("next_day"))
+		if (inputState == InputState.WORLD)
 		{
-			ServiceLocator.TimeService.TriggerNextDay(true);
+			interactHandler.ProcessInteraction(character.CurrentlyHolding, delta);
+
+			if (Input.IsActionJustPressed("next_day"))
+			{
+				ServiceLocator.TimeService.TriggerNextDay(true);
+			}
 		}
 	}
 

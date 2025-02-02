@@ -10,6 +10,7 @@ public partial class ServiceLocator : Node
     public static InventoryService InventoryService => Instance.GetService<InventoryService>(true);
     public static GameNotificationService GameNotificationService => Instance.GetService<GameNotificationService>(true);
     public static TimeService TimeService => Instance.GetService<TimeService>(true);
+    public static InputStateService InputStateService => Instance.GetService<InputStateService>(true);
 
     private Dictionary<Type, IService> services = new ();
 
@@ -21,6 +22,7 @@ public partial class ServiceLocator : Node
     public override void _Ready()
     {
         RegisterService(new TimeService());
+        RegisterService(new InputStateService());
     }
 
     public override void _Process(double delta)
