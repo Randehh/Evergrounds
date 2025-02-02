@@ -12,4 +12,7 @@ public partial class CraftingRecipe : Resource
 
     [Export]
     public CraftingRecipeType recipeType;
+
+    [Export]
+    public int experience = 1;
 }

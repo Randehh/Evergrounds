@@ -20,6 +20,9 @@ public class GameNotificationService : IService
     public GameNotification<TimeUpdatePayload> OnTimeUpdated = new();
     public GameNotification<Action> OnTriggerDayTransition = new();
 
+    // Experience
+    public GameNotification<ExperienceUpdatePayload> OnExperienceUpdated = new();
+
     public void OnInit()
     {
 

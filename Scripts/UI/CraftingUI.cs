@@ -73,6 +73,8 @@ public partial class CraftingUI : Control
         }
 
         inventory.AddItem(recipe.result.item, recipe.result.count);
+
+        ServiceLocator.ExperienceService.AddExperience(ExperienceType.CRAFTING, recipe.experience);
     }
 
     public override void _Process(double delta)
