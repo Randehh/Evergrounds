@@ -20,3 +20,4 @@ script = ExtResource("4_ywade")
 result = SubResource("Resource_gbmtc")
 requiredItems = [SubResource("Resource_kffyo")]
 recipeType = 2
+experience = 2

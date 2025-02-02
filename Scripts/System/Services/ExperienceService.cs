@@ -64,7 +64,8 @@ public class ExperienceService : IService, IWorldSaveable
                 continue;
             }
 
-            ServiceLocator.GameNotificationService.OnExperienceUpdated.Execute(pair.Value.GetUpdatePayload());
+            var payload = pair.Value.GetUpdatePayload();
+            ServiceLocator.GameNotificationService.OnExperienceUpdated.Execute(payload);
         }
     }
 
@@ -103,6 +104,17 @@ public class ExperienceService : IService, IWorldSaveable
     {
         int experience = GetExperience(experienceType);
         return GetExperienceForLevel(experience);
+    }
+
+    public ExperienceUpdatePayload GetPayload(ExperienceType experienceType)
+    {
+        if (!experienceAnimators.TryGetValue(experienceType, out ExperienceAnimator animator))
+        {
+            animator = new ExperienceAnimator(experienceType, 0, 0);
+            experienceAnimators[experienceType] = animator;
+        }
+
+        return animator.GetUpdatePayload();
     }
 
     public Godot.Collections.Dictionary<string, Variant> GetSaveData()
@@ -156,22 +168,29 @@ public class ExperienceService : IService, IWorldSaveable
         {
             if(!ShouldAnimate)
             {
+                current = target;
                 return false;
             }
 
-            current = Mathf.Lerp(current, target, 0.05f);
+            current = Mathf.Lerp(current, target, 0.02f) + 0.01f;
             return true;
         }
 
         public ExperienceUpdatePayload GetUpdatePayload()
         {
+            int animatedLevel = GetLevelForExperience(current);
+            int experienceForCurrentLevel = GetExperienceForLevel(animatedLevel);
+            int experienceForNextLevel = GetExperienceForLevel(animatedLevel + 1);
+            int experienceNeeded = experienceForNextLevel - experienceForCurrentLevel;
             return new()
             {
                 experienceType = experienceType,
                 level = GetLevelForExperience(target),
                 experience = target,
-                animatedLevel = GetLevelForExperience(current),
-                normalizedExperience = current
+                animatedLevel = animatedLevel,
+                animatedExperience = Mathf.RoundToInt(current) - experienceForCurrentLevel,
+                targetAnimatedExperience = experienceForNextLevel - experienceForCurrentLevel,
+                normalizedExperience = (current - experienceForCurrentLevel) / experienceNeeded
             };
         }
     }
@@ -191,5 +210,7 @@ public struct ExperienceUpdatePayload
     public int level;
     public int experience;
     public int animatedLevel;
+    public int animatedExperience;
+    public int targetAnimatedExperience;
     public float normalizedExperience;
 }

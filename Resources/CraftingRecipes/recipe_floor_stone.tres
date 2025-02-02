@@ -20,3 +20,4 @@ script = ExtResource("4_hwdl3")
 result = SubResource("Resource_ctn43")
 requiredItems = [SubResource("Resource_kffyo")]
 recipeType = 2
+experience = 2

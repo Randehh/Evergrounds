@@ -1,7 +1,9 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://grcak8uagcau"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://grcak8uagcau"]
 
 [ext_resource type="FontFile" uid="uid://0km3vn2tywnt" path="res://Fonts/Kenney Pixel.ttf" id="1_4vdcy"]
 [ext_resource type="Texture2D" uid="uid://cqp6i62kk37i4" path="res://Art/UI/UI_Inventory_Slot.png" id="2_u5jja"]
+[ext_resource type="Texture2D" uid="uid://dxgfoiitl7irw" path="res://Art/UI/UI_Inventory_Slot_Hover.png" id="3_ygmb2"]
+[ext_resource type="Texture2D" uid="uid://bwu0vge34b7tj" path="res://Art/UI/UI_Inventory_Slot_Selected.png" id="4_0vhsf"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_74xsu"]
 texture = ExtResource("2_u5jja")
@@ -10,7 +12,24 @@ texture_margin_top = 5.0
 texture_margin_right = 5.0
 texture_margin_bottom = 5.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2l310"]
+texture = ExtResource("3_ygmb2")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_voiby"]
+texture = ExtResource("4_0vhsf")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(0, 0, 34, 34)
+
 [resource]
 Label/constants/outline_size = 4
 Label/fonts/font = ExtResource("1_4vdcy")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_74xsu")
+ProgressBar/styles/background = SubResource("StyleBoxTexture_2l310")
+ProgressBar/styles/fill = SubResource("StyleBoxTexture_voiby")
