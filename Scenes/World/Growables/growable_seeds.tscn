@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://7s4ij62v280g"]
 
-[ext_resource type="Script" path="res://Scripts/World/WorldNodeGrowable.cs" id="1_k23cj"]
+[ext_resource type="Script" uid="uid://u18jqd5fygko" path="res://Scripts/World/WorldNodeGrowable.cs" id="1_k23cj"]
 [ext_resource type="PackedScene" uid="uid://hnncnqeulgog" path="res://Scenes/World/Interactables/interactable_seeds.tscn" id="2_5xcty"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_d8k13"]
+[ext_resource type="Script" uid="uid://cnd0nachuxwqr" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_d8k13"]
 [ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="4_rfuco"]
-[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_rnp4a"]
+[ext_resource type="Script" uid="uid://badhsmf7utxe5" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_rnp4a"]
 [ext_resource type="Texture2D" uid="uid://blqcsw7wgk6xx" path="res://Art/World/Growables/Growable_Seeds.png" id="6_kb4e1"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="7_rr68x"]
+[ext_resource type="Script" uid="uid://1vi5kkv8txr" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="7_rr68x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k8f8h"]
 

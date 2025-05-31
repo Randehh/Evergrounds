@@ -1,8 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://ctkvevyma6uqu"]
 
-[ext_resource type="Script" path="res://Scripts/Characters/CharacterBase.cs" id="1_dppcc"]
+[ext_resource type="Script" uid="uid://5wdh5bsds8fb" path="res://Scripts/Characters/CharacterBase.cs" id="1_dppcc"]
 [ext_resource type="Texture2D" uid="uid://jbp5g67jxlaa" path="res://Art/Characters/Player.png" id="1_gmury"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerAttachment.cs" id="2_jybix"]
+[ext_resource type="Script" uid="uid://cbojlivsnqtgf" path="res://Scripts/Player/PlayerAttachment.cs" id="2_jybix"]
 [ext_resource type="Texture2D" uid="uid://bqdga4yal185g" path="res://Art/Items/Holdables/Holdable_Spade.png" id="4_jejjs"]
 [ext_resource type="Texture2D" uid="uid://cfumscsxi7gbt" path="res://Art/Items/Backpacks/Backpack_Default.png" id="5_1i5mm"]
 [ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="6_gcjf1"]
@@ -83,8 +83,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_50ce0"]
 _data = {
-"RESET": SubResource("Animation_axdxj"),
-"Walk": SubResource("Animation_g5dc1")
+&"RESET": SubResource("Animation_axdxj"),
+&"Walk": SubResource("Animation_g5dc1")
 }
 
 [sub_resource type="Animation" id="Animation_pcqkw"]
@@ -193,8 +193,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_12kvp"]
 _data = {
-"RESET": SubResource("Animation_pcqkw"),
-"SWING": SubResource("Animation_tgyr5")
+&"RESET": SubResource("Animation_pcqkw"),
+&"SWING": SubResource("Animation_tgyr5")
 }
 
 [node name="CharacterBase" type="Node2D" node_paths=PackedStringArray("characterAnimator", "holdableAnimator", "holdableSprite")]

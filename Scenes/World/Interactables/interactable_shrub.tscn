@@ -1,14 +1,14 @@
 [gd_scene load_steps=15 format=3 uid="uid://dccf66b3ov4w2"]
 
-[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_743uh"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_w8uy6"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_y1dbr"]
+[ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_743uh"]
+[ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_w8uy6"]
+[ext_resource type="Script" uid="uid://cnd0nachuxwqr" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_y1dbr"]
 [ext_resource type="Resource" uid="uid://ds2rdh8u3kqm0" path="res://Resources/Items/item_stick.tres" id="4_lkajd"]
-[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_sl2o6"]
+[ext_resource type="Script" uid="uid://badhsmf7utxe5" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_sl2o6"]
 [ext_resource type="Resource" uid="uid://dkneqfx24g3j5" path="res://Resources/Items/item_leaf.tres" id="6_0uwgn"]
 [ext_resource type="Resource" uid="uid://p4innrlpa2cc" path="res://Resources/Items/item_acorn.tres" id="7_c6ads"]
 [ext_resource type="Texture2D" uid="uid://dpycdtxh4x02" path="res://Art/World/Interactables/Interactable_Shrub.png" id="8_8wtfg"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="10_pwo2d"]
+[ext_resource type="Script" uid="uid://1vi5kkv8txr" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="10_pwo2d"]
 
 [sub_resource type="Resource" id="Resource_1wpgf"]
 script = ExtResource("2_w8uy6")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bokq7ofwp6afk"]
 
-[ext_resource type="Script" path="res://Scripts/World/WorldNodeShadow.cs" id="1_7gk3i"]
+[ext_resource type="Script" uid="uid://c00falagwkpgg" path="res://Scripts/World/WorldNodeShadow.cs" id="1_7gk3i"]
 [ext_resource type="Texture2D" uid="uid://d4jelsu0lct5l" path="res://Art/Effects/Effects_Shadow.png" id="2_dbx44"]
 
 [node name="WorldNodeShadow" type="Node2D" node_paths=PackedStringArray("shadowSprite")]

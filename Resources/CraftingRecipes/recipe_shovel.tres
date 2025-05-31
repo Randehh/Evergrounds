@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=9 format=3 uid="uid://dfgy2evt8quyt"]
+[gd_resource type="Resource" load_steps=9 format=3 uid="uid://dfgy2evt8quyt"]
 
-[ext_resource type="Script" path="res://Scripts/System/Crafting/CraftingRecipe.cs" id="1_hv8f5"]
+[ext_resource type="Script" uid="uid://sjq3rvl8dikb" path="res://Scripts/System/Crafting/CraftingRecipe.cs" id="1_hv8f5"]
 [ext_resource type="Resource" uid="uid://ds2rdh8u3kqm0" path="res://Resources/Items/item_stick.tres" id="1_n1di1"]
-[ext_resource type="Script" path="res://Scripts/System/Crafting/CraftingRecipeItem.cs" id="2_6hy2b"]
+[ext_resource type="Script" uid="uid://btdb56a3w2bss" path="res://Scripts/System/Crafting/CraftingRecipeItem.cs" id="2_6hy2b"]
 [ext_resource type="Resource" uid="uid://madlj01uhxfs" path="res://Resources/Items/item_stone.tres" id="3_7mwss"]
 [ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="3_sgrri"]
 

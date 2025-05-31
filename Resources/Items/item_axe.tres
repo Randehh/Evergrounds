@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://ydg6emtaeg1f"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ydg6emtaeg1f"]
 
-[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="1_dp16n"]
+[ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="1_dp16n"]
 [ext_resource type="Texture2D" uid="uid://u31y5of46e5c" path="res://Art/Items/Holdables/Holdable_Axe.png" id="1_m0s1t"]
 
 [resource]

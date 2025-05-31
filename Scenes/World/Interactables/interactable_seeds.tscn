@@ -1,13 +1,13 @@
 [gd_scene load_steps=13 format=3 uid="uid://hnncnqeulgog"]
 
-[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_lbnul"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_hr3oi"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_cqpyo"]
+[ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_lbnul"]
+[ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_hr3oi"]
+[ext_resource type="Script" uid="uid://cnd0nachuxwqr" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_cqpyo"]
 [ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="4_7tukf"]
-[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_5elj0"]
+[ext_resource type="Script" uid="uid://badhsmf7utxe5" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_5elj0"]
 [ext_resource type="Resource" uid="uid://du6v1pv2pj6bu" path="res://Resources/Items/item_carrot.tres" id="6_ks1g2"]
 [ext_resource type="Texture2D" uid="uid://d03emquq8xpnj" path="res://Art/World/Interactables/Interactable_Seeds.png" id="9_cpy06"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="10_rt5ae"]
+[ext_resource type="Script" uid="uid://1vi5kkv8txr" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="10_rt5ae"]
 
 [sub_resource type="Resource" id="Resource_whq2g"]
 script = ExtResource("2_hr3oi")

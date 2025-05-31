@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://bnj36agsqd4o8"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bnj36agsqd4o8"]
 
 [ext_resource type="Texture2D" uid="uid://bqdga4yal185g" path="res://Art/Items/Holdables/Holdable_Spade.png" id="1_mprqx"]
-[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_a1drs"]
+[ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_a1drs"]
 
 [resource]
 script = ExtResource("2_a1drs")

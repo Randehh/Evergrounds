@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=7 format=3 uid="uid://dop3oh12nhycu"]
+[gd_resource type="Resource" load_steps=7 format=3 uid="uid://dop3oh12nhycu"]
 
 [ext_resource type="Resource" uid="uid://bkuersrsvb7ty" path="res://Resources/Items/item_wood.tres" id="1_cdm5n"]
-[ext_resource type="Script" path="res://Scripts/System/Crafting/CraftingRecipeItem.cs" id="2_bhwxp"]
+[ext_resource type="Script" uid="uid://btdb56a3w2bss" path="res://Scripts/System/Crafting/CraftingRecipeItem.cs" id="2_bhwxp"]
 [ext_resource type="Resource" uid="uid://d2vpbbt4a5c3d" path="res://Resources/Items/item_floor_wood.tres" id="3_a8n2b"]
-[ext_resource type="Script" path="res://Scripts/System/Crafting/CraftingRecipe.cs" id="4_ywade"]
+[ext_resource type="Script" uid="uid://sjq3rvl8dikb" path="res://Scripts/System/Crafting/CraftingRecipe.cs" id="4_ywade"]
 
 [sub_resource type="Resource" id="Resource_kffyo"]
 script = ExtResource("2_bhwxp")

@@ -1,11 +1,11 @@
 [gd_scene load_steps=14 format=3 uid="uid://cwkqdyaqwc88q"]
 
 [ext_resource type="Texture2D" uid="uid://6n7wapc0vi1m" path="res://Art/UI/UI_Time_Clock_Background.png" id="1_753by"]
-[ext_resource type="Script" path="res://Scripts/UI/TimeUI.cs" id="1_hl7gs"]
+[ext_resource type="Script" uid="uid://bireano0in135" path="res://Scripts/UI/TimeUI.cs" id="1_hl7gs"]
 [ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="2_kwuwr"]
 [ext_resource type="Texture2D" uid="uid://bd80e3o1q6ik3" path="res://Art/UI/UI_Time_Clock_Adornment.png" id="3_hdeqw"]
 [ext_resource type="Texture2D" uid="uid://blplr4asxjrq4" path="res://Art/UI/UI_Time_Clock_Dial.png" id="3_vicn0"]
-[ext_resource type="Script" path="res://Scripts/UI/DayTransitionUI.cs" id="6_4t05p"]
+[ext_resource type="Script" uid="uid://h4sjued1kv73" path="res://Scripts/UI/DayTransitionUI.cs" id="6_4t05p"]
 [ext_resource type="FontFile" uid="uid://dr54byvtn2u20" path="res://Fonts/Kenney High.ttf" id="7_l2l4t"]
 
 [sub_resource type="Animation" id="Animation_b7uci"]
@@ -80,8 +80,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nkurn"]
 _data = {
-"RESET": SubResource("Animation_b7uci"),
-"transition": SubResource("Animation_wklnl")
+&"RESET": SubResource("Animation_b7uci"),
+&"transition": SubResource("Animation_wklnl")
 }
 
 [sub_resource type="Gradient" id="Gradient_78im6"]

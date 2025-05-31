@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d1g02xoni2muk"]
 
-[ext_resource type="Script" path="res://Scripts/World/WorldItem.cs" id="1_syiyw"]
+[ext_resource type="Script" uid="uid://c56gfeqdw3dq8" path="res://Scripts/World/WorldItem.cs" id="1_syiyw"]
 [ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="2_ivm82"]
 [ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="3_sdiw5"]
 

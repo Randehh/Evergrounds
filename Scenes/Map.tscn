@@ -1,9 +1,9 @@
 [gd_scene load_steps=14 format=4 uid="uid://cevqvlshxo84w"]
 
-[ext_resource type="Script" path="res://Scripts/World/WorldMap.cs" id="1_1x1iq"]
-[ext_resource type="Script" path="res://Scripts/World/WorldMapGenerator.cs" id="2_pbtj7"]
+[ext_resource type="Script" uid="uid://dtg3wknn3k751" path="res://Scripts/World/WorldMap.cs" id="1_1x1iq"]
+[ext_resource type="Script" uid="uid://dpn8ca5ppkx8n" path="res://Scripts/World/WorldMapGenerator.cs" id="2_pbtj7"]
 [ext_resource type="PackedScene" uid="uid://cv78ude3j44mx" path="res://Scenes/World/Interactables/interactable_chest.tscn" id="4_b7prb"]
-[ext_resource type="Script" path="res://Scripts/World/WorldMapGeneratorNodePlacementData.cs" id="4_xlhxp"]
+[ext_resource type="Script" uid="uid://c8sggvv4ffenm" path="res://Scripts/World/WorldMapGeneratorNodePlacementData.cs" id="4_xlhxp"]
 [ext_resource type="PackedScene" uid="uid://dccf66b3ov4w2" path="res://Scenes/World/Interactables/interactable_shrub.tscn" id="5_2gngj"]
 [ext_resource type="PackedScene" uid="uid://pswa61xj7a1p" path="res://Scenes/World/Interactables/interactable_rock.tscn" id="6_odr6j"]
 [ext_resource type="TileSet" uid="uid://u1q06kau1m65" path="res://TileSets/Default.tres" id="8_tpcv2"]

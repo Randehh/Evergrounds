@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="CraftingRecipeContainer" load_steps=12 format=3 uid="uid://cpgju01n7q6hh"]
+[gd_resource type="Resource" load_steps=12 format=3 uid="uid://cpgju01n7q6hh"]
 
 [ext_resource type="Resource" uid="uid://b5e3i2wt1b4kc" path="res://Resources/CraftingRecipes/recipe_axe.tres" id="1_4ovun"]
-[ext_resource type="Script" path="res://Scripts/System/Crafting/CraftingRecipeContainer.cs" id="1_nldae"]
+[ext_resource type="Script" uid="uid://cjbfiq38t03tm" path="res://Scripts/System/Crafting/CraftingRecipeContainer.cs" id="1_nldae"]
 [ext_resource type="Resource" uid="uid://dfgy2evt8quyt" path="res://Resources/CraftingRecipes/recipe_shovel.tres" id="2_o5cn2"]
 [ext_resource type="Resource" uid="uid://blsxvdfippjuo" path="res://Resources/CraftingRecipes/recipe_pitchfork.tres" id="3_aq8uo"]
 [ext_resource type="Resource" uid="uid://baiquj15jhsb2" path="res://Resources/CraftingRecipes/recipe_wood.tres" id="4_gmj16"]

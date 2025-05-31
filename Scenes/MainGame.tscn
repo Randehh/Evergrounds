@@ -1,17 +1,17 @@
 [gd_scene load_steps=28 format=3 uid="uid://m5u74rphpivx"]
 
-[ext_resource type="Script" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
-[ext_resource type="Script" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
-[ext_resource type="Script" path="res://Scripts/System/Services/ServiceSerializer.cs" id="1_u5mee"]
+[ext_resource type="Script" uid="uid://bma8o18hnksg6" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
+[ext_resource type="Script" uid="uid://ch4mkk5twbuf" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
+[ext_resource type="Script" uid="uid://o4284x0lwtd" path="res://Scripts/System/Services/ServiceSerializer.cs" id="1_u5mee"]
 [ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/UI/Inventory_UI.tscn" id="1_v08iy"]
 [ext_resource type="PackedScene" uid="uid://cevqvlshxo84w" path="res://Scenes/Map.tscn" id="2_be0ya"]
-[ext_resource type="Script" path="res://Scripts/DragAndDrop/DragAndDrop.cs" id="2_n5ome"]
+[ext_resource type="Script" uid="uid://jc2ckdx3ltnj" path="res://Scripts/DragAndDrop/DragAndDrop.cs" id="2_n5ome"]
 [ext_resource type="PackedScene" uid="uid://emajq5067js6" path="res://Scenes/player_camera.tscn" id="4_1vx5r"]
 [ext_resource type="PackedScene" uid="uid://cigl51myg13f6" path="res://Scenes/Characters/player.tscn" id="4_hyjsw"]
-[ext_resource type="Script" path="res://Scripts/UI/DragAndDropUI.cs" id="5_dfp8p"]
+[ext_resource type="Script" uid="uid://dbboff66hbly5" path="res://Scripts/UI/DragAndDropUI.cs" id="5_dfp8p"]
 [ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="6_3kt0a"]
 [ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="6_c26d2"]
-[ext_resource type="Script" path="res://Scripts/UI/CursorUI.cs" id="8_4ge1w"]
+[ext_resource type="Script" uid="uid://kwbvwiax28wt" path="res://Scripts/UI/CursorUI.cs" id="8_4ge1w"]
 [ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="8_onj47"]
 [ext_resource type="PackedScene" uid="uid://c0ykpj48sr63t" path="res://Scenes/UI/crafting_canvas.tscn" id="9_gh0qo"]
 [ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_gieg4"]
@@ -20,8 +20,8 @@
 [ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="10_u4gyu"]
 [ext_resource type="Texture2D" uid="uid://bbms8e28hb43t" path="res://Art/UI/UI_Cursor_Grab.png" id="11_cpyry"]
 [ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="11_if80u"]
-[ext_resource type="Script" path="res://Scripts/UI/DebugUI.cs" id="12_i1bcf"]
-[ext_resource type="Script" path="res://Scripts/System/Services/ServiceLocator.cs" id="12_ucx2n"]
+[ext_resource type="Script" uid="uid://b6mdgd8su7t6y" path="res://Scripts/UI/DebugUI.cs" id="12_i1bcf"]
+[ext_resource type="Script" uid="uid://c0mo1k6wj4bmn" path="res://Scripts/System/Services/ServiceLocator.cs" id="12_ucx2n"]
 [ext_resource type="Resource" uid="uid://bp107fjr63j07" path="res://Resources/Items/item_wall_wood.tres" id="13_41jus"]
 [ext_resource type="Resource" uid="uid://d2vpbbt4a5c3d" path="res://Resources/Items/item_floor_wood.tres" id="14_pf2p4"]
 [ext_resource type="PackedScene" uid="uid://cwkqdyaqwc88q" path="res://Scenes/UI/general_canvas.tscn" id="14_qhyv2"]
@@ -53,10 +53,10 @@ script = ExtResource("2_n5ome")
 
 [node name="GameSetup" type="Node" parent="." node_paths=PackedStringArray("map")]
 script = ExtResource("1_4si5g")
-map = NodePath("../Map")
 cameraScene = ExtResource("4_1vx5r")
 characterScene = ExtResource("4_hyjsw")
 itemsToGive = [ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("14_pf2p4"), ExtResource("14_pf2p4")]
+map = NodePath("../Map")
 
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
 
@@ -125,11 +125,11 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("8_4ge1w")
+cursorTexture = ExtResource("9_rfphm")
+cursorTexturePressed = ExtResource("10_821fs")
 mouseParent = NodePath("CursorParent")
 cursorTextureRect = NodePath("CursorParent/CursorTextureRect")
 cursorGrabTextureRect = NodePath("CursorParent/GrabTextureRect")
-cursorTexture = ExtResource("9_rfphm")
-cursorTexturePressed = ExtResource("10_821fs")
 
 [node name="CursorParent" type="Control" parent="CursorCanvas/CursorUI"]
 anchors_preset = 0

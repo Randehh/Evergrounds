@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://pswa61xj7a1p"]
 
-[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_cujf6"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_efkqt"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_ipuka"]
+[ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_cujf6"]
+[ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_efkqt"]
+[ext_resource type="Script" uid="uid://cnd0nachuxwqr" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="3_ipuka"]
 [ext_resource type="Resource" uid="uid://madlj01uhxfs" path="res://Resources/Items/item_stone.tres" id="4_sqt0u"]
-[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_bucmb"]
+[ext_resource type="Script" uid="uid://badhsmf7utxe5" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_bucmb"]
 [ext_resource type="Texture2D" uid="uid://yfmh7j7fcuwt" path="res://Art/World/Interactables/Interactable_Rock.png" id="6_jr00o"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="9_igt7a"]
+[ext_resource type="Script" uid="uid://1vi5kkv8txr" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="9_igt7a"]
 
 [sub_resource type="Resource" id="Resource_1wpgf"]
 script = ExtResource("2_efkqt")

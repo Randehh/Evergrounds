@@ -1,14 +1,14 @@
 [gd_scene load_steps=16 format=3 uid="uid://cv78ude3j44mx"]
 
-[ext_resource type="Script" path="res://Scripts/Interactions/Interactable.cs" id="1_drppp"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_35spc"]
+[ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_drppp"]
+[ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_35spc"]
 [ext_resource type="Texture2D" uid="uid://dxv1suh6sexl7" path="res://Art/World/Interactables/Interactable_Chest_Closed.png" id="3_5raf4"]
 [ext_resource type="Texture2D" uid="uid://dycxjnpyccbh6" path="res://Art/World/Interactables/Interactable_Chest_Open.png" id="4_o2gcd"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="5_0kiej"]
+[ext_resource type="Script" uid="uid://cnd0nachuxwqr" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="5_0kiej"]
 [ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="6_mk56t"]
 [ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="6_nfmq4"]
-[ext_resource type="Script" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="7_3ms7t"]
-[ext_resource type="Script" path="res://Scripts/Interactions/InteractEvents/InteractEventPlayAnimation.cs" id="7_wifgg"]
+[ext_resource type="Script" uid="uid://badhsmf7utxe5" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="7_3ms7t"]
+[ext_resource type="Script" uid="uid://r875kqjm8lu2" path="res://Scripts/Interactions/InteractEvents/InteractEventPlayAnimation.cs" id="7_wifgg"]
 
 [sub_resource type="Resource" id="Resource_88xi3"]
 script = ExtResource("2_35spc")
@@ -173,8 +173,8 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i2tu2"]
 _data = {
-"Open": SubResource("Animation_cso4u"),
-"RESET": SubResource("Animation_rn23p")
+&"Open": SubResource("Animation_cso4u"),
+&"RESET": SubResource("Animation_rn23p")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3yfn1"]

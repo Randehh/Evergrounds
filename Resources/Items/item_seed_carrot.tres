@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://crmrvkfikd4f6"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://crmrvkfikd4f6"]
 
 [ext_resource type="Texture2D" uid="uid://wjdbvryvk3vf" path="res://Art/Items/Holdables/Holdable_Seed_Carrot.png" id="1_ejlg2"]
-[ext_resource type="Script" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_k0gam"]
+[ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_k0gam"]
 
 [resource]
 script = ExtResource("2_k0gam")

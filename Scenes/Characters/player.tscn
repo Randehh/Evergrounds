@@ -1,12 +1,12 @@
 [gd_scene load_steps=14 format=3 uid="uid://cigl51myg13f6"]
 
-[ext_resource type="Script" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
+[ext_resource type="Script" uid="uid://k7pix4e37ggf" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
 [ext_resource type="PackedScene" uid="uid://ctkvevyma6uqu" path="res://Scenes/Characters/character_base.tscn" id="2_ah60g"]
 [ext_resource type="Texture2D" uid="uid://b2c6m7ka7bi0m" path="res://Art/UI/Arrow_Down.png" id="3_d6q47"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerInteractHandler.cs" id="3_vywfg"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerInteractDetector.cs" id="4_faxxo"]
+[ext_resource type="Script" uid="uid://bdgh0rfmuh6hq" path="res://Scripts/Player/PlayerInteractHandler.cs" id="3_vywfg"]
+[ext_resource type="Script" uid="uid://q74pekach5tj" path="res://Scripts/Player/PlayerInteractDetector.cs" id="4_faxxo"]
 [ext_resource type="Texture2D" uid="uid://cbspc4phk6w78" path="res://Art/UI/UI_Grid_Overlay.png" id="6_8im18"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerDespawnableHandler.cs" id="6_47lku"]
+[ext_resource type="Script" uid="uid://c61nel2uiqlct" path="res://Scripts/Player/PlayerDespawnableHandler.cs" id="6_47lku"]
 
 [sub_resource type="Animation" id="Animation_cxq1k"]
 resource_name = "Highlight"
@@ -106,8 +106,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qnace"]
 _data = {
-"Highlight": SubResource("Animation_cxq1k"),
-"RESET": SubResource("Animation_lw88h")
+&"Highlight": SubResource("Animation_cxq1k"),
+&"RESET": SubResource("Animation_lw88h")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kovjw"]

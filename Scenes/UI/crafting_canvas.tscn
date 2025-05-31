@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://c0ykpj48sr63t"]
 
-[ext_resource type="Script" path="res://Scripts/UI/CraftingUI.cs" id="1_5jyco"]
+[ext_resource type="Script" uid="uid://cosjl553ieq4v" path="res://Scripts/UI/CraftingUI.cs" id="1_5jyco"]
 [ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="1_lomo0"]
 [ext_resource type="PackedScene" uid="uid://c6w2mtgtv8wld" path="res://Scenes/UI/crafting_slot.tscn" id="2_wmbck"]
 [ext_resource type="PackedScene" uid="uid://bhbww511wwegu" path="res://Scenes/UI/crafting_category.tscn" id="4_k63es"]
 [ext_resource type="Resource" uid="uid://cpgju01n7q6hh" path="res://Resources/CraftingContainers/field_crafting.tres" id="6_3vi1m"]
 [ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="8_deism"]
-[ext_resource type="Script" path="res://Scripts/UI/Components/ExperienceDisplay.cs" id="8_wdbou"]
+[ext_resource type="Script" uid="uid://bhm8hi7vpg2cv" path="res://Scripts/UI/Components/ExperienceDisplay.cs" id="8_wdbou"]
 [ext_resource type="PackedScene" uid="uid://da3q7wj3eg5f1" path="res://Scenes/UI/crafting_component.tscn" id="9_seyk2"]
 
 [node name="CraftingCanvas" type="CanvasLayer"]
