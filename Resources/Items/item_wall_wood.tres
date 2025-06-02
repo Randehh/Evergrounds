@@ -18,3 +18,4 @@ gridPlacementScene = ""
 tileMaterial = 3
 subTileSet = Vector2i(1, 0)
 isSimpleTileMap = false
+hasInfiniteUses = false

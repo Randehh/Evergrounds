@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://pswa61xj7a1p"]
+[gd_scene load_steps=12 format=3 uid="uid://pswa61xj7a1p"]
 
 [ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_cujf6"]
 [ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_efkqt"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://madlj01uhxfs" path="res://Resources/Items/item_stone.tres" id="4_sqt0u"]
 [ext_resource type="Script" uid="uid://badhsmf7utxe5" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_bucmb"]
 [ext_resource type="Texture2D" uid="uid://yfmh7j7fcuwt" path="res://Art/World/Interactables/Interactable_Rock.png" id="6_jr00o"]
+[ext_resource type="Script" uid="uid://dst75jhhe3gie" path="res://Scripts/Interactions/InteractEvents/InteractEventGiveExperience.cs" id="8_amr5w"]
 [ext_resource type="Script" uid="uid://1vi5kkv8txr" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="9_igt7a"]
 
 [sub_resource type="Resource" id="Resource_1wpgf"]
@@ -31,7 +32,7 @@ interactShape = NodePath("Shape")
 selectArrowAnchor = NodePath("ArrowAnchor")
 interactRequirement = SubResource("Resource_1wpgf")
 interactEvents = []
-interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode")]
+interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode"), NodePath("InteractEventGiveExperience")]
 mainSprite = NodePath("ShrubSprite")
 
 [node name="Shape" type="CollisionShape2D" parent="."]
@@ -51,3 +52,9 @@ offset = Vector2(0, -5)
 [node name="InteractEventDestroyNode" type="Node2D" parent="." node_paths=PackedStringArray("toDestroy")]
 script = ExtResource("9_igt7a")
 toDestroy = NodePath("..")
+
+[node name="InteractEventGiveExperience" type="Node2D" parent="."]
+script = ExtResource("8_amr5w")
+experienceType = 2
+experienceAmount = 2
+metadata/_custom_type_script = "uid://dst75jhhe3gie"

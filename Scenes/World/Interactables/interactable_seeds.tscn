@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://hnncnqeulgog"]
+[gd_scene load_steps=14 format=3 uid="uid://hnncnqeulgog"]
 
 [ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_lbnul"]
 [ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_hr3oi"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="4_7tukf"]
 [ext_resource type="Script" uid="uid://badhsmf7utxe5" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_5elj0"]
 [ext_resource type="Resource" uid="uid://du6v1pv2pj6bu" path="res://Resources/Items/item_carrot.tres" id="6_ks1g2"]
+[ext_resource type="Script" uid="uid://dst75jhhe3gie" path="res://Scripts/Interactions/InteractEvents/InteractEventGiveExperience.cs" id="9_6c6nt"]
 [ext_resource type="Texture2D" uid="uid://d03emquq8xpnj" path="res://Art/World/Interactables/Interactable_Seeds.png" id="9_cpy06"]
 [ext_resource type="Script" uid="uid://1vi5kkv8txr" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="10_rt5ae"]
 
@@ -39,9 +40,9 @@ interactShape = NodePath("Shape")
 selectArrowAnchor = NodePath("ArrowAnchor")
 interactRequirement = SubResource("Resource_whq2g")
 interactEvents = []
-interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode")]
+interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode"), NodePath("InteractEventGiveExperience")]
 mainSprite = NodePath("SeedsSprite")
-validTilePlacementMaterials = [2]
+validTilePlacementMaterials = Array[int]([2])
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_k8f8h")
@@ -59,3 +60,8 @@ texture = ExtResource("9_cpy06")
 [node name="InteractEventDestroyNode" type="Node2D" parent="." node_paths=PackedStringArray("toDestroy")]
 script = ExtResource("10_rt5ae")
 toDestroy = NodePath("..")
+
+[node name="InteractEventGiveExperience" type="Node2D" parent="."]
+script = ExtResource("9_6c6nt")
+experienceAmount = 2
+metadata/_custom_type_script = "uid://dst75jhhe3gie"

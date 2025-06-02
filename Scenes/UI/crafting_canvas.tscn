@@ -5,17 +5,17 @@
 [ext_resource type="PackedScene" uid="uid://c6w2mtgtv8wld" path="res://Scenes/UI/crafting_slot.tscn" id="2_wmbck"]
 [ext_resource type="PackedScene" uid="uid://bhbww511wwegu" path="res://Scenes/UI/crafting_category.tscn" id="4_k63es"]
 [ext_resource type="Resource" uid="uid://cpgju01n7q6hh" path="res://Resources/CraftingContainers/field_crafting.tres" id="6_3vi1m"]
+[ext_resource type="PackedScene" uid="uid://d1q71pnww7paf" path="res://Scenes/UI/experience_display.tscn" id="8_5wn55"]
 [ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="8_deism"]
-[ext_resource type="Script" uid="uid://bhm8hi7vpg2cv" path="res://Scripts/UI/Components/ExperienceDisplay.cs" id="8_wdbou"]
 [ext_resource type="PackedScene" uid="uid://da3q7wj3eg5f1" path="res://Scenes/UI/crafting_component.tscn" id="9_seyk2"]
 
-[node name="CraftingCanvas" type="CanvasLayer"]
-
-[node name="CraftingUI" type="Control" parent="." node_paths=PackedStringArray("craftingListParent", "expandParent", "recipeTitleLabel", "recipeDescriptionLabel", "recipeComponentContainer", "craftButton")]
+[node name="CraftingUI" type="Control" node_paths=PackedStringArray("craftingListParent", "recipeTitleLabel", "recipeDescriptionLabel", "recipeComponentContainer", "craftButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -24,109 +24,74 @@ inventorySlotScene = ExtResource("2_wmbck")
 craftingComponentScene = ExtResource("9_seyk2")
 craftingCategory = ExtResource("4_k63es")
 craftingListParent = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/ScrollContainer/CraftingListParent")
-expandParent = NodePath("CraftingContainer")
 recipeTitleLabel = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails/RecipeTitle")
 recipeDescriptionLabel = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails/RecipeDetails")
 recipeComponentContainer = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails/ComponentsList")
 craftButton = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails/Button")
 defaultCraftingRecipeContainer = ExtResource("6_3vi1m")
 
-[node name="CraftingContainer" type="PanelContainer" parent="CraftingUI"]
+[node name="CraftingContainer" type="PanelContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -258.0
-offset_right = 300.0
-offset_bottom = 42.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_lomo0")
 
-[node name="MarginContainer" type="MarginContainer" parent="CraftingUI/CraftingContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CraftingContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CraftingUI/CraftingContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CraftingContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Split" type="HBoxContainer" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer"]
+[node name="Split" type="HBoxContainer" parent="CraftingContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CraftingContainer/MarginContainer/VBoxContainer/Split"]
 layout_mode = 2
 size_flags_horizontal = 3
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="CraftingListParent" type="VBoxContainer" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split/ScrollContainer"]
+[node name="CraftingListParent" type="VBoxContainer" parent="CraftingContainer/MarginContainer/VBoxContainer/Split/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
-[node name="Separator" type="VSeparator" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split"]
+[node name="Separator" type="VSeparator" parent="CraftingContainer/MarginContainer/VBoxContainer/Split"]
 layout_mode = 2
 
-[node name="RecipeDetails" type="VBoxContainer" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split"]
+[node name="RecipeDetails" type="VBoxContainer" parent="CraftingContainer/MarginContainer/VBoxContainer/Split"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="RecipeTitle" type="Label" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
+[node name="RecipeTitle" type="Label" parent="CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
 layout_mode = 2
 text = "Title"
 label_settings = ExtResource("8_deism")
 
-[node name="RecipeDetails" type="Label" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
+[node name="RecipeDetails" type="Label" parent="CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
 layout_mode = 2
 text = "Some details of the item go here."
 autowrap_mode = 3
 
-[node name="Separator" type="HSeparator" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
+[node name="Separator" type="HSeparator" parent="CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
 layout_mode = 2
 
-[node name="RequiredText" type="Label" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
+[node name="RequiredText" type="Label" parent="CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
 layout_mode = 2
 text = "Components:"
 
-[node name="ComponentsList" type="VBoxContainer" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
+[node name="ComponentsList" type="VBoxContainer" parent="CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
+[node name="Button" type="Button" parent="CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails"]
 layout_mode = 2
 text = "Craft"
 
-[node name="ExperienceDisplay" type="Control" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("progressBar", "progressLabel")]
-custom_minimum_size = Vector2(0, 20)
+[node name="ExperienceDisplay" parent="CraftingContainer/MarginContainer/VBoxContainer" instance=ExtResource("8_5wn55")]
 layout_mode = 2
-script = ExtResource("8_wdbou")
-progressBar = NodePath("ProgressBar")
-progressLabel = NodePath("Label")
-trackingType = 3
-
-[node name="ProgressBar" type="ProgressBar" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/ExperienceDisplay"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-max_value = 1.0
-step = 0.001
-value = 0.235
-show_percentage = false
-
-[node name="Label" type="Label" parent="CraftingUI/CraftingContainer/MarginContainer/VBoxContainer/ExperienceDisplay"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Crafting Lv1 - 0/10"
-horizontal_alignment = 1
-vertical_alignment = 1

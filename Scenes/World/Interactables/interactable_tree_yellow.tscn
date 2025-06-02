@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bmu70m6spkl83"]
+[gd_scene load_steps=21 format=3 uid="uid://bmu70m6spkl83"]
 
 [ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_kwlpf"]
 [ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_4lh03"]
@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://p4innrlpa2cc" path="res://Resources/Items/item_acorn.tres" id="7_054iu"]
 [ext_resource type="Script" uid="uid://1vi5kkv8txr" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="7_vfhnh"]
 [ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="11_vp316"]
+[ext_resource type="Script" uid="uid://dst75jhhe3gie" path="res://Scripts/Interactions/InteractEvents/InteractEventGiveExperience.cs" id="12_cskvp"]
 
 [sub_resource type="Resource" id="Resource_cd1ki"]
 script = ExtResource("2_4lh03")
@@ -102,8 +103,8 @@ _data = {
 [sub_resource type="Resource" id="Resource_urmos"]
 script = ExtResource("5_5ckqr")
 item = ExtResource("4_jgta5")
-minimumCount = 1
-maximumCount = 2
+minimumCount = 2
+maximumCount = 3
 baseChance = 1.0
 
 [sub_resource type="Resource" id="Resource_6hjsb"]
@@ -129,14 +130,14 @@ interactShape = NodePath("Shape")
 selectArrowAnchor = NodePath("ArrowAnchor")
 interactRequirement = SubResource("Resource_cd1ki")
 interactEvents = [NodePath("InteractEventPlayAnimation")]
-interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode")]
+interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode"), NodePath("InteractEventGiveExperience")]
 interactCount = 3
 mainSprite = NodePath("TreeSprite")
-validTilePlacementMaterials = [0, 1]
+validTilePlacementMaterials = Array[int]([0, 1])
 
 [node name="TreeAnimator" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_4h7i0")
+&"": SubResource("AnimationLibrary_4h7i0")
 }
 
 [node name="Shape" type="CollisionShape2D" parent="."]
@@ -167,3 +168,8 @@ position = Vector2(0, -1)
 targetNode = NodePath("../TreeSprite")
 baseScaleMultiplier = 0.5
 isStatic = true
+
+[node name="InteractEventGiveExperience" type="Node2D" parent="."]
+script = ExtResource("12_cskvp")
+experienceType = 1
+metadata/_custom_type_script = "uid://dst75jhhe3gie"

@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://kowv86pjg7c8"]
+
+[ext_resource type="Script" uid="uid://clfnuxkdbxd3a" path="res://Scripts/UI/TabUI.cs" id="1_lqiri"]
+[ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="1_r0xay"]
+[ext_resource type="PackedScene" uid="uid://c0ykpj48sr63t" path="res://Scenes/UI/crafting_canvas.tscn" id="1_tdjf3"]
+[ext_resource type="Script" uid="uid://cutkxuc8rxknv" path="res://Scripts/UI/SkillsUI.cs" id="4_nr56r"]
+[ext_resource type="PackedScene" uid="uid://d1q71pnww7paf" path="res://Scenes/UI/experience_display.tscn" id="5_7tiu2"]
+
+[node name="TabUI" type="CanvasLayer"]
+
+[node name="TabContainer" type="TabContainer" parent="." node_paths=PackedStringArray("expandParent")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 400.0
+grow_horizontal = 2
+size_flags_stretch_ratio = 0.0
+theme = ExtResource("1_r0xay")
+current_tab = 1
+script = ExtResource("1_lqiri")
+expandParent = NodePath(".")
+
+[node name="Crafting" type="MarginContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_r0xay")
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+metadata/_tab_index = 0
+
+[node name="CraftingCanvas" parent="TabContainer/Crafting" instance=ExtResource("1_tdjf3")]
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 13
+
+[node name="Skills" type="MarginContainer" parent="TabContainer"]
+layout_mode = 2
+theme = ExtResource("1_r0xay")
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+metadata/_tab_index = 1
+
+[node name="SkillsCanvas" type="Control" parent="TabContainer/Skills" node_paths=PackedStringArray("skillsListParent")]
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 13
+mouse_filter = 2
+script = ExtResource("4_nr56r")
+skillsListParent = NodePath("CraftingContainer/MarginContainer/VBoxContainer")
+skillScene = ExtResource("5_7tiu2")
+
+[node name="CraftingContainer" type="PanelContainer" parent="TabContainer/Skills/SkillsCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_r0xay")
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Skills/SkillsCanvas/CraftingContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Skills/SkillsCanvas/CraftingContainer/MarginContainer"]
+layout_mode = 2

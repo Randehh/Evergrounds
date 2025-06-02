@@ -13,7 +13,6 @@
 [ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="6_c26d2"]
 [ext_resource type="Script" uid="uid://kwbvwiax28wt" path="res://Scripts/UI/CursorUI.cs" id="8_4ge1w"]
 [ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="8_onj47"]
-[ext_resource type="PackedScene" uid="uid://c0ykpj48sr63t" path="res://Scenes/UI/crafting_canvas.tscn" id="9_gh0qo"]
 [ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_gieg4"]
 [ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
 [ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="9_wn26v"]
@@ -26,6 +25,7 @@
 [ext_resource type="Resource" uid="uid://bp107fjr63j07" path="res://Resources/Items/item_wall_wood.tres" id="13_41jus"]
 [ext_resource type="Resource" uid="uid://d2vpbbt4a5c3d" path="res://Resources/Items/item_floor_wood.tres" id="14_pf2p4"]
 [ext_resource type="PackedScene" uid="uid://cwkqdyaqwc88q" path="res://Scenes/UI/general_canvas.tscn" id="14_qhyv2"]
+[ext_resource type="PackedScene" uid="uid://kowv86pjg7c8" path="res://Scenes/UI/tab_UI.tscn" id="18_wn26v"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
 line_spacing = 5.0
@@ -61,9 +61,9 @@ itemsToGive = Array[ExtResource("9_wn26v")]([ExtResource("8_onj47"), ExtResource
 
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
 
-[node name="CraftingCanvas" parent="." instance=ExtResource("9_gh0qo")]
-
 [node name="GeneralCanvas" parent="." instance=ExtResource("14_qhyv2")]
+
+[node name="TabUI" parent="." instance=ExtResource("18_wn26v")]
 
 [node name="DragAndDropCanvas" type="CanvasLayer" parent="."]
 layer = 5

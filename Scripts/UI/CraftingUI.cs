@@ -21,9 +21,6 @@ public partial class CraftingUI : Control
     private VBoxContainer craftingListParent;
 
     [Export]
-    private Control expandParent;
-
-    [Export]
     private Label recipeTitleLabel;
 
     [Export]
@@ -44,10 +41,6 @@ public partial class CraftingUI : Control
     private List<CraftingItemSlotComponent> inventoryButtons = new();
     private int currentlySelected = -1;
     private CraftingRecipe[] sortedRecipes;
-
-    private float foldedY;
-    private float expandedY;
-    private bool isExpanded = false;
 
     public override void _Ready()
     {
@@ -86,22 +79,6 @@ public partial class CraftingUI : Control
                 SetSelectedCraftingSlot(slotMouseOver);
             }
         }
-
-        if (Input.IsActionJustPressed("inventory_toggle"))
-        {
-            isExpanded = !isExpanded;
-
-            if (isExpanded)
-            {
-                ServiceLocator.InputStateService.PushInputState(InputState.UI);
-            }
-            else
-            {
-                ServiceLocator.InputStateService.PopInputState();
-            }
-        }
-
-        expandParent.Position = new Vector2(expandParent.Position.X, (float)Mathf.Lerp(expandParent.Position.Y, isExpanded ? expandedY : foldedY, 20 * delta));
     }
 
     private void ReloadUI()
@@ -160,9 +137,6 @@ public partial class CraftingUI : Control
 
             lastRecipeType = recipe.recipeType;
         }
-
-        foldedY = -310;
-        expandedY = 66;
 
         SetSelectedCraftingSlot(0);
     }
