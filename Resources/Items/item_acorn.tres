@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://p4innrlpa2cc"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://p4innrlpa2cc"]
 
 [ext_resource type="Texture2D" uid="uid://c3kocogfilgsv" path="res://Art/Items/Resources/Resource_Acorn.png" id="1_fd8hf"]
 [ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_d6mj5"]

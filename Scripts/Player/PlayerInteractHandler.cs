@@ -177,7 +177,11 @@ public partial class PlayerInteractHandler : Node2D
             WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial, itemInHand.definition.subTileSet, true);
             character.UseHoldable();
 
-            ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
+
+            if (!itemInHand.definition.hasInfiniteUses)
+            {
+                ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
+            }
         }
     }
 
@@ -244,7 +248,10 @@ public partial class PlayerInteractHandler : Node2D
             Node2D placedNode = currentlyLoadedPackedScene.Instantiate<Node2D>();
             WorldMap.Instance.AddWorldNode(placedNode, true, currentGridPosition);
 
-            ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
+            if (!itemInHand.definition.hasInfiniteUses)
+            {
+                ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
+            }
         }
     }
 

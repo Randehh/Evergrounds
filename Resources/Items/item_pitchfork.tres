@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ckkxt2qndwtsh"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://ckkxt2qndwtsh"]
 
 [ext_resource type="Texture2D" uid="uid://btk2ijugxyldc" path="res://Art/Items/Holdables/Holdable_Pitchfork.png" id="1_vfib3"]
 [ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_t6tb7"]
@@ -8,7 +8,6 @@ script = ExtResource("2_t6tb7")
 displayName = "Rake"
 description = "Time to make yourself brekkie.
 "
-usageText = "Turn dirt into tilled soil"
 itemSprite = ExtResource("1_vfib3")
 stackSize = 1
 useAnimation = 0
@@ -18,3 +17,6 @@ rarity = 1
 worldShadowScale = 0.5
 gridPlacementScene = ""
 tileMaterial = 2
+subTileSet = Vector2i(0, 0)
+isSimpleTileMap = false
+hasInfiniteUses = true

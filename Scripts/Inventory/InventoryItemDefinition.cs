@@ -45,6 +45,9 @@ public partial class InventoryItemDefinition : Resource
     [Export]
     public bool isSimpleTileMap = false;
 
+    [Export]
+    public bool hasInfiniteUses = false;
+
     public bool isStackable => stackSize > 1;
 
     public InventoryItemDefinition() { }

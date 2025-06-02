@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=9 format=3 uid="uid://blsxvdfippjuo"]
+[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=9 format=3 uid="uid://blsxvdfippjuo"]
 
 [ext_resource type="Resource" uid="uid://ds2rdh8u3kqm0" path="res://Resources/Items/item_stick.tres" id="1_ucsng"]
 [ext_resource type="Script" uid="uid://btdb56a3w2bss" path="res://Scripts/System/Crafting/CraftingRecipeItem.cs" id="2_sasho"]
@@ -24,6 +24,6 @@ count = 1
 [resource]
 script = ExtResource("5_afq3j")
 result = SubResource("Resource_7akgb")
-requiredItems = [SubResource("Resource_6y8vi"), SubResource("Resource_nvwp3")]
+requiredItems = Array[ExtResource("2_sasho")]([SubResource("Resource_6y8vi"), SubResource("Resource_nvwp3")])
 recipeType = 0
 experience = 5

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bnj36agsqd4o8"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://bnj36agsqd4o8"]
 
 [ext_resource type="Texture2D" uid="uid://bqdga4yal185g" path="res://Art/Items/Holdables/Holdable_Spade.png" id="1_mprqx"]
 [ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_a1drs"]
@@ -7,7 +7,6 @@
 script = ExtResource("2_a1drs")
 displayName = "Shovel"
 description = " Remove everything from the earth!"
-usageText = "Turn grass to dirt"
 itemSprite = ExtResource("1_mprqx")
 stackSize = 1
 useAnimation = 0
@@ -17,3 +16,6 @@ rarity = 1
 worldShadowScale = 0.5
 gridPlacementScene = ""
 tileMaterial = 1
+subTileSet = Vector2i(0, 0)
+isSimpleTileMap = false
+hasInfiniteUses = true

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ydg6emtaeg1f"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://ydg6emtaeg1f"]
 
 [ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="1_dp16n"]
 [ext_resource type="Texture2D" uid="uid://u31y5of46e5c" path="res://Art/Items/Holdables/Holdable_Axe.png" id="1_m0s1t"]
@@ -7,7 +7,6 @@
 script = ExtResource("1_dp16n")
 displayName = "Axe"
 description = "The basic tool for any self-respecting farmer."
-usageText = "Chop down trees"
 itemSprite = ExtResource("1_m0s1t")
 stackSize = 1
 useAnimation = 0
@@ -17,3 +16,6 @@ rarity = 1
 worldShadowScale = 0.5
 gridPlacementScene = ""
 tileMaterial = 0
+subTileSet = Vector2i(0, 0)
+isSimpleTileMap = false
+hasInfiniteUses = true

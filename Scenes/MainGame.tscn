@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene load_steps=29 format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" uid="uid://bma8o18hnksg6" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="Script" uid="uid://ch4mkk5twbuf" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://c0ykpj48sr63t" path="res://Scenes/UI/crafting_canvas.tscn" id="9_gh0qo"]
 [ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_gieg4"]
 [ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
+[ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="9_wn26v"]
 [ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="10_821fs"]
 [ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="10_u4gyu"]
 [ext_resource type="Texture2D" uid="uid://bbms8e28hb43t" path="res://Art/UI/UI_Cursor_Grab.png" id="11_cpyry"]
@@ -53,10 +54,10 @@ script = ExtResource("2_n5ome")
 
 [node name="GameSetup" type="Node" parent="." node_paths=PackedStringArray("map")]
 script = ExtResource("1_4si5g")
+map = NodePath("../Map")
 cameraScene = ExtResource("4_1vx5r")
 characterScene = ExtResource("4_hyjsw")
-itemsToGive = [ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("14_pf2p4"), ExtResource("14_pf2p4")]
-map = NodePath("../Map")
+itemsToGive = Array[ExtResource("9_wn26v")]([ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("14_pf2p4"), ExtResource("14_pf2p4")])
 
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
 
@@ -125,11 +126,11 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("8_4ge1w")
-cursorTexture = ExtResource("9_rfphm")
-cursorTexturePressed = ExtResource("10_821fs")
 mouseParent = NodePath("CursorParent")
 cursorTextureRect = NodePath("CursorParent/CursorTextureRect")
 cursorGrabTextureRect = NodePath("CursorParent/GrabTextureRect")
+cursorTexture = ExtResource("9_rfphm")
+cursorTexturePressed = ExtResource("10_821fs")
 
 [node name="CursorParent" type="Control" parent="CursorCanvas/CursorUI"]
 anchors_preset = 0
