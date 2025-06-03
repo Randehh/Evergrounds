@@ -26,15 +26,13 @@
 [ext_resource type="PackedScene" uid="uid://cwkqdyaqwc88q" path="res://Scenes/UI/general_canvas.tscn" id="14_qhyv2"]
 [ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="15_wn26v"]
 [ext_resource type="PackedScene" uid="uid://kowv86pjg7c8" path="res://Scenes/UI/tab_UI.tscn" id="18_wn26v"]
+[ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="27_cmrup"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
 line_spacing = 5.0
 font_size = 10
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_n2blw"]
-font_size = 10
 
 [node name="MainGame" type="Node"]
 
@@ -188,4 +186,7 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_vertical = 1
 text = "FPS 20"
-label_settings = SubResource("LabelSettings_n2blw")
+label_settings = ExtResource("27_cmrup")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true

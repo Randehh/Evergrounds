@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://cigl51myg13f6"]
+[gd_scene load_steps=15 format=3 uid="uid://cigl51myg13f6"]
 
 [ext_resource type="Script" uid="uid://k7pix4e37ggf" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
 [ext_resource type="PackedScene" uid="uid://ctkvevyma6uqu" path="res://Scenes/Characters/character_base.tscn" id="2_ah60g"]
 [ext_resource type="Texture2D" uid="uid://b2c6m7ka7bi0m" path="res://Art/UI/Arrow_Down.png" id="3_d6q47"]
 [ext_resource type="Script" uid="uid://bdgh0rfmuh6hq" path="res://Scripts/Player/PlayerInteractHandler.cs" id="3_vywfg"]
 [ext_resource type="Script" uid="uid://q74pekach5tj" path="res://Scripts/Player/PlayerInteractDetector.cs" id="4_faxxo"]
+[ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="4_gdgf0"]
 [ext_resource type="Texture2D" uid="uid://cbspc4phk6w78" path="res://Art/UI/UI_Grid_Overlay.png" id="6_8im18"]
 [ext_resource type="Script" uid="uid://c61nel2uiqlct" path="res://Scripts/Player/PlayerDespawnableHandler.cs" id="6_47lku"]
 
@@ -130,23 +131,43 @@ decceleration = 0.75
 
 [node name="CharacterBase" parent="." instance=ExtResource("2_ah60g")]
 
-[node name="PlayerInteractHandler" type="Node2D" parent="." node_paths=PackedStringArray("character", "interactDetector", "selectArrow", "previewSprite", "gridTileView")]
+[node name="PlayerInteractHandler" type="Node2D" parent="." node_paths=PackedStringArray("character", "interactDetector", "selectArrow", "selectArrowLabel", "previewSprite", "gridTileView")]
 script = ExtResource("3_vywfg")
 character = NodePath("../CharacterBase")
 interactDetector = NodePath("../InteractableDetector")
 selectArrow = NodePath("../SelectArrow")
+selectArrowLabel = NodePath("../SelectArrow/ArrowLabel")
 previewSprite = NodePath("../ItemPlacePreviewSprite")
 gridTileView = NodePath("../GridPreviewSprite")
 
 [node name="SelectArrow" type="Node2D" parent="."]
 
+[node name="ArrowLabel" type="Label" parent="SelectArrow"]
+z_index = 10
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -9.0
+offset_right = 150.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+text = "Arrow label"
+label_settings = ExtResource("4_gdgf0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Offset" type="Node2D" parent="SelectArrow"]
-position = Vector2(0, -4)
+position = Vector2(0, -15)
 
 [node name="ArrowAnimator" type="AnimationPlayer" parent="SelectArrow/Offset"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_qnace")
+&"": SubResource("AnimationLibrary_qnace")
 }
 speed_scale = 2.0
 

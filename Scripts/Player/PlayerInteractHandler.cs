@@ -22,6 +22,9 @@ public partial class PlayerInteractHandler : Node2D
     private Node2D selectArrow;
 
     [Export]
+    private Label selectArrowLabel;
+
+    [Export]
     private Sprite2D previewSprite;
 
     [Export]
@@ -133,8 +136,12 @@ public partial class PlayerInteractHandler : Node2D
         alpha = Mathf.Clamp(alpha, 0, 1);
         selectArrow.Modulate = colorWhite.WithAlpha(alpha);
 
-        selectArrow.GlobalPosition = currentInteracable.GetArrowAnchor();
+        string arrowText = currentInteracable.GetArrowText();
+        bool hasArrowText = string.IsNullOrWhiteSpace(arrowText);
+
+        selectArrow.GlobalPosition = currentInteracable.GetArrowAnchor() + (hasArrowText ? new Vector2(0, 10) : new Vector2());
         selectArrow.Visible = true;
+        selectArrowLabel.Text = arrowText;
 
         // Execute interact
         if (IsUseHoldablePressed())

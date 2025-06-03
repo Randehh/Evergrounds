@@ -21,6 +21,7 @@ script = ExtResource("1_q3chx")
 interactPoint = NodePath("Shape")
 interactShape = NodePath("Shape")
 selectArrowAnchor = NodePath("ArrowAnchor")
+selectArrowText = "General shop"
 interactRequirement = SubResource("Resource_cd1ki")
 interactEvents = []
 interactCompleteEvents = [NodePath("InteractEventOpenCrafting")]

@@ -180,7 +180,7 @@ animationPlayer = NodePath("TransitionAnimator")
 
 [node name="TransitionAnimator" type="AnimationPlayer" parent="DayTransitionUI"]
 libraries = {
-"": SubResource("AnimationLibrary_nkurn")
+&"": SubResource("AnimationLibrary_nkurn")
 }
 
 [node name="Parent" type="Control" parent="DayTransitionUI"]

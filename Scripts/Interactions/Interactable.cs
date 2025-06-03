@@ -17,6 +17,9 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
     private Node2D selectArrowAnchor;
 
     [Export]
+    private string selectArrowText = string.Empty;
+
+    [Export]
     private InteractableRequirement interactRequirement;
 
     [Export]
@@ -86,6 +89,7 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
     }
 
     public Vector2 GetArrowAnchor() => selectArrowAnchor.GlobalPosition;
+    public string GetArrowText() => selectArrowText;
 
     public InteractResult GetInteractResult(InventoryItem inventoryItem)
     {
