@@ -15,7 +15,6 @@
 [ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="8_onj47"]
 [ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_gieg4"]
 [ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
-[ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="9_wn26v"]
 [ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="10_821fs"]
 [ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="10_u4gyu"]
 [ext_resource type="Texture2D" uid="uid://bbms8e28hb43t" path="res://Art/UI/UI_Cursor_Grab.png" id="11_cpyry"]
@@ -25,6 +24,7 @@
 [ext_resource type="Resource" uid="uid://bp107fjr63j07" path="res://Resources/Items/item_wall_wood.tres" id="13_41jus"]
 [ext_resource type="Resource" uid="uid://d2vpbbt4a5c3d" path="res://Resources/Items/item_floor_wood.tres" id="14_pf2p4"]
 [ext_resource type="PackedScene" uid="uid://cwkqdyaqwc88q" path="res://Scenes/UI/general_canvas.tscn" id="14_qhyv2"]
+[ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="15_wn26v"]
 [ext_resource type="PackedScene" uid="uid://kowv86pjg7c8" path="res://Scenes/UI/tab_UI.tscn" id="18_wn26v"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
@@ -57,7 +57,7 @@ script = ExtResource("1_4si5g")
 map = NodePath("../Map")
 cameraScene = ExtResource("4_1vx5r")
 characterScene = ExtResource("4_hyjsw")
-itemsToGive = Array[ExtResource("9_wn26v")]([ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("14_pf2p4"), ExtResource("14_pf2p4")])
+itemsToGive = [ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("14_pf2p4"), ExtResource("14_pf2p4"), ExtResource("15_wn26v"), ExtResource("15_wn26v"), ExtResource("15_wn26v"), ExtResource("15_wn26v"), ExtResource("15_wn26v")]
 
 [node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
 

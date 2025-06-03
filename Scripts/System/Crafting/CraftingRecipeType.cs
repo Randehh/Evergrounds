@@ -4,5 +4,6 @@ public enum CraftingRecipeType
     FURNITURE,
     FLOORS,
     WALLS,
-    RESOURCES
+    RESOURCES,
+    SEEDS,
 }

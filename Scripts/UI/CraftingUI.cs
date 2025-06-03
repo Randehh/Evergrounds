@@ -27,13 +27,25 @@ public partial class CraftingUI : Control
     private Label recipeDescriptionLabel;
 
     [Export]
+    private Label recipeComponentsLabel;
+
+    [Export]
     private VBoxContainer recipeComponentContainer;
 
     [Export]
     private Button craftButton;
 
     [Export]
+    private ExperienceDisplay experienceDisplay;
+
+    [Export]
     private CraftingRecipeContainer defaultCraftingRecipeContainer;
+
+    [Export]
+    private string craftButtonText;
+
+    [Export]
+    private string componentsText;
 
     private InventoryService inventory;
     private CraftingRecipeContainer recipeContainer;
@@ -55,6 +67,9 @@ public partial class CraftingUI : Control
         {
             SetSelectedCraftingSlot(currentlySelected);
         };
+
+        recipeComponentsLabel.Text = componentsText;
+        craftButton.Text = craftButtonText;
     }   
 
     private void CraftButton_Pressed()
@@ -68,6 +83,14 @@ public partial class CraftingUI : Control
         inventory.AddItem(recipe.result.item, recipe.result.count);
 
         ServiceLocator.ExperienceService.AddExperience(ExperienceType.CRAFTING, recipe.experience);
+    }
+
+    public void SetCraftingContainer(CraftingRecipeContainer craftingRecipeContainer)
+    {
+        recipeContainer = craftingRecipeContainer;
+        ReloadUI();
+
+        experienceDisplay.Visible = false;
     }
 
     public override void _Process(double delta)
@@ -91,7 +114,7 @@ public partial class CraftingUI : Control
             child.Free();
         }
 
-        sortedRecipes = defaultCraftingRecipeContainer.recipes.OrderBy(recipe => recipe.recipeType).ThenBy(recipe => recipe.result.item.displayName).ToArray();
+        sortedRecipes = recipeContainer.recipes.OrderBy(recipe => recipe.recipeType).ThenBy(recipe => recipe.result.item.displayName).ToArray();
         CraftingRecipeType? lastRecipeType = null;
         FlowContainer currentFlowContainer = null;
 

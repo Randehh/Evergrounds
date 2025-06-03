@@ -4,12 +4,12 @@
 [ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="1_lomo0"]
 [ext_resource type="PackedScene" uid="uid://c6w2mtgtv8wld" path="res://Scenes/UI/crafting_slot.tscn" id="2_wmbck"]
 [ext_resource type="PackedScene" uid="uid://bhbww511wwegu" path="res://Scenes/UI/crafting_category.tscn" id="4_k63es"]
-[ext_resource type="Resource" uid="uid://cpgju01n7q6hh" path="res://Resources/CraftingContainers/field_crafting.tres" id="6_3vi1m"]
+[ext_resource type="Resource" uid="uid://cpgju01n7q6hh" path="res://Resources/CraftingContainers/crafting_field.tres" id="6_3vi1m"]
 [ext_resource type="PackedScene" uid="uid://d1q71pnww7paf" path="res://Scenes/UI/experience_display.tscn" id="8_5wn55"]
 [ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="8_deism"]
 [ext_resource type="PackedScene" uid="uid://da3q7wj3eg5f1" path="res://Scenes/UI/crafting_component.tscn" id="9_seyk2"]
 
-[node name="CraftingUI" type="Control" node_paths=PackedStringArray("craftingListParent", "recipeTitleLabel", "recipeDescriptionLabel", "recipeComponentContainer", "craftButton")]
+[node name="CraftingUI" type="Control" node_paths=PackedStringArray("craftingListParent", "recipeTitleLabel", "recipeDescriptionLabel", "recipeComponentsLabel", "recipeComponentContainer", "craftButton", "experienceDisplay")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,9 +26,13 @@ craftingCategory = ExtResource("4_k63es")
 craftingListParent = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/ScrollContainer/CraftingListParent")
 recipeTitleLabel = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails/RecipeTitle")
 recipeDescriptionLabel = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails/RecipeDetails")
+recipeComponentsLabel = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails/RequiredText")
 recipeComponentContainer = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails/ComponentsList")
 craftButton = NodePath("CraftingContainer/MarginContainer/VBoxContainer/Split/RecipeDetails/Button")
+experienceDisplay = NodePath("CraftingContainer/MarginContainer/VBoxContainer/ExperienceDisplay")
 defaultCraftingRecipeContainer = ExtResource("6_3vi1m")
+craftButtonText = "Craft"
+componentsText = "Components:"
 
 [node name="CraftingContainer" type="PanelContainer" parent="."]
 layout_mode = 1

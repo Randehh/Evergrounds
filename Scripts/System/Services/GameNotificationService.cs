@@ -5,6 +5,7 @@ using System;
 public class GameNotificationService : IService
 {
     // Gameplay
+    public GameNotification<bool> OnFocusUIToggled = new();
     public GameNotification<InputState> OnInputStateChanged = new();
 
     // Saving and loading

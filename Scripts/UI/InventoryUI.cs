@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 [GlobalClass]
@@ -62,7 +63,14 @@ public partial class InventoryUI : Control
         inventory.UpdateAllSlots();
 
         inputState = ServiceLocator.InputStateService.InputState;
+        
         ServiceLocator.GameNotificationService.OnInputStateChanged.OnFire += OnInputStateChanged;
+        ServiceLocator.GameNotificationService.OnFocusUIToggled.OnFire += OnToggleUI;
+    }
+
+    private void OnToggleUI(bool isExpanded)
+    {
+        this.isExpanded = isExpanded;
     }
 
     public override void _ExitTree()
@@ -162,11 +170,6 @@ public partial class InventoryUI : Control
                     DragAndDrop.Instance.StopDragging();
                 }
             }
-        }
-
-        if (Input.IsActionJustPressed("inventory_toggle"))
-        {
-            isExpanded = !isExpanded;
         }
 
         expandParent.Position = new Vector2(expandParent.Position.X, (float)Mathf.Lerp(expandParent.Position.Y, isExpanded ? expandedY : foldedY, 20 * delta));

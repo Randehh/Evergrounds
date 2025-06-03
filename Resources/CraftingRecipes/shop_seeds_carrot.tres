@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=7 format=3 uid="uid://bkq4vbi372jed"]
+
+[ext_resource type="Script" uid="uid://btdb56a3w2bss" path="res://Scripts/System/Crafting/CraftingRecipeItem.cs" id="1_7yioo"]
+[ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="1_a5oei"]
+[ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="3_7yioo"]
+[ext_resource type="Script" uid="uid://sjq3rvl8dikb" path="res://Scripts/System/Crafting/CraftingRecipe.cs" id="5_kw8fl"]
+
+[sub_resource type="Resource" id="Resource_iu20m"]
+script = ExtResource("1_7yioo")
+item = ExtResource("1_a5oei")
+count = 2
+
+[sub_resource type="Resource" id="Resource_tsn7e"]
+script = ExtResource("1_7yioo")
+item = ExtResource("3_7yioo")
+count = 1
+
+[resource]
+script = ExtResource("5_kw8fl")
+result = SubResource("Resource_tsn7e")
+requiredItems = [SubResource("Resource_iu20m")]
+recipeType = 5
+experience = 0

@@ -6,25 +6,38 @@
 [ext_resource type="Script" uid="uid://cutkxuc8rxknv" path="res://Scripts/UI/SkillsUI.cs" id="4_nr56r"]
 [ext_resource type="PackedScene" uid="uid://d1q71pnww7paf" path="res://Scenes/UI/experience_display.tscn" id="5_7tiu2"]
 
-[node name="TabUI" type="CanvasLayer"]
+[node name="TabUI" type="CanvasLayer" node_paths=PackedStringArray("expandParent", "playerUI", "shopUI")]
+script = ExtResource("1_lqiri")
+expandParent = NodePath("ExpandControl")
+playerUI = NodePath("ExpandControl/PlayerUI")
+shopUI = NodePath("ExpandControl/CraftingCanvas")
 
-[node name="TabContainer" type="TabContainer" parent="." node_paths=PackedStringArray("expandParent")]
-anchors_preset = 5
+[node name="ExpandControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -300.0
-offset_top = 100.0
+offset_top = -224.0
 offset_right = 300.0
-offset_bottom = 400.0
+offset_bottom = 76.0
 grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerUI" type="TabContainer" parent="ExpandControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_stretch_ratio = 0.0
 theme = ExtResource("1_r0xay")
-current_tab = 1
-script = ExtResource("1_lqiri")
-expandParent = NodePath(".")
+current_tab = 0
 
-[node name="Crafting" type="MarginContainer" parent="TabContainer"]
-visible = false
+[node name="Crafting" type="MarginContainer" parent="ExpandControl/PlayerUI"]
 layout_mode = 2
 theme = ExtResource("1_r0xay")
 theme_override_constants/margin_left = 3
@@ -33,12 +46,13 @@ theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 metadata/_tab_index = 0
 
-[node name="CraftingCanvas" parent="TabContainer/Crafting" instance=ExtResource("1_tdjf3")]
+[node name="CraftingCanvas" parent="ExpandControl/PlayerUI/Crafting" instance=ExtResource("1_tdjf3")]
 layout_mode = 2
 size_flags_horizontal = 13
 size_flags_vertical = 13
 
-[node name="Skills" type="MarginContainer" parent="TabContainer"]
+[node name="Skills" type="MarginContainer" parent="ExpandControl/PlayerUI"]
+visible = false
 layout_mode = 2
 theme = ExtResource("1_r0xay")
 theme_override_constants/margin_left = 3
@@ -47,7 +61,7 @@ theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 metadata/_tab_index = 1
 
-[node name="SkillsCanvas" type="Control" parent="TabContainer/Skills" node_paths=PackedStringArray("skillsListParent")]
+[node name="SkillsCanvas" type="Control" parent="ExpandControl/PlayerUI/Skills" node_paths=PackedStringArray("skillsListParent")]
 layout_mode = 2
 size_flags_horizontal = 13
 size_flags_vertical = 13
@@ -56,7 +70,7 @@ script = ExtResource("4_nr56r")
 skillsListParent = NodePath("CraftingContainer/MarginContainer/VBoxContainer")
 skillScene = ExtResource("5_7tiu2")
 
-[node name="CraftingContainer" type="PanelContainer" parent="TabContainer/Skills/SkillsCanvas"]
+[node name="CraftingContainer" type="PanelContainer" parent="ExpandControl/PlayerUI/Skills/SkillsCanvas"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,8 +79,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_r0xay")
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Skills/SkillsCanvas/CraftingContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ExpandControl/PlayerUI/Skills/SkillsCanvas/CraftingContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Skills/SkillsCanvas/CraftingContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ExpandControl/PlayerUI/Skills/SkillsCanvas/CraftingContainer/MarginContainer"]
 layout_mode = 2
+
+[node name="CraftingCanvas" parent="ExpandControl" instance=ExtResource("1_tdjf3")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+size_flags_horizontal = 13
+size_flags_vertical = 13
+craftButtonText = "Buy"
+componentsText = "Price:"

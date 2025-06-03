@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CraftingRecipeContainer" load_steps=4 format=3 uid="uid://cunx5dj4yvbnp"]
+
+[ext_resource type="Resource" uid="uid://bkq4vbi372jed" path="res://Resources/CraftingRecipes/shop_seeds_carrot.tres" id="1_puem1"]
+[ext_resource type="Resource" uid="uid://dvatfmaj1jvlc" path="res://Resources/CraftingRecipes/shop_wall_stone.tres" id="2_n0dp5"]
+[ext_resource type="Script" uid="uid://cjbfiq38t03tm" path="res://Scripts/System/Crafting/CraftingRecipeContainer.cs" id="12_tlu2u"]
+
+[resource]
+script = ExtResource("12_tlu2u")
+recipes = [ExtResource("1_puem1"), ExtResource("2_n0dp5")]

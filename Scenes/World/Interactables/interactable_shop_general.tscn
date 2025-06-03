@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://b6i7qmt8i7pq5"]
+
+[ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_q3chx"]
+[ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_j6hhx"]
+[ext_resource type="Texture2D" uid="uid://jbp5g67jxlaa" path="res://Art/Characters/Player.png" id="3_j6hhx"]
+[ext_resource type="Script" uid="uid://c7djundet1dnn" path="res://Scripts/Interactions/InteractEvents/InteractEventOpenCrafting.cs" id="4_4cgw2"]
+[ext_resource type="Resource" uid="uid://cunx5dj4yvbnp" path="res://Resources/CraftingContainers/shop_general.tres" id="5_vpr40"]
+
+[sub_resource type="Resource" id="Resource_cd1ki"]
+script = ExtResource("2_j6hhx")
+interactType = 0
+minimumLevel = 0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l4y4r"]
+size = Vector2(16, 16)
+
+[node name="Shop_General" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
+y_sort_enabled = true
+collision_layer = 5
+script = ExtResource("1_q3chx")
+interactPoint = NodePath("Shape")
+interactShape = NodePath("Shape")
+selectArrowAnchor = NodePath("ArrowAnchor")
+interactRequirement = SubResource("Resource_cd1ki")
+interactEvents = []
+interactCompleteEvents = [NodePath("InteractEventOpenCrafting")]
+interactCount = -1
+mainSprite = NodePath("BedSprite")
+placementTiles = Array[Vector2i]([Vector2i(0, 0), Vector2i(0, -1)])
+validTilePlacementMaterials = Array[int]([0, 1])
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_l4y4r")
+
+[node name="ArrowAnchor" type="Node2D" parent="."]
+position = Vector2(0, -15)
+
+[node name="BedSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_j6hhx")
+offset = Vector2(0, -8)
+
+[node name="InteractEventOpenCrafting" type="Node2D" parent="."]
+script = ExtResource("4_4cgw2")
+recipeContainer = ExtResource("5_vpr40")
+metadata/_custom_type_script = "uid://c7djundet1dnn"
