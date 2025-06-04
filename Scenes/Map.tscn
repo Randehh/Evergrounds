@@ -52,7 +52,6 @@ offsetVariance = 0.0
 
 [node name="Map" type="Node2D" node_paths=PackedStringArray("generator", "mapChunkParent")]
 y_sort_enabled = true
-texture_filter = 1
 script = ExtResource("1_1x1iq")
 generator = NodePath("WorldMapGenerator")
 mapChunkParent = NodePath("MapChunks")

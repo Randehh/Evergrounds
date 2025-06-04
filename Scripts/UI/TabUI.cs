@@ -23,7 +23,7 @@ public partial class TabUI : CanvasLayer
         base._Ready();
 
         foldedY = -310;
-        expandedY = 100;
+        expandedY = 50;
 
         Instance = this;
     }

@@ -240,7 +240,7 @@ public partial class InventoryUI : Control
         }
 
         foldedY = expandParent.Position.Y - slotSize - separatorSize;
-        expandedY = foldedY - (inventoryRowContainer.GetChildren().Count * slotSize) - separatorSize;
+        expandedY = foldedY - ((inventoryRowContainer.GetChildren().Count - 0.5f) * slotSize) + separatorSize;
     }
 
     private void SetSlot(int slot)

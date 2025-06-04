@@ -16,7 +16,7 @@ public class InventoryService : IService, IWorldSaveable
     public Action<InventoryItem> OnItemRemoved = delegate { };
 
     public const int QUICK_SELECT_COUNT = 10;
-    public const int INVENTORY_SIZE = 50;
+    public const int INVENTORY_SIZE = 40;
 
     private InventoryItem[] inventoryItems = new InventoryItem[INVENTORY_SIZE];
     private int quickSelectEquipped = 0;

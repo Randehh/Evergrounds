@@ -187,6 +187,3 @@ layout_mode = 2
 size_flags_vertical = 1
 text = "FPS 20"
 label_settings = ExtResource("27_cmrup")
-
-[node name="SubViewport" type="SubViewport" parent="."]
-disable_3d = true

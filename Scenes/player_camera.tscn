@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dujmqhrdtjxlx" path="res://Scripts/Player/PlayerCamera.cs" id="1_s600e"]
 
-[node name="PlayerCamera" type="Camera2D" node_paths=PackedStringArray("character")]
+[node name="PlayerCamera" type="Camera2D"]
 zoom = Vector2(2, 2)
 script = ExtResource("1_s600e")
-character = NodePath("")
 followSpeed = 4.0
 mousePullPower = 15.0
