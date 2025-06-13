@@ -8,7 +8,7 @@ public partial class CraftingRecipe : Resource
     public CraftingRecipeItem result;
 
     [Export]
-    public Array<CraftingRecipeItem> requiredItems = new();
+    public Array<CraftingRecipeItem> requiredItems;
 
     [Export]
     public CraftingRecipeType recipeType;

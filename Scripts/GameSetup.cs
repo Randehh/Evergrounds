@@ -14,7 +14,7 @@ public partial class GameSetup : Node
     private PackedScene characterScene;
 
     [Export]
-    private Array<InventoryItemDefinition> itemsToGive = new();
+    private Array<InventoryItemDefinition> itemsToGive;
 
     public override void _Ready()
     {

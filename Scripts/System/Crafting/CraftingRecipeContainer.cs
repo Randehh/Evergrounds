@@ -6,5 +6,5 @@ public partial class CraftingRecipeContainer : Resource
 {
 
     [Export]
-    public Array<CraftingRecipe> recipes = new ();
+    public Array<CraftingRecipe> recipes;
 }

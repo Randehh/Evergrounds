@@ -18,6 +18,6 @@ count = 1
 [resource]
 script = ExtResource("4_hwdl3")
 result = SubResource("Resource_ctn43")
-requiredItems = [SubResource("Resource_kffyo")]
+requiredItems = Array[ExtResource("2_3ryyd")]([SubResource("Resource_kffyo")])
 recipeType = 2
 experience = 2

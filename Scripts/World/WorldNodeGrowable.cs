@@ -17,10 +17,10 @@ public partial class WorldNodeGrowable : Area3D, IWorldGridNode, IWorldDespawnab
     private Node3D placementPreviewNode;
 
     [Export(hintString: "Defines which tiles this item will occupy")]
-    public Array<Vector2I> placementTiles = new() { Vector2I.Zero };
+    public Array<Vector2I> placementTiles;
 
     [Export(hintString: "Defines on which tiles the item can be placed")]
-    public Array<AtlasMaterial> validTilePlacementMaterials = new();
+    public Array<AtlasMaterial> validTilePlacementMaterials;
 
     private int startedGrowingOn;
 

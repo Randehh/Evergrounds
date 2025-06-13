@@ -35,10 +35,10 @@ public partial class Interactable : Area3D, IWorldGridNode, IWorldDespawnableNod
     private Node3D previewNode;
 
     [Export(hintString: "Defines which tiles this item will occupy")]
-    public Array<Vector2I> placementTiles = new() { Vector2I.Zero };
+    public Array<Vector2I> placementTiles;
 
     [Export(hintString: "Defines on which tiles the item can be placed")]
-    public Array<AtlasMaterial> validTilePlacementMaterials = new();
+    public Array<AtlasMaterial> validTilePlacementMaterials;
 
     private int interactCountRemaining;
 
