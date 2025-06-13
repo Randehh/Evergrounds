@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 
 [GlobalClass]
-public partial class WorldItemSpawner : Node2D
+public partial class WorldItemSpawner : Node3D
 {
     private const string WORLD_ITEM_SCENE = @"res://Scenes/World/world_item.tscn";
     private const float SPAWN_INTERVAL = 0.075f;

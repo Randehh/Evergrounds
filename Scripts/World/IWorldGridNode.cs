@@ -4,8 +4,6 @@ using static WorldMap;
 
 public interface IWorldGridNode
 {
-    public Sprite2D gridPlacementPreviewSprite { get; }
-    public Vector2 gridPlacementOffset { get; }
-    public Array<AtlasMaterial> placementMaterials { get; }
-    public Array<Vector2I> gridOffsetPositions { get; }
+    public Node3D placementPreview { get; }
+    public Vector3 gridPlacementOffset { get; }
 }

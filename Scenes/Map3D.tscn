@@ -1,0 +1,78 @@
+[gd_scene load_steps=15 format=3 uid="uid://3cf7uno5o24h"]
+
+[ext_resource type="Script" uid="uid://dtg3wknn3k751" path="res://Scripts/World/WorldMap.cs" id="1_gtxoe"]
+[ext_resource type="Script" uid="uid://dpn8ca5ppkx8n" path="res://Scripts/World/WorldMapGenerator.cs" id="2_sn35h"]
+[ext_resource type="PackedScene" uid="uid://bmu70m6spkl83" path="res://Scenes/World/Interactables/interactable_tree_yellow.tscn" id="3_6agyy"]
+[ext_resource type="Script" uid="uid://c8sggvv4ffenm" path="res://Scripts/World/WorldMapGeneratorNodePlacementData.cs" id="4_8t8t8"]
+[ext_resource type="PackedScene" uid="uid://dccf66b3ov4w2" path="res://Scenes/World/Interactables/interactable_shrub.tscn" id="5_tydn2"]
+[ext_resource type="PackedScene" uid="uid://pswa61xj7a1p" path="res://Scenes/World/Interactables/interactable_rock.tscn" id="6_8eynl"]
+[ext_resource type="PackedScene" uid="uid://cv78ude3j44mx" path="res://Scenes/World/Interactables/interactable_chest.tscn" id="7_e7h51"]
+
+[sub_resource type="Resource" id="Resource_826ao"]
+script = ExtResource("4_8t8t8")
+scene = ExtResource("3_6agyy")
+minThreshold = 0.0
+maxThreshold = 0.2
+chance = 0.2
+offsetVariance = 2.0
+
+[sub_resource type="Resource" id="Resource_6rp2r"]
+script = ExtResource("4_8t8t8")
+scene = ExtResource("5_tydn2")
+minThreshold = 0.0
+maxThreshold = 0.3
+chance = 0.8
+offsetVariance = 3.0
+
+[sub_resource type="Resource" id="Resource_svcrr"]
+script = ExtResource("4_8t8t8")
+scene = ExtResource("5_tydn2")
+minThreshold = 0.3
+maxThreshold = 0.6
+chance = 0.25
+offsetVariance = 3.0
+
+[sub_resource type="Resource" id="Resource_nv623"]
+script = ExtResource("4_8t8t8")
+scene = ExtResource("6_8eynl")
+minThreshold = 0.95
+maxThreshold = 1.0
+chance = 0.3
+offsetVariance = 3.0
+
+[sub_resource type="Resource" id="Resource_g6bnd"]
+script = ExtResource("4_8t8t8")
+scene = ExtResource("7_e7h51")
+minThreshold = 0.8
+maxThreshold = 1.0
+chance = 0.005
+offsetVariance = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_o8jnf"]
+size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o8jnf"]
+size = Vector3(100, 1, 100)
+
+[node name="Map" type="Node3D" node_paths=PackedStringArray("generator")]
+script = ExtResource("1_gtxoe")
+generator = NodePath("WorldMapGenerator")
+metadata/_edit_lock_ = true
+
+[node name="WorldMapGenerator" type="Node" parent="."]
+script = ExtResource("2_sn35h")
+seed = 2425
+placementDatas = Array[Object]([SubResource("Resource_826ao"), SubResource("Resource_6rp2r"), SubResource("Resource_svcrr"), SubResource("Resource_nv623"), SubResource("Resource_g6bnd")])
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("PlaneMesh_o8jnf")
+
+[node name="RigidBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_o8jnf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.747865, 0.000660419, -0.663851, 0.533908, 0.593682, 0.602067, 0.394514, -0.8047, 0.443641, 0, 0, 0)

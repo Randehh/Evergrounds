@@ -2,23 +2,23 @@ using Godot;
 using System.Collections.Generic;
 
 [GlobalClass]
-public partial class PlayerInteractDetector : Area2D
+public partial class PlayerInteractDetector : Area3D
 {
     public Interactable SelectedInteractable => IsInstanceValid(selectedInteractable) ? selectedInteractable : null;
     public bool IsInRange { get; private set; }
 
-    private Node2D parent;
+    private Node3D parent;
     private Interactable selectedInteractable;
 	private List<Interactable> interactables = new();
 
     public override void _Ready()
     {
-        parent = GetParent<Node2D>();
+        parent = GetParent<Node3D>();
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        GlobalPosition = GetGlobalMousePosition();
+        GlobalPosition = PlayerCamera.Instance.GetGroundRaycastPosition();
 
         if (interactables.Count == 0)
         {
@@ -26,7 +26,7 @@ public partial class PlayerInteractDetector : Area2D
             return;
         }
 
-        Vector2 position = GlobalPosition;
+        Vector3 position = GlobalPosition;
         int closestIndex = -1;
         float closestDistance = float.MaxValue;
         for (int i = interactables.Count - 1; i >= 0; i--)
@@ -56,21 +56,23 @@ public partial class PlayerInteractDetector : Area2D
         IsInRange = SelectedInteractable.GlobalPosition.DistanceTo(parent.GlobalPosition) <= PlayerInteractHandler.INTERACT_RADIUS;
     }
 
-    private void OnAreaEntered(Area2D area) {
+    private void OnAreaEntered(Area3D area) {
         if(area is not Interactable interactable)
         {
             return;
         }
 
         interactables.Add(interactable);
+        GD.Print("Interactable entered");
     }
 
-    private void OnAreaExited(Area2D area) {
+    private void OnAreaExited(Area3D area) {
         if (area is not Interactable interactable || !interactables.Contains(interactable))
         {
             return;
         }
 
         interactables.Remove(interactable);
+        GD.Print("Interactable exited");
     }
 }

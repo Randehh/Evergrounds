@@ -1,9 +1,8 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 [GlobalClass]
-public partial class PlayerCharacter : Node2D, IWorldSaveable
+public partial class PlayerCharacter : CharacterBody3D, IWorldSaveable
 {
 
 	public static PlayerCharacter Instance { get; private set; }
@@ -15,7 +14,7 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 	private PlayerInteractHandler interactHandler;
 
     [Export]
-	private Area2D vacuumArea;
+	private Area3D vacuumArea;
 
 	[Export]
 	private float maxSpeed = 1;
@@ -26,7 +25,7 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 	[Export]
 	private float decceleration = 0.01f;
 
-	private Vector2 currentSpeed = Vector2.Zero;
+	private Vector3 currentSpeed = Vector3.Zero;
 
 	private List<WorldItem> vacuumItemsInRadius = new();
     private InputState inputState;
@@ -69,7 +68,8 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 				).Normalized();
 		}
 
-		currentSpeed += input * acceleration;
+		Vector2 acceleratedInput = input * acceleration;
+        currentSpeed += new Vector3(acceleratedInput.X, 0, acceleratedInput.Y);
 
 		if (input.X < 0.05f && input.X > -0.05f)
 		{
@@ -78,13 +78,13 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 
 		if (input.Y < 0.05f && input.Y > -0.05f)
 		{
-			currentSpeed.Y *= decceleration;
+			currentSpeed.Z *= decceleration;
 		}
 
 		currentSpeed.X = Mathf.Clamp(currentSpeed.X, -maxSpeed, maxSpeed);
-		currentSpeed.Y = Mathf.Clamp(currentSpeed.Y, -maxSpeed, maxSpeed);
-
-		Position += currentSpeed * (float)delta;
+		currentSpeed.Z = Mathf.Clamp(currentSpeed.Z, -maxSpeed, maxSpeed);
+		
+		MoveAndCollide(currentSpeed * (float)delta);
 
 		if (inputState == InputState.WORLD)
 		{
@@ -118,7 +118,7 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 		character.SetHoldable(item);
 	}
 
-    private void OnVacuumAreaEntered(Area2D area)
+    private void OnVacuumAreaEntered(Area3D area)
     {
         if (area is not WorldItem worldItem)
         {
@@ -128,7 +128,7 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
         vacuumItemsInRadius.Add(worldItem);
     }
 
-    private void OnVacuumAreaExited(Area2D area)
+    private void OnVacuumAreaExited(Area3D area)
     {
         if (area is not WorldItem worldItem || !vacuumItemsInRadius.Contains(worldItem))
         {

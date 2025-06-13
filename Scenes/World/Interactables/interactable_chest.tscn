@@ -1,11 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cv78ude3j44mx"]
+[gd_scene load_steps=11 format=3 uid="uid://cv78ude3j44mx"]
 
 [ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_drppp"]
 [ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_35spc"]
 [ext_resource type="Texture2D" uid="uid://dxv1suh6sexl7" path="res://Art/World/Interactables/Interactable_Chest_Closed.png" id="3_5raf4"]
-[ext_resource type="Texture2D" uid="uid://dycxjnpyccbh6" path="res://Art/World/Interactables/Interactable_Chest_Open.png" id="4_o2gcd"]
 [ext_resource type="Script" uid="uid://cnd0nachuxwqr" path="res://Scripts/Interactions/InteractEvents/InteractEventSpawnItem.cs" id="5_0kiej"]
-[ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="6_mk56t"]
 [ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="6_nfmq4"]
 [ext_resource type="Script" uid="uid://badhsmf7utxe5" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="7_3ms7t"]
 [ext_resource type="Script" uid="uid://r875kqjm8lu2" path="res://Scripts/Interactions/InteractEvents/InteractEventPlayAnimation.cs" id="7_wifgg"]
@@ -15,169 +13,7 @@ script = ExtResource("2_35spc")
 interactType = 0
 minimumLevel = 0
 
-[sub_resource type="Animation" id="Animation_cso4u"]
-resource_name = "Open"
-length = 1.5
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ChestSprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("3_5raf4"), ExtResource("4_o2gcd")]
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath("ChestSprite:position:x")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0, 0, 0, -0.2, 0, 0.2, 0, 0, -0.25, 0, 0.25, 0, 0, 0, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.5, 0.6)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ChestSprite:position:y")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0, 0, -10, -0.2, 0, 0.2, 0, -1, 0, 0, 0, 0, -3, -0.1, 0, 0.1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.6, 0.7)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("ChestSprite:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0, 0, -0.2, 0, 0, 0, 0, -0.4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.6, 0.7)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("ChestSprite:scale:x")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0, 0, 1.11, -0.2, 0, 0.2, 0, 0.95, 0, 0, 0, 0, 1.05, 0, 0, 0, 0, 1, 0, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.6)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("ChestSprite:scale:y")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0, 0, 1.11, -0.2, 0, 0.2, 0, 0.95, 0, 0, 0, 0, 1.05, 0, 0, 0, 0, 1, 0, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.6)
-}
-tracks/6/type = "method"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("InteractEventSpawnItem")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0.4),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"Execute"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_rn23p"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ChestSprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("3_5raf4")]
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ChestSprite:position:x")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ChestSprite:position:y")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("ChestSprite:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("ChestSprite:scale:x")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("ChestSprite:scale:y")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_i2tu2"]
-_data = {
-&"Open": SubResource("Animation_cso4u"),
-&"RESET": SubResource("Animation_rn23p")
-}
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_3yfn1"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2hmgl"]
 
 [sub_resource type="Resource" id="Resource_31mgo"]
 script = ExtResource("7_3ms7t")
@@ -186,41 +22,32 @@ minimumCount = 10
 maximumCount = 25
 baseChance = 1.0
 
-[node name="Chest" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
+[node name="Chest" type="Area3D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents")]
 collision_layer = 5
 script = ExtResource("1_drppp")
-interactPoint = NodePath("InteractShape")
-interactShape = NodePath("InteractShape")
-selectArrowAnchor = NodePath("ArrowAnchor")
+interactPoint = NodePath("")
+interactShape = NodePath("")
+selectArrowAnchor = NodePath("")
 interactRequirement = SubResource("Resource_88xi3")
-interactEvents = [NodePath("InteractEventPlayAnimation")]
+interactEvents = [NodePath("")]
 interactCompleteEvents = []
-mainSprite = NodePath("ChestSprite")
 
-[node name="ChestAnimator" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_i2tu2")
-}
+[node name="InteractShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, 0)
+shape = SubResource("CylinderShape3D_2hmgl")
 
-[node name="InteractShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, -8)
-shape = SubResource("CircleShape2D_3yfn1")
-
-[node name="ChestSprite" type="Sprite2D" parent="."]
-texture = ExtResource("3_5raf4")
+[node name="ChestSprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15344, 0)
 offset = Vector2(0, -8)
+texture = ExtResource("3_5raf4")
 
-[node name="ArrowAnchor" type="Node2D" parent="."]
-position = Vector2(0, -14)
+[node name="ArrowAnchor" type="Node3D" parent="."]
 
-[node name="InteractEventSpawnItem" type="Node2D" parent="."]
+[node name="InteractEventSpawnItem" type="Node3D" parent="."]
 script = ExtResource("5_0kiej")
 itemsToSpawn = Array[Object]([SubResource("Resource_31mgo")])
 
-[node name="WorldNodeShadow" parent="." node_paths=PackedStringArray("targetNode") instance=ExtResource("6_mk56t")]
-targetNode = NodePath("../ChestSprite")
-
-[node name="InteractEventPlayAnimation" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+[node name="InteractEventPlayAnimation" type="Node3D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("7_wifgg")
-player = NodePath("../ChestAnimator")
+player = NodePath("")
 animationName = "Open"

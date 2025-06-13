@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cigl51myg13f6"]
+[gd_scene load_steps=10 format=3 uid="uid://cigl51myg13f6"]
 
 [ext_resource type="Script" uid="uid://k7pix4e37ggf" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
 [ext_resource type="PackedScene" uid="uid://ctkvevyma6uqu" path="res://Scenes/Characters/character_base.tscn" id="2_ah60g"]
@@ -6,141 +6,38 @@
 [ext_resource type="Script" uid="uid://bdgh0rfmuh6hq" path="res://Scripts/Player/PlayerInteractHandler.cs" id="3_vywfg"]
 [ext_resource type="Script" uid="uid://q74pekach5tj" path="res://Scripts/Player/PlayerInteractDetector.cs" id="4_faxxo"]
 [ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="4_gdgf0"]
-[ext_resource type="Texture2D" uid="uid://cbspc4phk6w78" path="res://Art/UI/UI_Grid_Overlay.png" id="6_8im18"]
-[ext_resource type="Script" uid="uid://c61nel2uiqlct" path="res://Scripts/Player/PlayerDespawnableHandler.cs" id="6_47lku"]
 
-[sub_resource type="Animation" id="Animation_cxq1k"]
-resource_name = "Highlight"
-loop_mode = 1
-step = 0.05
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Offset/Sprite:scale:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(0.25, -0.25, 0, 0.25, 0, 0.3, -0.5, 0, 0, 0, 0.15, 0, 0, 0, 0, 0.25, 0, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.75, 0.9, 1.00358)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Offset/Sprite:scale:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(0.25, -0.25, 0, 0.25, 0, 0.2, 0, 0, 0, 0, 0.3, -0.1, 0, 0, 0, 0.25, -0.1, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.75, 0.9, 1.00358)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Offset/Sprite:position:x")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 2, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.75, 1)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Offset/Sprite:position:y")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 2, 0),
-"points": PackedFloat32Array(0, 0, 0, 0, 0, -10, -0.6, 0, 0, 0, 0, -0.05, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.75, 1)
-}
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gdgf0"]
 
-[sub_resource type="Animation" id="Animation_lw88h"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Offset/Sprite:scale:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0.25, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Offset/Sprite:scale:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0.25, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Offset/Sprite:position:x")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Offset/Sprite:position:y")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
+[sub_resource type="SphereShape3D" id="SphereShape3D_gdgf0"]
+radius = 5.0
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_qnace"]
-_data = {
-&"Highlight": SubResource("Animation_cxq1k"),
-&"RESET": SubResource("Animation_lw88h")
-}
+[sub_resource type="SphereShape3D" id="SphereShape3D_xo8ps"]
+radius = 3.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kovjw"]
-radius = 30.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_u6o11"]
-radius = 35.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vfjf2"]
-radius = 400.0
-
-[node name="Player" type="Node2D" node_paths=PackedStringArray("character", "interactHandler", "vacuumArea")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("character", "interactHandler", "vacuumArea")]
 script = ExtResource("1_ty55n")
 character = NodePath("CharacterBase")
 interactHandler = NodePath("PlayerInteractHandler")
 vacuumArea = NodePath("VacuumDetector")
-maxSpeed = 50.0
-acceleration = 7.5
+maxSpeed = 2.5
+acceleration = 0.5
 decceleration = 0.75
+metadata/_custom_type_script = "uid://k7pix4e37ggf"
 
 [node name="CharacterBase" parent="." instance=ExtResource("2_ah60g")]
 
-[node name="PlayerInteractHandler" type="Node2D" parent="." node_paths=PackedStringArray("character", "interactDetector", "selectArrow", "selectArrowLabel", "previewSprite", "gridTileView")]
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_gdgf0")
+
+[node name="PlayerInteractHandler" type="Node3D" parent="." node_paths=PackedStringArray("character", "interactDetector", "selectArrow", "selectArrowLabel")]
 script = ExtResource("3_vywfg")
 character = NodePath("../CharacterBase")
 interactDetector = NodePath("../InteractableDetector")
-selectArrow = NodePath("../SelectArrow")
+selectArrow = NodePath("../SelectArrow/Offset/Sprite")
 selectArrowLabel = NodePath("../SelectArrow/ArrowLabel")
-previewSprite = NodePath("../ItemPlacePreviewSprite")
-gridTileView = NodePath("../GridPreviewSprite")
 
-[node name="SelectArrow" type="Node2D" parent="."]
+[node name="SelectArrow" type="Node3D" parent="."]
 
 [node name="ArrowLabel" type="Label" parent="SelectArrow"]
 z_index = 10
@@ -161,52 +58,26 @@ label_settings = ExtResource("4_gdgf0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Offset" type="Node2D" parent="SelectArrow"]
-position = Vector2(0, -15)
+[node name="Offset" type="Node3D" parent="SelectArrow"]
 
-[node name="ArrowAnimator" type="AnimationPlayer" parent="SelectArrow/Offset"]
-root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_qnace")
-}
-speed_scale = 2.0
-
-[node name="Sprite" type="Sprite2D" parent="SelectArrow/Offset"]
-scale = Vector2(0.25, 0.25)
+[node name="Sprite" type="Sprite3D" parent="SelectArrow/Offset"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 1.18671, 0)
 texture = ExtResource("3_d6q47")
 
-[node name="InteractableDetector" type="Area2D" parent="."]
+[node name="InteractableDetector" type="Area3D" parent="."]
 script = ExtResource("4_faxxo")
 
-[node name="CollisionShape" type="CollisionShape2D" parent="InteractableDetector"]
-shape = SubResource("CircleShape2D_kovjw")
+[node name="CollisionShape" type="CollisionShape3D" parent="InteractableDetector"]
+shape = SubResource("SphereShape3D_gdgf0")
 
-[node name="VacuumDetector" type="Area2D" parent="."]
+[node name="VacuumDetector" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="VacuumShape" type="CollisionShape2D" parent="VacuumDetector"]
-shape = SubResource("CircleShape2D_u6o11")
-
-[node name="DespawnableDetector" type="Area2D" parent="." node_paths=PackedStringArray("collisionShape")]
-collision_layer = 0
-collision_mask = 4
-script = ExtResource("6_47lku")
-collisionShape = NodePath("CollisionShape")
-
-[node name="CollisionShape" type="CollisionShape2D" parent="DespawnableDetector"]
-shape = SubResource("CircleShape2D_vfjf2")
-
-[node name="ItemPlacePreviewSprite" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.5)
-
-[node name="GridPreviewSprite" type="Sprite2D" parent="."]
-visible = false
-texture = ExtResource("6_8im18")
+[node name="VacuumShape" type="CollisionShape3D" parent="VacuumDetector"]
+shape = SubResource("SphereShape3D_xo8ps")
 
 [connection signal="area_entered" from="InteractableDetector" to="InteractableDetector" method="OnAreaEntered"]
 [connection signal="area_exited" from="InteractableDetector" to="InteractableDetector" method="OnAreaExited"]
 [connection signal="area_entered" from="VacuumDetector" to="." method="OnVacuumAreaEntered"]
 [connection signal="area_exited" from="VacuumDetector" to="." method="OnVacuumAreaExited"]
-[connection signal="area_entered" from="DespawnableDetector" to="DespawnableDetector" method="OnAreaEntered"]
-[connection signal="area_exited" from="DespawnableDetector" to="DespawnableDetector" method="OnAreaExited"]

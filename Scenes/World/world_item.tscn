@@ -1,30 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://d1g02xoni2muk"]
+[gd_scene load_steps=4 format=3 uid="uid://d1g02xoni2muk"]
 
 [ext_resource type="Script" uid="uid://c56gfeqdw3dq8" path="res://Scripts/World/WorldItem.cs" id="1_syiyw"]
-[ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="2_ivm82"]
-[ext_resource type="PackedScene" uid="uid://bokq7ofwp6afk" path="res://Scenes/World/world_node_shadow.tscn" id="3_sdiw5"]
+[ext_resource type="Texture2D" uid="uid://ba5mmy2282scu" path="res://Art/Items/Resources/Resource_Gold.png" id="2_bvkmo"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ynqdi"]
-radius = 1.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_bvkmo"]
 
-[node name="WorldItem" type="Area2D" node_paths=PackedStringArray("sprite", "floatParent", "shadow")]
+[node name="WorldItem" type="Area3D" node_paths=PackedStringArray("itemVisual", "floatParent")]
 collision_layer = 6
 collision_mask = 0
 script = ExtResource("1_syiyw")
-sprite = NodePath("FloatParent/ItemSprite")
+itemVisual = NodePath("FloatParent/Visual")
 floatParent = NodePath("FloatParent")
-shadow = NodePath("WorldNodeShadow")
 
-[node name="FloatParent" type="Node2D" parent="."]
+[node name="FloatParent" type="Node3D" parent="."]
 
-[node name="ItemSprite" type="Sprite2D" parent="FloatParent"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_ivm82")
-offset = Vector2(0, -8)
+[node name="Visual" type="Sprite3D" parent="FloatParent"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.2, 0)
+texture = ExtResource("2_bvkmo")
 
-[node name="ItemShape" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_ynqdi")
-
-[node name="WorldNodeShadow" parent="." node_paths=PackedStringArray("targetNode") instance=ExtResource("3_sdiw5")]
-targetNode = NodePath("../FloatParent/ItemSprite")
-maxHeight = 5.0
+[node name="ItemShape" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_bvkmo")

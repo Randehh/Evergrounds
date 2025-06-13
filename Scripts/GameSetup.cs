@@ -24,7 +24,7 @@ public partial class GameSetup : Node
         PlayerCharacter character = characterScene.Instantiate<PlayerCharacter>();
 
         AddChild(camera);
-        map.AddWorldNode(character, true, Vector2.Zero);
+        map.AddWorldNode(character, true, Vector3.Zero);
 
         camera.toFollow = character;
 

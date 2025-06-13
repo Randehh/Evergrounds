@@ -12,6 +12,7 @@ public partial class WorldData : Node
     private const string SAVE_KEY_PARENT = "Parent";
     private const string SAVE_KEY_POS_X = "PosX";
     private const string SAVE_KEY_POS_Y = "PosY";
+    private const string SAVE_KEY_POS_Z = "PosZ";
 
     private Node rootNode;
 
@@ -76,7 +77,7 @@ public partial class WorldData : Node
                 var newObjectScene = GD.Load<PackedScene>(nodeData[SAVE_KEY_FILEPATH].ToString());
                 var newObject = newObjectScene.Instantiate<Node>();
                 GetNode(nodeData[SAVE_KEY_PARENT].ToString()).AddChild(newObject);
-                newObject.Set(Node2D.PropertyName.Position, new Vector2((float)nodeData[SAVE_KEY_POS_X], (float)nodeData[SAVE_KEY_POS_Y]));
+                newObject.Set(Node3D.PropertyName.Position, new Vector3((float)nodeData[SAVE_KEY_POS_X], (float)nodeData[SAVE_KEY_POS_Y], (float)nodeData[SAVE_KEY_POS_Z]));
 
                 saveable = newObject as IWorldSaveable;
             }
@@ -111,10 +112,11 @@ public partial class WorldData : Node
                 saveDataDictionary.Add(SAVE_KEY_FILEPATH, node.SceneFilePath);
                 saveDataDictionary.Add(SAVE_KEY_PARENT, node.GetParent().GetPath());
 
-                if (node is Node2D positionalNode)
+                if (node is Node3D positionalNode)
                 {
                     saveDataDictionary.Add(SAVE_KEY_POS_X, positionalNode.Position.X);
                     saveDataDictionary.Add(SAVE_KEY_POS_Y, positionalNode.Position.Y);
+                    saveDataDictionary.Add(SAVE_KEY_POS_Z, positionalNode.Position.Z);
                 }
             }
 

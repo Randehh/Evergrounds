@@ -15,7 +15,9 @@ script = ExtResource("2_w8uy6")
 interactType = 0
 minimumLevel = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_04bqn"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xr4gc"]
+height = 0.2
+radius = 0.15
 
 [sub_resource type="Resource" id="Resource_wvy2i"]
 script = ExtResource("5_sl2o6")
@@ -38,32 +40,29 @@ minimumCount = 1
 maximumCount = 1
 baseChance = 0.1
 
-[node name="Shrub" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
-y_sort_enabled = true
+[node name="Shrub" type="Area3D" node_paths=PackedStringArray("selectArrowAnchor", "interactEvents", "interactCompleteEvents")]
 collision_layer = 5
 script = ExtResource("1_743uh")
-interactPoint = NodePath("Shape")
-interactShape = NodePath("Shape")
 selectArrowAnchor = NodePath("ArrowAnchor")
 interactRequirement = SubResource("Resource_1wpgf")
 interactEvents = []
 interactCompleteEvents = [NodePath("InteractEventSpawnItem"), NodePath("InteractEventDestroyNode")]
-mainSprite = NodePath("ShrubSprite")
 
-[node name="Shape" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_04bqn")
+[node name="Shape" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_xr4gc")
 
-[node name="ArrowAnchor" type="Node2D" parent="."]
-position = Vector2(0, -9)
+[node name="ArrowAnchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.461179, 0)
 
-[node name="InteractEventSpawnItem" type="Node2D" parent="."]
+[node name="InteractEventSpawnItem" type="Node3D" parent="."]
 script = ExtResource("3_y1dbr")
 itemsToSpawn = Array[Object]([SubResource("Resource_wvy2i"), SubResource("Resource_85462"), SubResource("Resource_3crmo")])
 
-[node name="ShrubSprite" type="Sprite2D" parent="."]
-texture = ExtResource("8_8wtfg")
+[node name="ShrubSprite" type="Sprite3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0.498677, 0)
 offset = Vector2(0, -5)
+texture = ExtResource("8_8wtfg")
 
-[node name="InteractEventDestroyNode" type="Node2D" parent="." node_paths=PackedStringArray("toDestroy")]
+[node name="InteractEventDestroyNode" type="Node3D" parent="." node_paths=PackedStringArray("toDestroy")]
 script = ExtResource("10_pwo2d")
 toDestroy = NodePath("..")

@@ -3,7 +3,7 @@ using Godot.Collections;
 
 public class WorldNodeData : IWorldSaveable
 {
-    public static bool TryCreateFromLiveInstance(Node2D node, out WorldNodeData worldNodeData)
+    public static bool TryCreateFromLiveInstance(Node3D node, out WorldNodeData worldNodeData)
     {
         worldNodeData = new WorldNodeData();
         bool succeeded = worldNodeData.SetLiveNodeReference(node);
@@ -14,25 +14,22 @@ public class WorldNodeData : IWorldSaveable
     private const string SAVE_KEY_PARENT = "Parent";
     private const string SAVE_KEY_POS_X = "PosX";
     private const string SAVE_KEY_POS_Y = "PosY";
-    private const string SAVE_KEY_CHUNK_X = "ChunkX";
-    private const string SAVE_KEY_CHUNK_Y = "ChunkY";
+    private const string SAVE_KEY_POS_Z = "PosY";
     private const string SAVE_KEY_METADATA = "Metadata";
 
-    public Node2D LiveNode => liveNodeReference;
-    public Vector2I NodeChunkCoordinate => liveNodeReference != null ? WorldMap.Instance.GetGridChunkPosition(liveNodeReference.Position) : lastKnownChunk;
+    public Node3D LiveNode => liveNodeReference;
     public bool IsValid => isValid;
 
-    private Node2D liveNodeReference;
+    private Node3D liveNodeReference;
     private IWorldSaveable liveWorldSaveable;
 
     private string sceneFilePath;
     private string parentPath;
-    private Vector2 lastKnownPosition;
-    private Vector2I lastKnownChunk;
+    private Vector3 lastKnownPosition;
     private Dictionary<string, Variant> metadata;
     private bool isValid = true;
 
-    public bool TrySpawn(out Node2D spawnedNode)
+    public bool TrySpawn(out Node3D spawnedNode)
     {
         spawnedNode = null;
 
@@ -42,7 +39,7 @@ public class WorldNodeData : IWorldSaveable
         }
 
         var newObjectScene = GD.Load<PackedScene>(sceneFilePath);
-        spawnedNode = newObjectScene.Instantiate<Node2D>();
+        spawnedNode = newObjectScene.Instantiate<Node3D>();
         WorldMap.Instance.AddChild(spawnedNode);
         spawnedNode.Set(Node2D.PropertyName.Position, lastKnownPosition);
 
@@ -53,7 +50,7 @@ public class WorldNodeData : IWorldSaveable
         return true;
     }
 
-    public bool SetLiveNodeReference(Node2D liveNode)
+    public bool SetLiveNodeReference(Node3D liveNode)
     {
         if(liveNode is not IWorldSaveable saveable)
         {
@@ -85,7 +82,6 @@ public class WorldNodeData : IWorldSaveable
         }
 
         lastKnownPosition = liveNodeReference.Position;
-        lastKnownChunk = WorldMap.Instance.GetGridChunkPosition(lastKnownPosition);
 
         metadata = liveWorldSaveable.GetSaveData();
     }
@@ -104,10 +100,9 @@ public class WorldNodeData : IWorldSaveable
 
         saveDataDictionary.Add(SAVE_KEY_FILEPATH, sceneFilePath);
         saveDataDictionary.Add(SAVE_KEY_PARENT, parentPath);
-        saveDataDictionary.Add(SAVE_KEY_CHUNK_X, lastKnownChunk.X);
-        saveDataDictionary.Add(SAVE_KEY_CHUNK_Y, lastKnownChunk.Y);
         saveDataDictionary.Add(SAVE_KEY_POS_X, lastKnownPosition.X);
         saveDataDictionary.Add(SAVE_KEY_POS_Y, lastKnownPosition.Y);
+        saveDataDictionary.Add(SAVE_KEY_POS_Z, lastKnownPosition.Z);
         saveDataDictionary.Add(SAVE_KEY_METADATA, metadata);
 
         return saveDataDictionary;
@@ -118,14 +113,10 @@ public class WorldNodeData : IWorldSaveable
         sceneFilePath = data[SAVE_KEY_FILEPATH].AsString();
         parentPath = data[SAVE_KEY_PARENT].AsString();
 
-        lastKnownChunk = new Vector2I(
-            data[SAVE_KEY_CHUNK_X].AsInt32(),
-            data[SAVE_KEY_CHUNK_Y].AsInt32()
-            );
-
-        lastKnownPosition = new Vector2(
+        lastKnownPosition = new Vector3(
             (float)data[SAVE_KEY_POS_X].AsDouble(),
-            (float)data[SAVE_KEY_POS_Y].AsDouble()
+            (float)data[SAVE_KEY_POS_Y].AsDouble(),
+            (float)data[SAVE_KEY_POS_Z].AsDouble()
             );
 
         metadata = data[SAVE_KEY_METADATA].AsGodotDictionary<string, Variant>();

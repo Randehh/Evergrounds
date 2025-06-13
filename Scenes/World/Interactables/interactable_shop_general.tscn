@@ -14,7 +14,7 @@ minimumLevel = 0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l4y4r"]
 size = Vector2(16, 16)
 
-[node name="Shop_General" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
+[node name="Shop_General" type="Area2D" node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents")]
 y_sort_enabled = true
 collision_layer = 5
 script = ExtResource("1_q3chx")
@@ -26,7 +26,6 @@ interactRequirement = SubResource("Resource_cd1ki")
 interactEvents = []
 interactCompleteEvents = [NodePath("InteractEventOpenCrafting")]
 interactCount = -1
-mainSprite = NodePath("BedSprite")
 placementTiles = Array[Vector2i]([Vector2i(0, 0), Vector2i(0, -1)])
 validTilePlacementMaterials = Array[int]([0, 1])
 

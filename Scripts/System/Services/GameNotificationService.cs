@@ -13,8 +13,8 @@ public class GameNotificationService : IService
 
     // Nodes
     public GameNotification<WorldNodeData> OnNodeSpawned = new();
-    public GameNotification<Node2D> OnNodeDespawned = new();
-    public GameNotification<Node2D> OnNodeDestroyed = new();
+    public GameNotification<Node3D> OnNodeDespawned = new();
+    public GameNotification<Node3D> OnNodeDestroyed = new();
 
     // Time
     public GameNotification<int> OnNextDay = new();

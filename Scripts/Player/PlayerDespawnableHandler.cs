@@ -2,14 +2,14 @@ using Godot;
 using System.Collections.Generic;
 
 [GlobalClass]
-public partial class PlayerDespawnableHandler : Area2D
+public partial class PlayerDespawnableHandler : Area3D
 {
     public static PlayerDespawnableHandler Instance;
 
     [Export]
-    private CollisionShape2D collisionShape;
+    private CollisionShape3D collisionShape;
 
-    private Node2D parent;
+    private Node3D parent;
 	private List<IWorldDespawnableNode> despawnables = new();
 
     private float squaredInteractableRange;
@@ -21,13 +21,13 @@ public partial class PlayerDespawnableHandler : Area2D
 
     public override void _Ready()
     {
-        parent = GetParent<Node2D>();
+        parent = GetParent<Node3D>();
 
-        float circleRadius = (collisionShape.Shape as CircleShape2D).Radius;
+        float circleRadius = (collisionShape.Shape as SphereShape3D).Radius;
         squaredInteractableRange = new Vector2(circleRadius, circleRadius).DistanceSquaredTo(Vector2.Zero);
     }
 
-    private void OnAreaEntered(Area2D area) {
+    private void OnAreaEntered(Area3D area) {
         if(area is not IWorldDespawnableNode interactable)
         {
             return;
@@ -36,7 +36,7 @@ public partial class PlayerDespawnableHandler : Area2D
         despawnables.Add(interactable);
     }
 
-    private void OnAreaExited(Area2D area) {
+    private void OnAreaExited(Area3D area) {
         if (area is not IWorldDespawnableNode interactable || !despawnables.Contains(interactable) || area.IsQueuedForDeletion())
         {
             return;
@@ -47,7 +47,7 @@ public partial class PlayerDespawnableHandler : Area2D
         area.QueueFree();
     }
 
-    public bool IsPointInArea(Vector2 point)
+    public bool IsPointInArea(Vector3 point)
     {
         return parent.GlobalPosition.DistanceSquaredTo(point) <= squaredInteractableRange;
     }

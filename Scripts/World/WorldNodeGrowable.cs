@@ -3,7 +3,7 @@ using Godot.Collections;
 using static WorldMap;
 
 [GlobalClass]
-public partial class WorldNodeGrowable : Area2D, IWorldGridNode, IWorldDespawnableNode, IWorldSaveable, IWorldTimeListener
+public partial class WorldNodeGrowable : Area3D, IWorldGridNode, IWorldDespawnableNode, IWorldSaveable, IWorldTimeListener
 {
     private const string SAVE_KEY_START_GROWING = "Start";
 
@@ -14,7 +14,7 @@ public partial class WorldNodeGrowable : Area2D, IWorldGridNode, IWorldDespawnab
     private PackedScene onFinishedGrowingScene;
 
     [Export]
-    private Sprite2D mainSprite;
+    private Node3D placementPreviewNode;
 
     [Export(hintString: "Defines which tiles this item will occupy")]
     public Array<Vector2I> placementTiles = new() { Vector2I.Zero };
@@ -24,9 +24,9 @@ public partial class WorldNodeGrowable : Area2D, IWorldGridNode, IWorldDespawnab
 
     private int startedGrowingOn;
 
-    public Sprite2D gridPlacementPreviewSprite => mainSprite;
+    public Node3D placementPreview => placementPreviewNode;
 
-    public Vector2 gridPlacementOffset => (gridPlacementPreviewSprite.GlobalPosition - GlobalPosition) + gridPlacementPreviewSprite.Offset;
+    public Vector3 gridPlacementOffset => placementPreviewNode.GlobalPosition - GlobalPosition;
 
     public Array<Vector2I> gridOffsetPositions => placementTiles;
 
@@ -37,7 +37,7 @@ public partial class WorldNodeGrowable : Area2D, IWorldGridNode, IWorldDespawnab
         startedGrowingOn = ServiceLocator.TimeService.currentDay;
     }
 
-    public Node2D GetNode() => this;
+    public Node3D GetNode() => this;
 
     public void SetTime(int day)
     {
@@ -49,7 +49,7 @@ public partial class WorldNodeGrowable : Area2D, IWorldGridNode, IWorldDespawnab
         ServiceLocator.GameNotificationService.OnNodeDestroyed.Execute(this);
         QueueFree();
 
-        Node2D grownNode = onFinishedGrowingScene.Instantiate<Node2D>();
+        Node3D grownNode = onFinishedGrowingScene.Instantiate<Node3D>();
         WorldMap.Instance.AddWorldNode(grownNode, true, Position);
     }
 

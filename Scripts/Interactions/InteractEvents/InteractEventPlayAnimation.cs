@@ -12,6 +12,6 @@ public partial class InteractEventPlayAnimation : InteractEvent
 
     public override void Execute()
     {
-        player.Play(animationName);
+        //player.Play(animationName);
     }
 }

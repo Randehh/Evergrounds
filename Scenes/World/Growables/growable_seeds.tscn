@@ -17,13 +17,12 @@ minimumCount = 1
 maximumCount = 2
 baseChance = 0.25
 
-[node name="Seeds" type="Area2D" node_paths=PackedStringArray("mainSprite")]
+[node name="Seeds" type="Area2D"]
 y_sort_enabled = true
 collision_layer = 5
 script = ExtResource("1_k23cj")
 onFinishedGrowingScene = ExtResource("2_5xcty")
-mainSprite = NodePath("SeedsSprite")
-validTilePlacementMaterials = [2]
+validTilePlacementMaterials = Array[int]([2])
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_k8f8h")

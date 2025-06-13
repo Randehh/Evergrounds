@@ -83,7 +83,7 @@ public class TimeService : IService, IWorldSaveable
         }
     }
 
-    private void OnNodeRemoved(Node2D node)
+    private void OnNodeRemoved(Node3D node)
     {
         if (node is IWorldTimeListener timeListener)
         {

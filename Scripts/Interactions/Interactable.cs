@@ -3,18 +3,18 @@ using Godot.Collections;
 using static WorldMap;
 
 [GlobalClass]
-public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNode, IWorldSaveable
+public partial class Interactable : Area3D, IWorldGridNode, IWorldDespawnableNode, IWorldSaveable
 {
     private const string SAVE_KEY_INTERACTABLE_COUNT = "InteractableCount";
 
     [Export]
-    private Node2D interactPoint;
+    private Node3D interactPoint;
 
     [Export]
     private CollisionShape2D interactShape;
 
     [Export]
-    private Node2D selectArrowAnchor;
+    private Node3D selectArrowAnchor;
 
     [Export]
     private string selectArrowText = string.Empty;
@@ -32,7 +32,7 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
     private int interactCount = 1;
 
     [Export]
-    private Sprite2D mainSprite;
+    private Node3D previewNode;
 
     [Export(hintString: "Defines which tiles this item will occupy")]
     public Array<Vector2I> placementTiles = new() { Vector2I.Zero };
@@ -42,9 +42,9 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
 
     private int interactCountRemaining;
 
-    public Sprite2D gridPlacementPreviewSprite => mainSprite;
+    public Node3D placementPreview => previewNode;
 
-    public Vector2 gridPlacementOffset => (gridPlacementPreviewSprite.GlobalPosition - GlobalPosition) + gridPlacementPreviewSprite.Offset;
+    public Vector3 gridPlacementOffset => placementPreview.GlobalPosition - GlobalPosition;
 
     public Array<Vector2I> gridOffsetPositions => placementTiles;
 
@@ -55,7 +55,7 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
         interactCountRemaining = interactCount;
     }
 
-    public Node2D GetNode() => this;
+    public Node3D GetNode() => this;
 
     public void Interact()
     {
@@ -88,7 +88,7 @@ public partial class Interactable : Area2D, IWorldGridNode, IWorldDespawnableNod
         }
     }
 
-    public Vector2 GetArrowAnchor() => selectArrowAnchor.GlobalPosition;
+    public Vector3 GetArrowAnchor() => selectArrowAnchor.GlobalPosition;
     public string GetArrowText() => selectArrowText;
 
     public InteractResult GetInteractResult(InventoryItem inventoryItem)

@@ -5,7 +5,7 @@ public partial class InteractEventDestroyNode : InteractEvent
 {
 
     [Export]
-    private Node2D toDestroy;
+    private Node3D toDestroy;
 
     public override void Execute()
     {
