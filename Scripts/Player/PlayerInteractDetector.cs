@@ -63,7 +63,6 @@ public partial class PlayerInteractDetector : Area3D
         }
 
         interactables.Add(interactable);
-        GD.Print("Interactable entered");
     }
 
     private void OnAreaExited(Area3D area) {
@@ -73,6 +72,5 @@ public partial class PlayerInteractDetector : Area3D
         }
 
         interactables.Remove(interactable);
-        GD.Print("Interactable exited");
     }
 }

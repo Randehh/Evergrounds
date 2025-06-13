@@ -1,73 +1,8 @@
-[gd_scene load_steps=6 format=4 uid="uid://ctmj7licxkjnq"]
+[gd_scene load_steps=2 format=3 uid="uid://ctmj7licxkjnq"]
 
-[ext_resource type="Script" uid="uid://rkfdhp16hyek" path="res://Scripts/Building/BuildingMeshGenerator.cs" id="1_1ju7j"]
-[ext_resource type="PackedScene" uid="uid://bkvoswugc8iv4" path="res://Scenes/World/Building/pillar.tscn" id="2_ilsvm"]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_ilsvm"]
-_surfaces = [{
-"aabb": AABB(-0.1, 0, -0.1, 2.2, 1, 4.17071),
-"attribute_data": PackedByteArray("AACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAA"),
-"format": 34359738391,
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 24,
-"vertex_data": PackedByteArray("AAAAQAAAgD/NzMy98jCWsQAAgD/NzMy98jCWsQAAAADNzMy9AAAAQAAAAADNzMy9AAAAQAAAgD/NzMy98jCWsQAAAADNzMy9ZmYGQAAAgD8AAIBAZmYGQAAAgD/yMJaxZmYGQAAAAADyMJaxZmYGQAAAAAAAAIBAZmYGQAAAgD8AAIBAZmYGQAAAAADyMJaxw9CQvQAAgD+GhgRA9PL2PwAAgD9DQ4JA9PL2PwAAAABDQ4JAw9CQvQAAAACGhgRAw9CQvQAAgD+GhgRA9PL2PwAAAABDQ4JAzczMvQAAgD/yMJYxzczMvQAAgD8AAABAzczMvQAAAAAAAABAzczMvQAAAADyMJYxzczMvQAAgD/yMJYxzczMvQAAAAAAAABAAAD///9/AIAAAP///38AgAAA////fwCAAAD///9/AIAAAP///38AgAAA////fwCA////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//z//f6qqqar/P/9/qqqpqv8//3+qqqmq/z//f6qqqar/P/9/qqqpqv8//3+qqqmqAAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/")
-}]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_r8lfq"]
-_surfaces = [{
-"aabb": AABB(-4.37114e-09, 0, -4.37114e-09, 2.07071, 1, 4),
-"attribute_data": PackedByteArray("AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAIA/AACAPwAAgD8AAAAA"),
-"format": 34359738391,
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 24,
-"vertex_data": PackedByteArray("8jCWsQAAAADNzMw98jCWsQAAgD/NzMw9AAAAQAAAgD/NzMw98jCWsQAAAADNzMw9AAAAQAAAgD/NzMw9AAAAQAAAAADNzMw9MzPzPwAAAADyMJaxMzPzPwAAgD/yMJaxMzPzPwAAgD8AAIBAMzPzPwAAAADyMJaxMzPzPwAAgD8AAIBAMzPzPwAAAAAAAIBAhoYEQAAAAAB6eXtAhoYEQAAAgD96eXtAw9CQPQAAgD/08vY/hoYEQAAAAAB6eXtAw9CQPQAAgD/08vY/w9CQPQAAAAD08vY/zczMPQAAAAAAAABAzczMPQAAgD8AAABAzczMPQAAgD/yMJYxzczMPQAAAAAAAABAzczMPQAAgD/yMJYxzczMPQAAAADyMJYx/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCAAAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/////v6qqqar///+/qqqpqv///7+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+/")
-}]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_xooff"]
-_surfaces = [{
-"aabb": AABB(-0.1, 1, -0.1, 2.2, 1e-05, 4.17071),
-"attribute_data": PackedByteArray("AACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAAAA"),
-"format": 34359738391,
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 24,
-"vertex_data": PackedByteArray("8jCWsQAAgD/NzMy9AAAAQAAAgD/NzMy9AAAAQAAAgD/NzMw98jCWsQAAgD/NzMy9AAAAQAAAgD/NzMw98jCWsQAAgD/NzMw9ZmYGQAAAgD/yMJaxZmYGQAAAgD8AAIBAMzPzPwAAgD8AAIBAZmYGQAAAgD/yMJaxMzPzPwAAgD8AAIBAMzPzPwAAgD/yMJax9PL2PwAAgD9DQ4JAw9CQvQAAgD+GhgRAw9CQPQAAgD/08vY/9PL2PwAAgD9DQ4JAw9CQPQAAgD/08vY/hoYEQAAAgD96eXtAzczMvQAAgD8AAABAzczMvQAAgD/yMJYxzczMPQAAgD/yMJYxzczMvQAAgD8AAABAzczMPQAAgD/yMJYxzczMPQAAgD8AAABA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/")
-}]
+[ext_resource type="PackedScene" uid="uid://bc6d1r5h78sfr" path="res://Scenes/World/Building/building_mesh_generator.tscn" id="1_1ju7j"]
 
 [node name="Building3d" type="Node3D"]
 
-[node name="BuildingMeshGenerator" type="Node3D" parent="." node_paths=PackedStringArray("meshInstanceRight", "meshInstanceLeft", "meshInstanceTop", "pillarParent")]
+[node name="BuildingMeshGenerator" parent="." instance=ExtResource("1_1ju7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.269876, 0, 0)
-script = ExtResource("1_1ju7j")
-meshInstanceRight = NodePath("Wall2")
-meshInstanceLeft = NodePath("Wall1")
-meshInstanceTop = NodePath("Top")
-pillarScene = ExtResource("2_ilsvm")
-pillarParent = NodePath("PillarsParent")
-metadata/_custom_type_script = "uid://rkfdhp16hyek"
-
-[node name="Wall1" type="MeshInstance3D" parent="BuildingMeshGenerator"]
-mesh = SubResource("ArrayMesh_ilsvm")
-
-[node name="Wall2" type="MeshInstance3D" parent="BuildingMeshGenerator"]
-mesh = SubResource("ArrayMesh_r8lfq")
-skeleton = NodePath("../..")
-
-[node name="Top" type="MeshInstance3D" parent="BuildingMeshGenerator"]
-mesh = SubResource("ArrayMesh_xooff")
-skeleton = NodePath("../..")
-
-[node name="PillarsParent" type="Node3D" parent="BuildingMeshGenerator"]
-
-[node name="Pillar_0_0" type="Node3D" parent="BuildingMeshGenerator/PillarsParent" instance=ExtResource("2_ilsvm")]
-
-[node name="Pillar_2_0" type="Node3D" parent="BuildingMeshGenerator/PillarsParent" instance=ExtResource("2_ilsvm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-
-[node name="Pillar_2_4" type="Node3D" parent="BuildingMeshGenerator/PillarsParent" instance=ExtResource("2_ilsvm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
-
-[node name="Pillar_0_2" type="Node3D" parent="BuildingMeshGenerator/PillarsParent" instance=ExtResource("2_ilsvm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)

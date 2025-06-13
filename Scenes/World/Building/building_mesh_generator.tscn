@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc6d1r5h78sfr"]
+
+[ext_resource type="Script" uid="uid://rkfdhp16hyek" path="res://Scripts/Building/BuildingMeshGenerator.cs" id="1_gvojf"]
+[ext_resource type="PackedScene" uid="uid://bkvoswugc8iv4" path="res://Scenes/World/Building/pillar.tscn" id="2_p0o05"]
+
+[node name="BuildingMeshGenerator" type="Node3D" node_paths=PackedStringArray("meshInstanceRight", "meshInstanceLeft", "meshInstanceTop", "pillarParent")]
+script = ExtResource("1_gvojf")
+meshInstanceRight = NodePath("Wall2")
+meshInstanceLeft = NodePath("Wall1")
+meshInstanceTop = NodePath("Top")
+pillarScene = ExtResource("2_p0o05")
+pillarParent = NodePath("PillarsParent")
+metadata/_custom_type_script = "uid://rkfdhp16hyek"
+
+[node name="Wall1" type="MeshInstance3D" parent="."]
+
+[node name="Wall2" type="MeshInstance3D" parent="."]
+skeleton = NodePath("../..")
+
+[node name="Top" type="MeshInstance3D" parent="."]
+skeleton = NodePath("../..")
+
+[node name="PillarsParent" type="Node3D" parent="."]

@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c4urjpa5d0gnx"]
+
+[ext_resource type="Texture2D" uid="uid://7xgn3ukabcyh" path="res://Art/Characters/Sample/Skins/survivorMaleB.png" id="1_y6srx"]
+
+[resource]
+albedo_texture = ExtResource("1_y6srx")

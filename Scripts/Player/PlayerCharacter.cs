@@ -65,11 +65,11 @@ public partial class PlayerCharacter : CharacterBody3D, IWorldSaveable
 			input = new Vector2(
 				Input.GetAxis("move_left", "move_right"),
 				Input.GetAxis("move_up", "move_down")
-				).Normalized();
+				);
 		}
 
 		Vector2 acceleratedInput = input * acceleration;
-        currentSpeed += new Vector3(acceleratedInput.X, 0, acceleratedInput.Y);
+        currentSpeed += new Vector3(acceleratedInput.X, 0, acceleratedInput.Y).Normalized();
 
 		if (input.X < 0.05f && input.X > -0.05f)
 		{
@@ -81,12 +81,13 @@ public partial class PlayerCharacter : CharacterBody3D, IWorldSaveable
 			currentSpeed.Z *= decceleration;
 		}
 
-		currentSpeed.X = Mathf.Clamp(currentSpeed.X, -maxSpeed, maxSpeed);
-		currentSpeed.Z = Mathf.Clamp(currentSpeed.Z, -maxSpeed, maxSpeed);
-		
-		MoveAndCollide(currentSpeed * (float)delta);
+        currentSpeed = currentSpeed.Clamp(-maxSpeed, maxSpeed);
 
-		if (inputState == InputState.WORLD)
+        MoveAndCollide(currentSpeed * (float)delta);
+
+		character.SetMovementParameters(currentSpeed, currentSpeed.Length() / maxSpeed);
+
+        if (inputState == InputState.WORLD)
 		{
 			interactHandler.ProcessInteraction(character.CurrentlyHolding, delta);
 
