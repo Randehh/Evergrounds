@@ -26,6 +26,7 @@ public partial class PlayerCharacter : CharacterBody3D, IWorldSaveable
 	private float decceleration = 0.01f;
 
 	private Vector3 currentSpeed = Vector3.Zero;
+	private Vector3 gravity;
 
 	private List<WorldItem> vacuumItemsInRadius = new();
     private InputState inputState;
@@ -33,7 +34,10 @@ public partial class PlayerCharacter : CharacterBody3D, IWorldSaveable
     public PlayerCharacter()
 	{
 		Instance = this;
-	}
+
+		gravity = (Vector3)ProjectSettings.GetSetting("physics/3d/default_gravity_vector") * (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
+
+    }
 
     public override void _Ready()
 	{
@@ -58,34 +62,6 @@ public partial class PlayerCharacter : CharacterBody3D, IWorldSaveable
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		Vector2 input = Vector2.Zero;
-
-        if (inputState == InputState.WORLD)
-		{
-			input = new Vector2(
-				Input.GetAxis("move_left", "move_right"),
-				Input.GetAxis("move_up", "move_down")
-				);
-		}
-
-		Vector2 acceleratedInput = input * acceleration;
-        currentSpeed += new Vector3(acceleratedInput.X, 0, acceleratedInput.Y).Normalized();
-
-		if (input.X < 0.05f && input.X > -0.05f)
-		{
-			currentSpeed.X *= decceleration;
-		}
-
-		if (input.Y < 0.05f && input.Y > -0.05f)
-		{
-			currentSpeed.Z *= decceleration;
-		}
-
-        currentSpeed = currentSpeed.Clamp(-maxSpeed, maxSpeed);
-
-        MoveAndCollide(currentSpeed * (float)delta);
-
-		character.SetMovementParameters(currentSpeed, currentSpeed.Length() / maxSpeed);
 
         if (inputState == InputState.WORLD)
 		{
@@ -100,6 +76,37 @@ public partial class PlayerCharacter : CharacterBody3D, IWorldSaveable
 
     public override void _PhysicsProcess(double delta)
     {
+        Vector2 input = Vector2.Zero;
+
+        if (inputState == InputState.WORLD)
+        {
+            input = new Vector2(
+                Input.GetAxis("move_left", "move_right"),
+                Input.GetAxis("move_up", "move_down")
+                );
+        }
+
+        Vector2 acceleratedInput = input * acceleration;
+        currentSpeed += new Vector3(acceleratedInput.X, 0, acceleratedInput.Y).Normalized();
+
+        if (input.X < 0.05f && input.X > -0.05f)
+        {
+            currentSpeed.X *= decceleration;
+        }
+
+        if (input.Y < 0.05f && input.Y > -0.05f)
+        {
+            currentSpeed.Z *= decceleration;
+        }
+
+        currentSpeed = currentSpeed.LimitLength(maxSpeed);
+        Vector3 finalSpeed = currentSpeed + gravity;
+
+        Velocity = finalSpeed;
+        MoveAndSlide();
+
+        character.SetMovementParameters(currentSpeed, currentSpeed.Length() / maxSpeed);
+
         for (int i = vacuumItemsInRadius.Count - 1; i >= 0; i--)
         {
 			WorldItem item = vacuumItemsInRadius[i];

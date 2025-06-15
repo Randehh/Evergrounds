@@ -36,6 +36,15 @@ public partial class PlayerCamera : Camera3D
 
     public override void _PhysicsProcess(double delta)
     {
+        if (toFollow != null)
+        {
+            Vector2 mouseNormalized = GetViewport().GetMousePosition() / GetViewport().GetVisibleRect().Size;
+            mouseNormalized = mouseNormalized - (Vector2.One * 0.5f);
+            mouseNormalized *= mousePullPower;
+            Vector3 targetPosition = toFollow.Position + new Vector3(mouseNormalized.X, 0, mouseNormalized.Y) + (this.Transform.Basis.Z * 10);
+            Position = Position.Lerp(targetPosition, (float)(followSpeed * delta));
+        }
+
         Vector2 mousePosition = GetViewport().GetMousePosition();
         Vector3 from = ProjectRayOrigin(mousePosition);
         Vector3 to = ProjectRayNormal(mousePosition) * 1000;

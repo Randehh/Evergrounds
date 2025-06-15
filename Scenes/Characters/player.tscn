@@ -20,7 +20,7 @@ script = ExtResource("1_ty55n")
 character = NodePath("CharacterBase")
 interactHandler = NodePath("PlayerInteractHandler")
 vacuumArea = NodePath("VacuumDetector")
-maxSpeed = 2.5
+maxSpeed = 3.5
 acceleration = 0.5
 decceleration = 0.75
 metadata/_custom_type_script = "uid://k7pix4e37ggf"
@@ -28,6 +28,7 @@ metadata/_custom_type_script = "uid://k7pix4e37ggf"
 [node name="CharacterBase" parent="." instance=ExtResource("2_ah60g")]
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_gdgf0")
 
 [node name="PlayerInteractHandler" type="Node3D" parent="." node_paths=PackedStringArray("character", "interactDetector", "selectArrow", "selectArrowLabel")]

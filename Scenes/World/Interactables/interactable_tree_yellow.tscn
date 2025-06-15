@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bmu70m6spkl83"]
+[gd_scene load_steps=22 format=3 uid="uid://bmu70m6spkl83"]
 
 [ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_kwlpf"]
 [ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_4lh03"]
@@ -6,11 +6,16 @@
 [ext_resource type="Resource" uid="uid://bkuersrsvb7ty" path="res://Resources/Items/item_wood.tres" id="4_jgta5"]
 [ext_resource type="Script" uid="uid://badhsmf7utxe5" path="res://Scripts/World/WorldItemSpawnerItemData.cs" id="5_5ckqr"]
 [ext_resource type="Script" uid="uid://r875kqjm8lu2" path="res://Scripts/Interactions/InteractEvents/InteractEventPlayAnimation.cs" id="5_rl274"]
-[ext_resource type="Texture2D" uid="uid://b5wka57y7fcb0" path="res://Art/World/Interactables/Interactable_Tree_Yellow.png" id="6_4qrqw"]
 [ext_resource type="Resource" uid="uid://dkneqfx24g3j5" path="res://Resources/Items/item_leaf.tres" id="6_7gpjj"]
 [ext_resource type="Resource" uid="uid://p4innrlpa2cc" path="res://Resources/Items/item_acorn.tres" id="7_054iu"]
 [ext_resource type="Script" uid="uid://1vi5kkv8txr" path="res://Scripts/Interactions/InteractEvents/InteractEventDestroyNode.cs" id="7_vfhnh"]
+[ext_resource type="Script" uid="uid://co4o54jflfdto" path="res://Scripts/Utility/EnableRandomChild.cs" id="11_0nif7"]
+[ext_resource type="PackedScene" uid="uid://j5q3qptiu87t" path="res://Art/World/Interactables/Tree/tree_default.fbx" id="11_bkjxf"]
 [ext_resource type="Script" uid="uid://dst75jhhe3gie" path="res://Scripts/Interactions/InteractEvents/InteractEventGiveExperience.cs" id="12_cskvp"]
+[ext_resource type="PackedScene" uid="uid://cp061m3nwyo14" path="res://Art/World/Interactables/Tree/tree_default_dark.fbx" id="13_njyxk"]
+[ext_resource type="PackedScene" uid="uid://cxw02qdv20ic8" path="res://Art/World/Interactables/Tree/tree_detailed.fbx" id="14_jtedt"]
+[ext_resource type="PackedScene" uid="uid://oloy3vo4avxn" path="res://Art/World/Interactables/Tree/tree_detailed_dark.fbx" id="15_rmbib"]
+[ext_resource type="PackedScene" uid="uid://denq834hmktkq" path="res://Art/World/Interactables/Tree/tree_oak.fbx" id="16_o1ngg"]
 
 [sub_resource type="Resource" id="Resource_cd1ki"]
 script = ExtResource("2_4lh03")
@@ -65,11 +70,6 @@ itemsToSpawn = Array[Object]([SubResource("Resource_urmos"), SubResource("Resour
 script = ExtResource("5_rl274")
 animationName = "Shake"
 
-[node name="TreeSprite" type="Sprite3D" parent="."]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.60507, 0)
-offset = Vector2(0, -16)
-texture = ExtResource("6_4qrqw")
-
 [node name="InteractEventDestroyNode" type="Node3D" parent="." node_paths=PackedStringArray("toDestroy")]
 script = ExtResource("7_vfhnh")
 toDestroy = NodePath("..")
@@ -78,3 +78,22 @@ toDestroy = NodePath("..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0)
 script = ExtResource("12_cskvp")
 experienceType = 1
+
+[node name="EnableRandomChild" type="Node3D" parent="."]
+script = ExtResource("11_0nif7")
+metadata/_custom_type_script = "uid://co4o54jflfdto"
+
+[node name="tree_default" parent="EnableRandomChild" instance=ExtResource("11_bkjxf")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="tree_default_dark" parent="EnableRandomChild" instance=ExtResource("13_njyxk")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="tree_detailed" parent="EnableRandomChild" instance=ExtResource("14_jtedt")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="tree_detailed_dark" parent="EnableRandomChild" instance=ExtResource("15_rmbib")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="tree_oak" parent="EnableRandomChild" instance=ExtResource("16_o1ngg")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)

@@ -47,7 +47,7 @@ public partial class CharacterBase : Node3D
 		}
 
         animationTree.Set("parameters/RunBlend/blend_amount", runBlend);
-        animationTree.Set("parameters/TimeScale/scale", runBlend * 0.6f);
+        animationTree.Set("parameters/TimeScale/scale", runBlend * 0.8f);
     }
 
 	public void SetHoldable(InventoryItem item)
