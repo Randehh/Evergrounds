@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://y7lq0iabir8u"]
+
+[ext_resource type="Material" uid="uid://ixtt7qq6vhut" path="res://Art/Environment/Foliage/Materials/Grass_Tiling_WS.tres" id="1_8kxox"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_iesi8"]
+
+[node name="ArtGym" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.0868241, 0.492404, -0.5, 0.150384, 0.852869, 0, -0.984808, 0.173648, -1.9219, 7.38134, 2.20879)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0)
+mesh = SubResource("PlaneMesh_iesi8")
+surface_material_override/0 = ExtResource("1_8kxox")
