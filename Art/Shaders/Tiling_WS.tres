@@ -46,7 +46,7 @@ varying_type = 3
 
 [sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_ym7mm"]
 size = Vector2(1160, 620)
-expression = "OUT = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;"
+expression = "//OUT = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;"
 
 [resource]
 code = "shader_type spatial;
@@ -66,7 +66,7 @@ void vertex() {
 // Expression:3
 	n_out3p0 = vec2(0.0, 0.0);
 	{
-		n_out3p0 = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+		//n_out3p0 = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
 	}
 
 
@@ -123,7 +123,7 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-517.393, -236.894)
+graph_offset = Vector2(-591.917, -50.9657)
 varyings/world_pos = "0,3"
 nodes/vertex/0/position = Vector2(40, -620)
 nodes/vertex/2/node = SubResource("VisualShaderNodeVaryingSetter_u0xfy")
@@ -133,7 +133,7 @@ nodes/vertex/3/position = Vector2(-2320, -600)
 nodes/vertex/3/size = Vector2(1160, 620)
 nodes/vertex/3/input_ports = ""
 nodes/vertex/3/output_ports = "0,3,OUT;"
-nodes/vertex/3/expression = "OUT = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;"
+nodes/vertex/3/expression = "//OUT = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;"
 nodes/vertex/connections = PackedInt32Array(3, 0, 2, 0)
 nodes/fragment/0/position = Vector2(2360, -460)
 nodes/fragment/2/node = SubResource("VisualShaderNodeVaryingGetter_ym7mm")

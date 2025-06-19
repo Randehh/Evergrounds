@@ -1,7 +1,10 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ixtt7qq6vhut"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ixtt7qq6vhut"]
 
 [ext_resource type="Shader" uid="uid://blxmpuivdgvne" path="res://Art/Shaders/Tiling_WS.tres" id="1_nkwq1"]
+[ext_resource type="Texture2D" uid="uid://bvsbeerrdim7r" path="res://Art/Environment/Foliage/Textures/Grass_Tileable_01.png" id="2_5j0sb"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_nkwq1")
+shader_parameter/Tiling = 10.0
+shader_parameter/Texture2DParameter = ExtResource("2_5j0sb")
