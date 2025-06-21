@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Evergrounds"
 run/main_scene="res://Scenes/MainGame.tscn"
-config/features=PackedStringArray("4.4", "C#", "Forward Plus")
+config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
