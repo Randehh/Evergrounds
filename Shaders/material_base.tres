@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dm1cue8wy8wdq"]
+
+[ext_resource type="Material" uid="uid://4xjsxirf0qum" path="res://Shaders/outline_custom.tres" id="1_cpp1m"]
+[ext_resource type="Shader" uid="uid://bpryllk3gtcrl" path="res://Shaders/flat.tres" id="2_nnwch"]
+[ext_resource type="Texture2D" uid="uid://b8ssbgteg5of3" path="res://Art/Characters/Sample/Skins/survivorFemaleA.png" id="3_cpp1m"]
+
+[resource]
+render_priority = 1
+next_pass = ExtResource("1_cpp1m")
+shader = ExtResource("2_nnwch")
+shader_parameter/Albedo = ExtResource("3_cpp1m")
