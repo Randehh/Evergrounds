@@ -8,6 +8,6 @@ albedo_color = Color(0, 0, 0, 1)
 grow = true
 grow_amount = 0.001
 stencil_mode = 3
-stencil_flags = 3
+stencil_flags = 1
 stencil_compare = 5
 metadata/_stencil_owned = true

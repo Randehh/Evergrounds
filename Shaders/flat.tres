@@ -16,6 +16,8 @@ constant = 1.0
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx, depth_prepass_alpha;
 
+stencil_mode write, 1;
+
 uniform sampler2D Albedo : repeat_disable;
 
 
@@ -48,8 +50,10 @@ void light() {
 
 }
 "
-graph_offset = Vector2(-51.521545, -15.940002)
+graph_offset = Vector2(-31.97371, -1.8339996)
 flags/depth_prepass_alpha = true
+stencil/enabled = true
+stencil_flags/write = true
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_nkgvf")
 nodes/fragment/2/position = Vector2(-240, 160)
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_e4jey")

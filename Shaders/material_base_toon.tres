@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://32s6yg8wep6g"]
+
+[ext_resource type="Material" uid="uid://4xjsxirf0qum" path="res://Shaders/outline_custom.tres" id="1_44ylm"]
+[ext_resource type="Shader" uid="uid://8ejgh71bjli5" path="res://Shaders/toon_code.gdshader" id="1_yuo65"]
+[ext_resource type="Texture2D" uid="uid://ca3ikckd7adcp" path="res://Art/Characters/Sample/Skins/zombieA.png" id="3_44ylm"]
+
+[resource]
+render_priority = 1
+next_pass = ExtResource("1_44ylm")
+shader = ExtResource("1_yuo65")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/albedo_texture = ExtResource("3_44ylm")
+shader_parameter/clamp_diffuse_to_max = true
+shader_parameter/cuts = 1
+shader_parameter/wrap = 0.0
+shader_parameter/steepness = 1.0
+shader_parameter/use_attenuation = true
+shader_parameter/use_specular = false
+shader_parameter/specular_strength = 1.0
+shader_parameter/specular_shininess = 16.0
+shader_parameter/use_rim = false
+shader_parameter/rim_width = 2.9210001387475
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/use_ramp = false
+shader_parameter/use_borders = false
+shader_parameter/border_width = 0.01
