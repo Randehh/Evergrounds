@@ -1,19 +1,22 @@
-[gd_resource type="VisualShader" load_steps=4 format=3 uid="uid://bpryllk3gtcrl"]
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://bpryllk3gtcrl"]
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_nkgvf"]
 parameter_name = "Albedo"
-qualifier = 2
+texture_repeat = 2
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_e4jey"]
 source = 5
 
 [sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_dt5fk"]
 
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_nkgvf"]
+constant = 1.0
+
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx, depth_test_disabled;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx, depth_prepass_alpha;
 
-uniform sampler2D Albedo;
+uniform sampler2D Albedo : repeat_disable;
 
 
 
@@ -34,15 +37,19 @@ void light() {
 	vec4 n_out2p0 = vec4(1.000000, 1.000000, 1.000000, 1.000000);
 
 
+// FloatConstant:3
+	float n_out3p0 = 1.000000;
+
+
 // Output:0
 	DIFFUSE_LIGHT = vec3(n_out2p0.xyz);
+	ALPHA = n_out3p0;
 
 
 }
 "
-graph_offset = Vector2(-197.6636, -33.374573)
-flags/depth_test_disabled = true
-stencil/enabled = true
+graph_offset = Vector2(-51.521545, -15.940002)
+flags/depth_prepass_alpha = true
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_nkgvf")
 nodes/fragment/2/position = Vector2(-240, 160)
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_e4jey")
@@ -50,4 +57,6 @@ nodes/fragment/3/position = Vector2(80, 160)
 nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 3, 0, 0, 0)
 nodes/light/2/node = SubResource("VisualShaderNodeColorConstant_dt5fk")
 nodes/light/2/position = Vector2(140, 160)
-nodes/light/connections = PackedInt32Array(2, 0, 0, 0)
+nodes/light/3/node = SubResource("VisualShaderNodeFloatConstant_nkgvf")
+nodes/light/3/position = Vector2(140, 260)
+nodes/light/connections = PackedInt32Array(3, 0, 0, 2, 2, 0, 0, 0)
