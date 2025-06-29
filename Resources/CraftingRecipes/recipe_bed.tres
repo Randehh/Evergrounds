@@ -19,7 +19,6 @@ count = 50
 [sub_resource type="Resource" id="Resource_tsn7e"]
 script = ExtResource("2_qip8v")
 item = ExtResource("4_bc4f3")
-count = 1
 
 [resource]
 script = ExtResource("5_ojbo7")

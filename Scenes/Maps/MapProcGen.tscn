@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://3cf7uno5o24h"]
+[gd_scene load_steps=17 format=3 uid="uid://3cf7uno5o24h"]
 
 [ext_resource type="Script" uid="uid://dtg3wknn3k751" path="res://Scripts/World/WorldMap.cs" id="1_gtxoe"]
 [ext_resource type="Script" uid="uid://dpn8ca5ppkx8n" path="res://Scripts/World/WorldMapGenerator.cs" id="2_sn35h"]
@@ -7,11 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://dccf66b3ov4w2" path="res://Scenes/World/Interactables/interactable_shrub.tscn" id="5_tydn2"]
 [ext_resource type="PackedScene" uid="uid://pswa61xj7a1p" path="res://Scenes/World/Interactables/interactable_rock.tscn" id="6_8eynl"]
 [ext_resource type="PackedScene" uid="uid://cv78ude3j44mx" path="res://Scenes/World/Interactables/interactable_chest.tscn" id="7_e7h51"]
+[ext_resource type="Script" uid="uid://ch4mkk5twbuf" path="res://Scripts/World/WorldData.cs" id="8_o0xkd"]
 
 [sub_resource type="Resource" id="Resource_826ao"]
 script = ExtResource("4_8t8t8")
 scenes = Array[PackedScene]([ExtResource("3_6agyy")])
-minThreshold = 0.0
 maxThreshold = 0.2
 chance = 0.2
 offsetVariance = 0.35
@@ -20,7 +20,6 @@ randomRotation = true
 [sub_resource type="Resource" id="Resource_6rp2r"]
 script = ExtResource("4_8t8t8")
 scenes = Array[PackedScene]([ExtResource("5_tydn2")])
-minThreshold = 0.0
 maxThreshold = 0.3
 chance = 0.8
 offsetVariance = 0.4
@@ -39,19 +38,15 @@ randomRotation = true
 script = ExtResource("4_8t8t8")
 scenes = Array[PackedScene]([ExtResource("6_8eynl")])
 minThreshold = 0.95
-maxThreshold = 1.0
 chance = 0.3
 offsetVariance = 0.2
-randomRotation = false
 
 [sub_resource type="Resource" id="Resource_g6bnd"]
 script = ExtResource("4_8t8t8")
 scenes = Array[PackedScene]([ExtResource("7_e7h51")])
 minThreshold = 0.8
-maxThreshold = 1.0
 chance = 0.005
 offsetVariance = 0.1
-randomRotation = false
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_o8jnf"]
 size = Vector2(100, 100)
@@ -62,7 +57,7 @@ albedo_color = Color(0.521585, 0.78125, 0.466919, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_o8jnf"]
 size = Vector3(100, 1, 100)
 
-[node name="Map" type="Node3D" node_paths=PackedStringArray("generator")]
+[node name="MapProcGen" type="Node3D" node_paths=PackedStringArray("generator")]
 script = ExtResource("1_gtxoe")
 generator = NodePath("WorldMapGenerator")
 metadata/_edit_lock_ = true
@@ -71,6 +66,9 @@ metadata/_edit_lock_ = true
 script = ExtResource("2_sn35h")
 seed = 2425
 placementDatas = Array[Object]([SubResource("Resource_826ao"), SubResource("Resource_6rp2r"), SubResource("Resource_svcrr"), SubResource("Resource_nv623"), SubResource("Resource_g6bnd")])
+
+[node name="WorldData" type="Node" parent="."]
+script = ExtResource("8_o0xkd")
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

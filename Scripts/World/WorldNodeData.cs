@@ -40,7 +40,7 @@ public class WorldNodeData : IWorldSaveable
 
         var newObjectScene = GD.Load<PackedScene>(sceneFilePath);
         spawnedNode = newObjectScene.Instantiate<Node3D>();
-        WorldMap.Instance.AddChild(spawnedNode);
+        GroupUtility.GetWorldMap<WorldMap>().AddChild(spawnedNode);
         spawnedNode.Set(Node2D.PropertyName.Position, lastKnownPosition);
 
         (spawnedNode as IWorldSaveable).SetSaveData(metadata);

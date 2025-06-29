@@ -1,11 +1,9 @@
 using Godot;
 
 [GlobalClass]
-public partial class WorldMap : Node3D, IWorldSaveable
+public partial class WorldMap : Node3D, IWorldSaveable, IWorldMap
 {
     private const string SAVE_KEY_MAP_DATA = "MapData";
-
-    public static WorldMap Instance;
 
     [Export]
     private WorldMapGenerator generator;
@@ -14,25 +12,25 @@ public partial class WorldMap : Node3D, IWorldSaveable
 
     public WorldMap()
     {
-        Instance = this;
+        AddToGroup("worldmap");
     }
 
     public override void _Ready()
     {
         AddToGroup(WorldData.RecreateSaveGroup);
 
-        for(int x = -2;  x <= 2; x++)
+        for (int x = -2; x <= 2; x++)
         {
             for (int z = -2; z <= 2; z++)
             {
-                generator.GenerateChunk(worldMapData, new Vector2I(x,z));
+                generator.GenerateChunk(worldMapData, new Vector2I(x, z));
             }
         }
     }
 
     public void AddWorldNode(Node3D node, bool replaceParent, Vector3 replaceParentPosition)
     {
-        if(replaceParent)
+        if (replaceParent)
         {
             if (node.GetParent() != null)
             {
@@ -52,7 +50,7 @@ public partial class WorldMap : Node3D, IWorldSaveable
     public Godot.Collections.Dictionary<string, Variant> GetSaveData()
     {
         Godot.Collections.Dictionary<string, Variant> data = new();
-        
+
         data.Add(SAVE_KEY_MAP_DATA, worldMapData.GetSaveData());
 
         return data;

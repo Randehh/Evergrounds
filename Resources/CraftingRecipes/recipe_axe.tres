@@ -19,11 +19,9 @@ count = 2
 [sub_resource type="Resource" id="Resource_tsn7e"]
 script = ExtResource("2_o2jaf")
 item = ExtResource("3_ia1ac")
-count = 1
 
 [resource]
 script = ExtResource("4_3l1mw")
 result = SubResource("Resource_tsn7e")
 requiredItems = Array[ExtResource("2_o2jaf")]([SubResource("Resource_1i130"), SubResource("Resource_iu20m")])
-recipeType = 0
 experience = 5

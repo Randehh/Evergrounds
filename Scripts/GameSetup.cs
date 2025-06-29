@@ -4,8 +4,6 @@ using Godot.Collections;
 [GlobalClass]
 public partial class GameSetup : Node
 {
-    [Export]
-    private WorldMap map;
 
     [Export]
     private PackedScene cameraScene;
@@ -18,13 +16,15 @@ public partial class GameSetup : Node
 
     public override void _Ready()
     {
+        GroupUtility.SetTreeRoot(this);
+
         Input.MouseMode = Input.MouseModeEnum.Hidden;
 
         PlayerCamera camera = cameraScene.Instantiate<PlayerCamera>();
         PlayerCharacter character = characterScene.Instantiate<PlayerCharacter>();
 
         AddChild(camera);
-        map.AddWorldNode(character, true, Vector3.Zero);
+        GroupUtility.GetNodeFromGroup<IWorldMap>(GroupUtility.GROUP_WORLD_MAP).AddWorldNode(character, true, Vector3.Zero);
 
         camera.toFollow = character;
 

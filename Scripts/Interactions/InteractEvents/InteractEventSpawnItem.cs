@@ -11,7 +11,7 @@ public partial class InteractEventSpawnItem : InteractEvent
     public override void Execute()
     {
         WorldItemSpawner spawner = new WorldItemSpawner(itemsToSpawn.ToArray());
-        WorldMap.Instance.AddChild(spawner);
+        GroupUtility.GetWorldMap<WorldMap>().AddChild(spawner);
         spawner.GlobalPosition = GlobalPosition;
     }
 }

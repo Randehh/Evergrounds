@@ -1,0 +1,34 @@
+[gd_scene load_steps=15 format=3 uid="uid://biiythq0erak5"]
+
+[ext_resource type="Script" uid="uid://o4284x0lwtd" path="res://Scripts/System/Services/ServiceSerializer.cs" id="1_vn1qa"]
+[ext_resource type="Script" uid="uid://c0mo1k6wj4bmn" path="res://Scripts/System/Services/ServiceLocator.cs" id="2_8choy"]
+[ext_resource type="Script" uid="uid://bma8o18hnksg6" path="res://Scripts/GameSetup.cs" id="3_f0qoe"]
+[ext_resource type="PackedScene" uid="uid://emajq5067js6" path="res://Scenes/player_camera.tscn" id="4_efrci"]
+[ext_resource type="PackedScene" uid="uid://cigl51myg13f6" path="res://Scenes/Characters/player.tscn" id="5_mveki"]
+[ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="6_3713m"]
+[ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="7_4xn4u"]
+[ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="8_2rxqg"]
+[ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="9_lc4nd"]
+[ext_resource type="Resource" uid="uid://ydg6emtaeg1f" path="res://Resources/Items/item_axe.tres" id="10_0omsd"]
+[ext_resource type="Resource" uid="uid://bp107fjr63j07" path="res://Resources/Items/item_wall_wood.tres" id="11_lo5v5"]
+[ext_resource type="Resource" uid="uid://d2vpbbt4a5c3d" path="res://Resources/Items/item_floor_wood.tres" id="12_ba5pf"]
+[ext_resource type="Resource" uid="uid://cnunxpm83nnu2" path="res://Resources/Items/item_gold.tres" id="13_7hcql"]
+[ext_resource type="Script" uid="uid://jc2ckdx3ltnj" path="res://Scripts/DragAndDrop/DragAndDrop.cs" id="14_3xq3r"]
+
+[node name="GameInitializer" type="Node"]
+
+[node name="ServiceSerializer" type="Node" parent="."]
+script = ExtResource("1_vn1qa")
+
+[node name="ServiceLocator" type="Node" parent="."]
+script = ExtResource("2_8choy")
+
+[node name="GameSetup" type="Node" parent="." node_paths=PackedStringArray("map")]
+script = ExtResource("3_f0qoe")
+map = NodePath("")
+cameraScene = ExtResource("4_efrci")
+characterScene = ExtResource("5_mveki")
+itemsToGive = Array[ExtResource("6_3713m")]([ExtResource("7_4xn4u"), ExtResource("8_2rxqg"), ExtResource("9_lc4nd"), ExtResource("10_0omsd"), ExtResource("11_lo5v5"), ExtResource("11_lo5v5"), ExtResource("11_lo5v5"), ExtResource("11_lo5v5"), ExtResource("11_lo5v5"), ExtResource("11_lo5v5"), ExtResource("11_lo5v5"), ExtResource("11_lo5v5"), ExtResource("12_ba5pf"), ExtResource("12_ba5pf"), ExtResource("13_7hcql"), ExtResource("13_7hcql"), ExtResource("13_7hcql"), ExtResource("13_7hcql"), ExtResource("13_7hcql")])
+
+[node name="DragAndDrop" type="Node" parent="."]
+script = ExtResource("14_3xq3r")

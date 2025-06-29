@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbi1dnue5oc4w"]
+
+[ext_resource type="Script" uid="uid://cecfqmgqmkq2h" path="res://Scripts/World/WorldMapStatic.cs" id="1_vu26x"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_o8jnf"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wax06"]
+albedo_color = Color(0.521585, 0.78125, 0.466919, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o8jnf"]
+size = Vector3(100, 1, 100)
+
+[node name="MapHub" type="Node3D"]
+script = ExtResource("1_vu26x")
+metadata/_edit_lock_ = true
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("PlaneMesh_o8jnf")
+surface_material_override/0 = SubResource("StandardMaterial3D_wax06")
+
+[node name="RigidBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_o8jnf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.747865, 0.000660419, -0.663851, 0.533908, 0.593682, 0.602067, 0.394514, -0.8047, 0.443641, 0, 0, 0)

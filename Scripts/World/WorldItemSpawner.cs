@@ -40,7 +40,7 @@ public partial class WorldItemSpawner : Node3D
             spawningTime -= SPAWN_INTERVAL;
 
             WorldItem worldItem = worldItemScene.Instantiate<WorldItem>();
-            WorldMap.Instance.AddWorldNode(worldItem, true, GlobalPosition);
+            GroupUtility.GetWorldMap().AddWorldNode(worldItem, true, GlobalPosition);
             worldItem.Initialize(toSpawn.Dequeue(), 1);
             worldItem.Spawn();
         }

@@ -13,7 +13,6 @@ count = 2
 [sub_resource type="Resource" id="Resource_ctn43"]
 script = ExtResource("2_3ryyd")
 item = ExtResource("3_amg7d")
-count = 1
 
 [resource]
 script = ExtResource("4_hwdl3")

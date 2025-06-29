@@ -50,7 +50,7 @@ public partial class WorldNodeGrowable : Area3D, IWorldGridNode, IWorldDespawnab
         QueueFree();
 
         Node3D grownNode = onFinishedGrowingScene.Instantiate<Node3D>();
-        WorldMap.Instance.AddWorldNode(grownNode, true, Position);
+        GroupUtility.GetWorldMap<WorldMap>().AddWorldNode(grownNode, true, Position);
     }
 
     public Dictionary<string, Variant> GetSaveData()

@@ -1,0 +1,153 @@
+[gd_scene load_steps=14 format=3 uid="uid://cwbfm8k1l3r38"]
+
+[ext_resource type="PackedScene" uid="uid://byw6uf1hldkac" path="res://Scenes/UI/Inventory_UI.tscn" id="1_j6wod"]
+[ext_resource type="PackedScene" uid="uid://cwkqdyaqwc88q" path="res://Scenes/UI/general_canvas.tscn" id="2_fnjgc"]
+[ext_resource type="PackedScene" uid="uid://kowv86pjg7c8" path="res://Scenes/UI/tab_UI.tscn" id="3_at4s5"]
+[ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="4_d4ujo"]
+[ext_resource type="Script" uid="uid://dbboff66hbly5" path="res://Scripts/UI/DragAndDropUI.cs" id="5_bjfvf"]
+[ext_resource type="Texture2D" uid="uid://o4qwppo0jd4v" path="res://Art/Items/Holdables/Holdable_Scythe.png" id="6_0cl5f"]
+[ext_resource type="Script" uid="uid://kwbvwiax28wt" path="res://Scripts/UI/CursorUI.cs" id="7_o3y3q"]
+[ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="8_gcmc7"]
+[ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="9_m0s1b"]
+[ext_resource type="Texture2D" uid="uid://bbms8e28hb43t" path="res://Art/UI/UI_Cursor_Grab.png" id="10_1hw2s"]
+[ext_resource type="Script" uid="uid://b6mdgd8su7t6y" path="res://Scripts/UI/DebugUI.cs" id="11_nt63y"]
+[ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="12_fox6b"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_irpbb"]
+line_spacing = 5.0
+font_size = 10
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="GameCanvases" type="Node"]
+
+[node name="InventoryCanvas" parent="." instance=ExtResource("1_j6wod")]
+
+[node name="GeneralCanvas" parent="." instance=ExtResource("2_fnjgc")]
+
+[node name="TabUI" parent="." instance=ExtResource("3_at4s5")]
+
+[node name="DragAndDropCanvas" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="DragAndDropUI" type="Control" parent="DragAndDropCanvas" node_paths=PackedStringArray("mouseParent", "itemDisplay", "itemCountLabel")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme = ExtResource("4_d4ujo")
+script = ExtResource("5_bjfvf")
+mouseParent = NodePath("MouseParent")
+itemDisplay = NodePath("MouseParent/CursorOffset/ItemTexture")
+itemCountLabel = NodePath("MouseParent/CursorOffset/ItemTexture/ItemCountLabel")
+
+[node name="MouseParent" type="Control" parent="DragAndDropCanvas/DragAndDropUI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="CursorOffset" type="Control" parent="DragAndDropCanvas/DragAndDropUI/MouseParent"]
+anchors_preset = 0
+offset_left = -5.0
+offset_top = -4.0
+offset_right = 35.0
+offset_bottom = 36.0
+mouse_filter = 2
+
+[node name="ItemTexture" type="TextureRect" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/CursorOffset"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+mouse_filter = 2
+texture = ExtResource("6_0cl5f")
+
+[node name="ItemCountLabel" type="Label" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/CursorOffset/ItemTexture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+label_settings = SubResource("LabelSettings_irpbb")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="CursorCanvas" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="CursorUI" type="Control" parent="CursorCanvas" node_paths=PackedStringArray("mouseParent", "cursorTextureRect", "cursorGrabTextureRect")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("7_o3y3q")
+mouseParent = NodePath("CursorParent")
+cursorTextureRect = NodePath("CursorParent/CursorTextureRect")
+cursorGrabTextureRect = NodePath("CursorParent/GrabTextureRect")
+cursorTexture = ExtResource("8_gcmc7")
+cursorTexturePressed = ExtResource("9_m0s1b")
+
+[node name="CursorParent" type="Control" parent="CursorCanvas/CursorUI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="CursorTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 26.0
+offset_bottom = 26.0
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("8_gcmc7")
+
+[node name="GrabTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent"]
+layout_mode = 0
+offset_left = -7.0
+offset_top = -20.0
+offset_right = 21.0
+offset_bottom = 8.0
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("10_1hw2s")
+
+[node name="DebugCanvas" type="CanvasLayer" parent="."]
+
+[node name="DebugUI" type="Control" parent="DebugCanvas" node_paths=PackedStringArray("fpsLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("11_nt63y")
+fpsLabel = NodePath("MarginContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="DebugCanvas/DebugUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="DebugCanvas/DebugUI/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "FPS 20"
+label_settings = ExtResource("12_fox6b")

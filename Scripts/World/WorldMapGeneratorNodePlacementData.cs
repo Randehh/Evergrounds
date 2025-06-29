@@ -44,7 +44,7 @@ public partial class WorldMapGeneratorNodePlacementData : Resource
 
         Node3D placedNode = scenes.PickRandom().Instantiate<Node3D>();
         Vector3 placementPosition = globalTileCoord + GetRandomOffset();
-        WorldMap.Instance.AddWorldNode(placedNode, true, placementPosition);
+        GroupUtility.GetWorldMap<WorldMap>().AddWorldNode(placedNode, true, placementPosition);
 
         if(randomRotation)
         {
