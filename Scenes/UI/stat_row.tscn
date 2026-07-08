@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://0c1iabxnuada"]
+
+[ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="1_vpcye"]
+[ext_resource type="Script" uid="uid://dra7favnp6ufj" path="res://Scripts/UI/Components/StatRow.cs" id="1_vu5r5"]
+[ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="2_vu5r5"]
+
+[node name="StatRow" type="HBoxContainer" unique_id=1113291874 node_paths=PackedStringArray("icon", "typeLabel", "typeValueLabel")]
+script = ExtResource("1_vu5r5")
+icon = NodePath("TypeIcon")
+typeLabel = NodePath("TypeLabel")
+typeValueLabel = NodePath("TypeValue")
+
+[node name="TypeIcon" type="TextureRect" parent="." unique_id=122111599]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("1_vpcye")
+expand_mode = 2
+
+[node name="TypeLabel" type="Label" parent="." unique_id=1864753647]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Type"
+label_settings = ExtResource("2_vu5r5")
+
+[node name="TypeValue" type="Label" parent="." unique_id=656497376]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.25
+text = "Value"
+label_settings = ExtResource("2_vu5r5")

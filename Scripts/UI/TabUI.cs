@@ -14,6 +14,8 @@ public partial class TabUI : CanvasLayer
     [Export]
     private CraftingUI shopUI;
 
+    public bool IsMouseOver { get; private set; } = false;
+
     private float foldedY;
     private float expandedY;
     private bool isExpanded = false;
@@ -26,6 +28,13 @@ public partial class TabUI : CanvasLayer
         expandedY = 50;
 
         Instance = this;
+
+        expandParent.MouseEntered += () => {
+            IsMouseOver = true;
+        };
+        expandParent.MouseExited += () => {
+            IsMouseOver = false;
+        };
     }
 
     public override void _Process(double delta)

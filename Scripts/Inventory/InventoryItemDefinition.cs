@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 using static CharacterBase;
 using static WorldMap;
 
@@ -47,6 +46,9 @@ public partial class InventoryItemDefinition : Resource
 
     [Export]
     public bool hasInfiniteUses = false;
+
+    [Export]
+    public InventoryEquipmentType inventoryEquipmentType;
 
     public bool isStackable => stackSize > 1;
 

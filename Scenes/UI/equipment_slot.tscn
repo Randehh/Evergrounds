@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://brsi57js84won"]
+
+[ext_resource type="Script" uid="uid://bycdj8k3vsihc" path="res://Scripts/UI/Components/EquipmentSlot.cs" id="1_4ax2b"]
+[ext_resource type="PackedScene" uid="uid://cukj0u724ndo3" path="res://Scenes/UI/inventory_slot.tscn" id="4_4dqpw"]
+[ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="5_pnfyf"]
+[ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="6_7cmi1"]
+
+[node name="EquipmentSlot" type="VBoxContainer" unique_id=1251514124 node_paths=PackedStringArray("itemSlot", "equipmentTypeLabel", "equipmentNameLabel")]
+offset_right = 121.0
+offset_bottom = 52.0
+size_flags_horizontal = 3
+script = ExtResource("1_4ax2b")
+itemSlot = NodePath("HBoxContainer/InventorySlot")
+equipmentTypeLabel = NodePath("EquipmentSlotName")
+equipmentNameLabel = NodePath("HBoxContainer/EquipmentName")
+
+[node name="EquipmentSlotName" type="Label" parent="." unique_id=1520073911]
+layout_mode = 2
+theme = ExtResource("5_pnfyf")
+text = "Head"
+label_settings = ExtResource("6_7cmi1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=105723708]
+layout_mode = 2
+
+[node name="InventorySlot" parent="HBoxContainer" unique_id=460460938 instance=ExtResource("4_4dqpw")]
+layout_mode = 2
+
+[node name="EquipmentName" type="Label" parent="HBoxContainer" unique_id=41087107]
+layout_mode = 2
+text = "Character name"
+label_settings = ExtResource("6_7cmi1")

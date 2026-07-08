@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://bd5hgufogy8hd"]
+
+[ext_resource type="Script" uid="uid://ikikvwif2xpf" path="res://Scripts/UI/EquipmentUI.cs" id="1_7s6sq"]
+[ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="1_asx4d"]
+[ext_resource type="LabelSettings" uid="uid://c5x8qfymis31b" path="res://Fonts/LabelStyle_Large.tres" id="1_gbhf3"]
+[ext_resource type="PackedScene" uid="uid://0c1iabxnuada" path="res://Scenes/UI/stat_row.tscn" id="2_cibxw"]
+[ext_resource type="PackedScene" uid="uid://brsi57js84won" path="res://Scenes/UI/equipment_slot.tscn" id="4_7s6sq"]
+
+[node name="EquipmentCanvas" type="Control" unique_id=132788220 node_paths=PackedStringArray("slotHead", "slotChest", "slotFeet", "slotTrinket", "statRowParent")]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 1
+script = ExtResource("1_7s6sq")
+slotHead = NodePath("CraftingContainer/MarginContainer/MainLayout/Content/EquipmentColumn/EquipmentSlotHead")
+slotChest = NodePath("CraftingContainer/MarginContainer/MainLayout/Content/EquipmentColumn/EquipmentSlotChest")
+slotFeet = NodePath("CraftingContainer/MarginContainer/MainLayout/Content/EquipmentColumn/EquipmentSlotFeet")
+slotTrinket = NodePath("CraftingContainer/MarginContainer/MainLayout/Content/EquipmentColumn/EquipmentSlotTrinket")
+statRowScene = ExtResource("2_cibxw")
+statRowParent = NodePath("CraftingContainer/MarginContainer/MainLayout/Content/StatsColumn")
+
+[node name="CraftingContainer" type="PanelContainer" parent="." unique_id=1096534932]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_asx4d")
+
+[node name="MarginContainer" type="MarginContainer" parent="CraftingContainer" unique_id=1185368354]
+layout_mode = 2
+
+[node name="MainLayout" type="VBoxContainer" parent="CraftingContainer/MarginContainer" unique_id=373635386]
+layout_mode = 2
+
+[node name="CharacterName" type="Label" parent="CraftingContainer/MarginContainer/MainLayout" unique_id=180290130]
+layout_mode = 2
+text = "Character name"
+label_settings = ExtResource("1_gbhf3")
+
+[node name="Content" type="HBoxContainer" parent="CraftingContainer/MarginContainer/MainLayout" unique_id=907477558]
+layout_mode = 2
+
+[node name="EquipmentColumn" type="VBoxContainer" parent="CraftingContainer/MarginContainer/MainLayout/Content" unique_id=32389404]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EquipmentSlotHead" parent="CraftingContainer/MarginContainer/MainLayout/Content/EquipmentColumn" unique_id=1502733575 instance=ExtResource("4_7s6sq")]
+layout_mode = 2
+
+[node name="EquipmentSlotChest" parent="CraftingContainer/MarginContainer/MainLayout/Content/EquipmentColumn" unique_id=1251514124 instance=ExtResource("4_7s6sq")]
+layout_mode = 2
+
+[node name="EquipmentSlotFeet" parent="CraftingContainer/MarginContainer/MainLayout/Content/EquipmentColumn" unique_id=1616836986 instance=ExtResource("4_7s6sq")]
+layout_mode = 2
+
+[node name="EquipmentSlotTrinket" parent="CraftingContainer/MarginContainer/MainLayout/Content/EquipmentColumn" unique_id=2134219798 instance=ExtResource("4_7s6sq")]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="CraftingContainer/MarginContainer/MainLayout/Content" unique_id=1986079993]
+layout_mode = 2
+
+[node name="StatsColumn" type="VBoxContainer" parent="CraftingContainer/MarginContainer/MainLayout/Content" unique_id=1735236117]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Stats" type="Label" parent="CraftingContainer/MarginContainer/MainLayout/Content/StatsColumn" unique_id=467227385]
+layout_mode = 2
+text = "Stats"
+label_settings = ExtResource("1_gbhf3")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c6w2mtgtv8wld"]
+[gd_scene format=3 uid="uid://c6w2mtgtv8wld"]
 
 [ext_resource type="Texture2D" uid="uid://cqp6i62kk37i4" path="res://Art/UI/UI_Inventory_Slot.png" id="1_hu0ya"]
 [ext_resource type="Script" uid="uid://k6cn3msbi7a8" path="res://Scripts/UI/Components/CraftingItemSlotComponent.cs" id="2_p0xy2"]
@@ -12,7 +12,7 @@ line_spacing = 1.0
 outline_size = 3
 outline_color = Color(0.0430392, 0.0430392, 0.0430392, 1)
 
-[node name="InventorySlot" type="TextureRect" node_paths=PackedStringArray("backgroundRect", "textureRect", "quickSelectLabel", "stackCountLabel")]
+[node name="InventorySlot" type="TextureRect" unique_id=1182843628 node_paths=PackedStringArray("backgroundRect", "textureRect", "quickSelectLabel", "stackCountLabel")]
 texture_filter = 1
 texture_repeat = 1
 custom_minimum_size = Vector2(34, 34)
@@ -29,7 +29,7 @@ slotBackground = ExtResource("1_hu0ya")
 slotBackgroundHover = ExtResource("3_vwph3")
 slotBackgroundSelected = ExtResource("4_k846c")
 
-[node name="NumberLabel" type="Label" parent="."]
+[node name="NumberLabel" type="Label" parent="." unique_id=124958551]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,7 +44,7 @@ theme = ExtResource("5_tji0s")
 text = "1"
 label_settings = ExtResource("6_qupw0")
 
-[node name="StackCountLabel" type="Label" parent="."]
+[node name="StackCountLabel" type="Label" parent="." unique_id=651757979]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,7 +60,7 @@ label_settings = SubResource("LabelSettings_5t7nj")
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="ItemSprite" type="TextureRect" parent="."]
+[node name="ItemSprite" type="TextureRect" parent="." unique_id=1742482079]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

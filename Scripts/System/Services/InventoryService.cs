@@ -6,6 +6,7 @@ public class InventoryService : IService, IWorldSaveable
 {
     private const string SAVE_KEY_QUICK_SELECT = "QuickSelect";
     private const string SAVE_KEY_ITEMS = "Items";
+    private const string SAVE_KEY_EQUIPMENT = "Equipment";
     private const string SAVE_KEY_ITEM_INDEX = "ItemIndex";
     private const string SAVE_KEY_ITEM_DEFINITION = "ItemDefinitionPath";
     private const string SAVE_KEY_ITEM_STACK_COUNT = "ItemStackCount";
@@ -14,12 +15,15 @@ public class InventoryService : IService, IWorldSaveable
     public Action<int> OnUpdateSlot = delegate { };
     public Action<InventoryItem> OnItemAdded = delegate { };
     public Action<InventoryItem> OnItemRemoved = delegate { };
+    public Action<InventoryItem, InventoryEquipmentType> OnEquipmentSet = delegate { };
 
     public const int QUICK_SELECT_COUNT = 10;
     public const int INVENTORY_SIZE = 40;
 
     private InventoryItem[] inventoryItems = new InventoryItem[INVENTORY_SIZE];
     private int quickSelectEquipped = 0;
+
+    private InventoryItem[] equippedItems = new InventoryItem[4];
 
     private System.Collections.Generic.Dictionary<InventoryItemDefinition, List<int>> itemLookup = new();
     private System.Collections.Generic.Dictionary<InventoryItem, int> itemInstanceLookup = new();
@@ -267,6 +271,39 @@ public class InventoryService : IService, IWorldSaveable
         OnSelectQuickslot.Invoke(nextButtonIndex);
     }
 
+    public bool SetEquipment(InventoryEquipmentType inventoryEquipmentType, InventoryItemDefinition itemDefinition)
+    {
+        return SetEquipment((int)inventoryEquipmentType - 1, itemDefinition);
+    }
+
+    public bool SetEquipment(int equipmentIndex, InventoryItemDefinition itemDefinition)
+    {
+        if (equipmentIndex == (int)InventoryEquipmentType.NONE) {
+            return false;
+        }
+
+        InventoryItem currentItem = equippedItems[equipmentIndex];
+        if (currentItem != null && !AddItem(currentItem)) {
+            return false;
+        }
+
+        InventoryItem item = new InventoryItem(itemDefinition, 1);
+        equippedItems[equipmentIndex] = item;
+
+        OnEquipmentSet.Invoke(item, (InventoryEquipmentType)(equipmentIndex + 1));
+
+        return true;
+    }
+
+    public InventoryItemDefinition GetEquipment(InventoryEquipmentType slotType)
+    {
+        if(slotType == InventoryEquipmentType.NONE) {
+            return null;
+        }
+
+        return equippedItems[(int)slotType - 1]?.definition ?? null;
+    }
+
     public bool CanCraftRecipe(CraftingRecipe recipe)
     {
         bool canCraftItem = true;
@@ -308,6 +345,15 @@ public class InventoryService : IService, IWorldSaveable
             });
         }
 
+        Godot.Collections.Array<string> equipmentData = new(new string[4] {
+            equippedItems[0]?.definition.ResourcePath ?? string.Empty,
+            equippedItems[1]?.definition.ResourcePath ?? string.Empty,
+            equippedItems[2]?.definition.ResourcePath ?? string.Empty,
+            equippedItems[3]?.definition.ResourcePath ?? string.Empty,
+        });
+        data.Add(SAVE_KEY_EQUIPMENT, equipmentData);
+
+
         return data;
     }
 
@@ -334,6 +380,13 @@ public class InventoryService : IService, IWorldSaveable
             int stackCount = itemData[SAVE_KEY_ITEM_STACK_COUNT].AsInt32();
 
             SetItem(index, itemDefinition, stackCount);
+        }
+
+        Godot.Collections.Array<string> list = data[SAVE_KEY_EQUIPMENT].AsGodotArray<string>();
+        for (int i = 0; i < list.Count; i++) {
+            string equipmentItemPath = list[i];
+            InventoryItemDefinition itemDefinition = GD.Load<InventoryItemDefinition>(equipmentItemPath);
+            SetEquipment((InventoryEquipmentType)i, itemDefinition);
         }
 
         UpdateAllSlots();

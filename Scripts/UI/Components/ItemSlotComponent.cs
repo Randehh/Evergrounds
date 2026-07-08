@@ -36,12 +36,12 @@ public partial class ItemSlotComponent : TextureRect
         base._ExitTree();
     }
 
-    public void SetItem(InventoryItem item)
+    public virtual void SetItem(InventoryItem item)
     {
         SetItem(item?.definition, item?.CurrentStackSize ?? 1);
     }
 
-    public void SetItem(InventoryItemDefinition itemDefinition, int stackSize)
+    public virtual void SetItem(InventoryItemDefinition itemDefinition, int stackSize)
     {
         InventoryItemRarity rarity = itemDefinition != null ? itemDefinition.rarity : InventoryItemRarity.COMMON;
 

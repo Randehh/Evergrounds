@@ -1,18 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://kowv86pjg7c8"]
+[gd_scene format=3 uid="uid://kowv86pjg7c8"]
 
 [ext_resource type="Script" uid="uid://clfnuxkdbxd3a" path="res://Scripts/UI/TabUI.cs" id="1_lqiri"]
 [ext_resource type="Theme" uid="uid://grcak8uagcau" path="res://Themes/Theme_Default.tres" id="1_r0xay"]
 [ext_resource type="PackedScene" uid="uid://c0ykpj48sr63t" path="res://Scenes/UI/crafting_canvas.tscn" id="1_tdjf3"]
+[ext_resource type="PackedScene" uid="uid://bd5hgufogy8hd" path="res://Scenes/UI/equipment_canvas.tscn" id="3_7tiu2"]
 [ext_resource type="Script" uid="uid://cutkxuc8rxknv" path="res://Scripts/UI/SkillsUI.cs" id="4_nr56r"]
 [ext_resource type="PackedScene" uid="uid://d1q71pnww7paf" path="res://Scenes/UI/experience_display.tscn" id="5_7tiu2"]
 
-[node name="TabUI" type="CanvasLayer" node_paths=PackedStringArray("expandParent", "playerUI", "shopUI")]
+[node name="TabUI" type="CanvasLayer" unique_id=1552623871 node_paths=PackedStringArray("expandParent", "playerUI", "shopUI")]
 script = ExtResource("1_lqiri")
 expandParent = NodePath("ExpandControl")
 playerUI = NodePath("ExpandControl/PlayerUI")
 shopUI = NodePath("ExpandControl/CraftingCanvas")
 
-[node name="ExpandControl" type="Control" parent="."]
+[node name="ExpandControl" type="Control" parent="." unique_id=871424421]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -25,8 +26,9 @@ offset_right = 300.0
 offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
-[node name="PlayerUI" type="TabContainer" parent="ExpandControl"]
+[node name="PlayerUI" type="TabContainer" parent="ExpandControl" unique_id=1365921308]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +39,7 @@ size_flags_stretch_ratio = 0.0
 theme = ExtResource("1_r0xay")
 current_tab = 0
 
-[node name="Crafting" type="MarginContainer" parent="ExpandControl/PlayerUI"]
+[node name="Equipment" type="MarginContainer" parent="ExpandControl/PlayerUI" unique_id=1093415670]
 layout_mode = 2
 theme = ExtResource("1_r0xay")
 theme_override_constants/margin_left = 3
@@ -46,12 +48,10 @@ theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 metadata/_tab_index = 0
 
-[node name="CraftingCanvas" parent="ExpandControl/PlayerUI/Crafting" instance=ExtResource("1_tdjf3")]
+[node name="EquipmentCanvas" parent="ExpandControl/PlayerUI/Equipment" unique_id=132788220 instance=ExtResource("3_7tiu2")]
 layout_mode = 2
-size_flags_horizontal = 13
-size_flags_vertical = 13
 
-[node name="Skills" type="MarginContainer" parent="ExpandControl/PlayerUI"]
+[node name="Crafting" type="MarginContainer" parent="ExpandControl/PlayerUI" unique_id=117424905]
 visible = false
 layout_mode = 2
 theme = ExtResource("1_r0xay")
@@ -61,31 +61,47 @@ theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 metadata/_tab_index = 1
 
-[node name="SkillsCanvas" type="Control" parent="ExpandControl/PlayerUI/Skills" node_paths=PackedStringArray("skillsListParent")]
+[node name="CraftingCanvas" parent="ExpandControl/PlayerUI/Crafting" unique_id=808675696 instance=ExtResource("1_tdjf3")]
 layout_mode = 2
 size_flags_horizontal = 13
 size_flags_vertical = 13
-mouse_filter = 2
+
+[node name="Skills" type="MarginContainer" parent="ExpandControl/PlayerUI" unique_id=1803025603]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_r0xay")
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+metadata/_tab_index = 2
+
+[node name="SkillsCanvas" type="Control" parent="ExpandControl/PlayerUI/Skills" unique_id=1686611794 node_paths=PackedStringArray("skillsListParent")]
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 13
+mouse_filter = 1
 script = ExtResource("4_nr56r")
 skillsListParent = NodePath("CraftingContainer/MarginContainer/VBoxContainer")
 skillScene = ExtResource("5_7tiu2")
 
-[node name="CraftingContainer" type="PanelContainer" parent="ExpandControl/PlayerUI/Skills/SkillsCanvas"]
+[node name="CraftingContainer" type="PanelContainer" parent="ExpandControl/PlayerUI/Skills/SkillsCanvas" unique_id=320272946]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme = ExtResource("1_r0xay")
 
-[node name="MarginContainer" type="MarginContainer" parent="ExpandControl/PlayerUI/Skills/SkillsCanvas/CraftingContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ExpandControl/PlayerUI/Skills/SkillsCanvas/CraftingContainer" unique_id=499415631]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ExpandControl/PlayerUI/Skills/SkillsCanvas/CraftingContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ExpandControl/PlayerUI/Skills/SkillsCanvas/CraftingContainer/MarginContainer" unique_id=1959923610]
 layout_mode = 2
 
-[node name="CraftingCanvas" parent="ExpandControl" instance=ExtResource("1_tdjf3")]
+[node name="CraftingCanvas" parent="ExpandControl" unique_id=568293004 instance=ExtResource("1_tdjf3")]
 layout_mode = 1
 offset_right = 0.0
 offset_bottom = 0.0

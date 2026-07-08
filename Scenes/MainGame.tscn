@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://m5u74rphpivx"]
+[gd_scene format=3 uid="uid://m5u74rphpivx"]
 
 [ext_resource type="Script" uid="uid://bma8o18hnksg6" path="res://Scripts/GameSetup.cs" id="1_4si5g"]
 [ext_resource type="Script" uid="uid://ch4mkk5twbuf" path="res://Scripts/World/WorldData.cs" id="1_rxiwr"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://kwbvwiax28wt" path="res://Scripts/UI/CursorUI.cs" id="8_4ge1w"]
 [ext_resource type="Resource" uid="uid://crmrvkfikd4f6" path="res://Resources/Items/item_seed_carrot.tres" id="8_onj47"]
 [ext_resource type="Resource" uid="uid://ckkxt2qndwtsh" path="res://Resources/Items/item_pitchfork.tres" id="9_gieg4"]
+[ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="9_im1vy"]
 [ext_resource type="Texture2D" uid="uid://c5sroav8psyer" path="res://Art/UI/UI_Cursor.png" id="9_rfphm"]
 [ext_resource type="Texture2D" uid="uid://cos7gijltd37t" path="res://Art/UI/UI_Cursor_Click.png" id="10_821fs"]
 [ext_resource type="Resource" uid="uid://bnj36agsqd4o8" path="res://Resources/Items/item_shovel.tres" id="10_u4gyu"]
@@ -34,39 +35,39 @@ font_size = 10
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
-[node name="MainGame" type="Node"]
+[node name="MainGame" type="Node" unique_id=828106761]
 
-[node name="ServiceSerializer" type="Node" parent="."]
+[node name="ServiceSerializer" type="Node" parent="." unique_id=743148982]
 script = ExtResource("1_u5mee")
 
-[node name="ServiceLocator" type="Node" parent="."]
+[node name="ServiceLocator" type="Node" parent="." unique_id=2128618058]
 script = ExtResource("12_ucx2n")
 
-[node name="WorldData" type="Node" parent="."]
+[node name="WorldData" type="Node" parent="." unique_id=2036845775]
 script = ExtResource("1_rxiwr")
 
-[node name="DragAndDrop" type="Node" parent="."]
+[node name="DragAndDrop" type="Node" parent="." unique_id=1605388377]
 script = ExtResource("2_n5ome")
 
-[node name="Map" parent="." instance=ExtResource("2_be0ya")]
+[node name="Map" parent="." unique_id=1445787910 instance=ExtResource("2_be0ya")]
 
-[node name="GameSetup" type="Node" parent="." node_paths=PackedStringArray("map")]
+[node name="GameSetup" type="Node" parent="." unique_id=1043045676 node_paths=PackedStringArray("map")]
 script = ExtResource("1_4si5g")
 map = NodePath("../Map")
 cameraScene = ExtResource("4_1vx5r")
 characterScene = ExtResource("4_hyjsw")
-itemsToGive = [ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("14_pf2p4"), ExtResource("14_pf2p4"), ExtResource("15_wn26v"), ExtResource("15_wn26v"), ExtResource("15_wn26v"), ExtResource("15_wn26v"), ExtResource("15_wn26v")]
+itemsToGive = Array[ExtResource("9_im1vy")]([ExtResource("8_onj47"), ExtResource("9_gieg4"), ExtResource("10_u4gyu"), ExtResource("11_if80u"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("13_41jus"), ExtResource("14_pf2p4"), ExtResource("14_pf2p4"), ExtResource("15_wn26v"), ExtResource("15_wn26v"), ExtResource("15_wn26v"), ExtResource("15_wn26v"), ExtResource("15_wn26v")])
 
-[node name="InventoryCanvas" parent="." instance=ExtResource("1_v08iy")]
+[node name="InventoryCanvas" parent="." unique_id=1912356723 instance=ExtResource("1_v08iy")]
 
-[node name="GeneralCanvas" parent="." instance=ExtResource("14_qhyv2")]
+[node name="GeneralCanvas" parent="." unique_id=584254443 instance=ExtResource("14_qhyv2")]
 
-[node name="TabUI" parent="." instance=ExtResource("18_wn26v")]
+[node name="TabUI" parent="." unique_id=29891560 instance=ExtResource("18_wn26v")]
 
-[node name="DragAndDropCanvas" type="CanvasLayer" parent="."]
+[node name="DragAndDropCanvas" type="CanvasLayer" parent="." unique_id=1750485765]
 layer = 5
 
-[node name="DragAndDropUI" type="Control" parent="DragAndDropCanvas" node_paths=PackedStringArray("mouseParent", "itemDisplay", "itemCountLabel")]
+[node name="DragAndDropUI" type="Control" parent="DragAndDropCanvas" unique_id=1340137685 node_paths=PackedStringArray("mouseParent", "itemDisplay", "itemCountLabel")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -78,13 +79,13 @@ mouseParent = NodePath("MouseParent")
 itemDisplay = NodePath("MouseParent/CursorOffset/ItemTexture")
 itemCountLabel = NodePath("MouseParent/CursorOffset/ItemTexture/ItemCountLabel")
 
-[node name="MouseParent" type="Control" parent="DragAndDropCanvas/DragAndDropUI"]
+[node name="MouseParent" type="Control" parent="DragAndDropCanvas/DragAndDropUI" unique_id=1811928406]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[node name="CursorOffset" type="Control" parent="DragAndDropCanvas/DragAndDropUI/MouseParent"]
+[node name="CursorOffset" type="Control" parent="DragAndDropCanvas/DragAndDropUI/MouseParent" unique_id=214795749]
 anchors_preset = 0
 offset_left = -5.0
 offset_top = -4.0
@@ -92,7 +93,7 @@ offset_right = 35.0
 offset_bottom = 36.0
 mouse_filter = 2
 
-[node name="ItemTexture" type="TextureRect" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/CursorOffset"]
+[node name="ItemTexture" type="TextureRect" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/CursorOffset" unique_id=268294520]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_right = 16.0
@@ -100,7 +101,7 @@ offset_bottom = 16.0
 mouse_filter = 2
 texture = ExtResource("6_3kt0a")
 
-[node name="ItemCountLabel" type="Label" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/CursorOffset/ItemTexture"]
+[node name="ItemCountLabel" type="Label" parent="DragAndDropCanvas/DragAndDropUI/MouseParent/CursorOffset/ItemTexture" unique_id=1744522423]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -114,10 +115,10 @@ label_settings = SubResource("LabelSettings_irpbb")
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="CursorCanvas" type="CanvasLayer" parent="."]
+[node name="CursorCanvas" type="CanvasLayer" parent="." unique_id=1299628837]
 layer = 100
 
-[node name="CursorUI" type="Control" parent="CursorCanvas" node_paths=PackedStringArray("mouseParent", "cursorTextureRect", "cursorGrabTextureRect")]
+[node name="CursorUI" type="Control" parent="CursorCanvas" unique_id=1029502203 node_paths=PackedStringArray("mouseParent", "cursorTextureRect", "cursorGrabTextureRect")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -130,13 +131,13 @@ cursorGrabTextureRect = NodePath("CursorParent/GrabTextureRect")
 cursorTexture = ExtResource("9_rfphm")
 cursorTexturePressed = ExtResource("10_821fs")
 
-[node name="CursorParent" type="Control" parent="CursorCanvas/CursorUI"]
+[node name="CursorParent" type="Control" parent="CursorCanvas/CursorUI" unique_id=801203397]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[node name="CursorTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent"]
+[node name="CursorTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent" unique_id=821231588]
 layout_mode = 0
 offset_left = -2.0
 offset_top = -2.0
@@ -146,7 +147,7 @@ scale = Vector2(0.75, 0.75)
 mouse_filter = 2
 texture = ExtResource("9_rfphm")
 
-[node name="GrabTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent"]
+[node name="GrabTextureRect" type="TextureRect" parent="CursorCanvas/CursorUI/CursorParent" unique_id=741139237]
 layout_mode = 0
 offset_left = -7.0
 offset_top = -20.0
@@ -156,9 +157,9 @@ scale = Vector2(0.75, 0.75)
 mouse_filter = 2
 texture = ExtResource("11_cpyry")
 
-[node name="DebugCanvas" type="CanvasLayer" parent="."]
+[node name="DebugCanvas" type="CanvasLayer" parent="." unique_id=821054717]
 
-[node name="DebugUI" type="Control" parent="DebugCanvas" node_paths=PackedStringArray("fpsLabel")]
+[node name="DebugUI" type="Control" parent="DebugCanvas" unique_id=1480820540 node_paths=PackedStringArray("fpsLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -169,7 +170,7 @@ mouse_filter = 2
 script = ExtResource("12_i1bcf")
 fpsLabel = NodePath("MarginContainer/Label")
 
-[node name="MarginContainer" type="MarginContainer" parent="DebugCanvas/DebugUI"]
+[node name="MarginContainer" type="MarginContainer" parent="DebugCanvas/DebugUI" unique_id=404299271]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -182,7 +183,7 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="DebugCanvas/DebugUI/MarginContainer"]
+[node name="Label" type="Label" parent="DebugCanvas/DebugUI/MarginContainer" unique_id=162131364]
 layout_mode = 2
 size_flags_vertical = 1
 text = "FPS 20"

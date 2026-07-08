@@ -142,12 +142,16 @@ public partial class InventoryUI : Control
                             {
                                 itemInSlot.CurrentStackSize += draggingItem.CurrentStackSize;
                                 DragAndDrop.Instance.StopDragging();
+
+                                GD.Print("Stopped dragging by adding to existing stack");
                             }
                         }
                         else
                         {
                             inventory.RemoveItem(slotMouseOver);
                             DragAndDrop.Instance.StopDragging();
+
+                            GD.Print("Stopped dragging by swapping item in hand");
 
                             inventory.SetItem(slotMouseOver, draggingItem.definition, draggingItem.CurrentStackSize);
                             DragAndDrop.Instance.StartDragging(itemInSlot);
@@ -158,9 +162,11 @@ public partial class InventoryUI : Control
                     {
                         inventory.SetItem(slotMouseOver, draggingItem.definition, draggingItem.CurrentStackSize);
                         DragAndDrop.Instance.StopDragging();
+
+                        GD.Print("Stopped dragging by setting item in slot");
                     }
                 }
-                else
+                else if(!TabUI.Instance.IsMouseOver)
                 {
                     WorldItemSpawner itemSpawner = new WorldItemSpawner(new WorldItemSpawnerItemData[] {
                         new WorldItemSpawnerItemData(draggingItem.definition, draggingItem.CurrentStackSize, draggingItem.CurrentStackSize, 1)
@@ -168,6 +174,8 @@ public partial class InventoryUI : Control
                     PlayerCharacter.Instance.AddChild(itemSpawner);
                     itemSpawner.GlobalPosition = PlayerCharacter.Instance.GlobalPosition;
                     DragAndDrop.Instance.StopDragging();
+
+                    GD.Print("Stopped dragging by dropping on floor");
                 }
             }
         }
