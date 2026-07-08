@@ -1,19 +1,30 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cnunxpm83nnu2"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://cnunxpm83nnu2"]
 
+[ext_resource type="Script" uid="uid://dhf5ijyjnp6d1" path="res://Scripts/System/Services/NumberMod.cs" id="1_ddpox"]
 [ext_resource type="Texture2D" uid="uid://ba5mmy2282scu" path="res://Art/Items/Resources/Resource_Gold.png" id="1_v6uc3"]
 [ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_ifhfj"]
+
+[sub_resource type="Resource" id="Resource_yx3rn"]
+script = ExtResource("1_ddpox")
+id = "GOLD_CHARISMA"
+numberType = 2
+modType = 2
+modValue = 2.0
+metadata/_custom_type_script = "uid://dhf5ijyjnp6d1"
+
+[sub_resource type="Resource" id="Resource_ix3no"]
+script = ExtResource("1_ddpox")
+id = "GOLD_MS"
+modValue = 0.2
+metadata/_custom_type_script = "uid://dhf5ijyjnp6d1"
 
 [resource]
 script = ExtResource("2_ifhfj")
 displayName = "Gold coin"
 description = "Worth its weight."
-usageText = "Transactional material"
 itemSprite = ExtResource("1_v6uc3")
 stackSize = 100
-useAnimation = 0
-interactType = 0
-interactLevel = 1
 rarity = 1
 worldShadowScale = 0.25
-gridPlacementScene = ""
-tileMaterial = 0
+inventoryEquipmentType = 1
+equipMods = Array[Object]([SubResource("Resource_yx3rn"), SubResource("Resource_ix3no")])

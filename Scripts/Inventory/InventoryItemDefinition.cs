@@ -5,6 +5,7 @@ using static WorldMap;
 [GlobalClass]
 public partial class InventoryItemDefinition : Resource
 {
+    [ExportGroup("General")]
     [Export]
     public string displayName;
 
@@ -18,6 +19,10 @@ public partial class InventoryItemDefinition : Resource
     public int stackSize = 1;
 
     [Export]
+    public InventoryItemRarity rarity;
+
+    [ExportGroup("Interactions")]
+    [Export]
     public HoldableAnimations useAnimation;
 
     [Export]
@@ -26,12 +31,11 @@ public partial class InventoryItemDefinition : Resource
     [Export]
     public int interactLevel = 1;
 
-    [Export]
-    public InventoryItemRarity rarity;
-
+    [ExportGroup("World")]
     [Export]
     public float worldShadowScale = 0.5f;
 
+    [ExportGroup("Grid placement")]
     [Export(hintString: "Defines what is placed on the grid with grid-based interaction types")]
     public string gridPlacementScene;
 
@@ -47,8 +51,12 @@ public partial class InventoryItemDefinition : Resource
     [Export]
     public bool hasInfiniteUses = false;
 
+    [ExportGroup("Equipment")]
     [Export]
     public InventoryEquipmentType inventoryEquipmentType;
+
+    [Export]
+    public Godot.Collections.Array<NumberMod> equipMods;
 
     public bool isStackable => stackSize > 1;
 

@@ -1,4 +1,6 @@
+using Evergrounds.Scripts.Utility;
 using Godot;
+using System;
 
 [GlobalClass]
 public partial class EquipmentUI : Control
@@ -34,9 +36,9 @@ public partial class EquipmentUI : Control
         SetEquipmentSlot(slotFeet, InventoryEquipmentType.FEET);
         SetEquipmentSlot(slotTrinket, InventoryEquipmentType.TRINKET);
 
-        CreateStatRow(null, "Movement speed", "2");
-        CreateStatRow(null, "Attack speed", "1 per second");
-        CreateStatRow(null, "Charisma", "12");
+        foreach (NumberType numberType in Enum.GetValues(typeof(NumberType))) {
+            CreateStatRow(null, numberType);
+        }
     }
 
     public override void _Process(double delta)
@@ -44,10 +46,19 @@ public partial class EquipmentUI : Control
         if (Input.IsActionJustReleased("click")) {
             var draggingItem = DragAndDrop.Instance.DraggingItem;
 
+            if (draggingItem == null && mouseOverSlot != null) {
+                DragAndDrop.Instance.StartDragging(new InventoryItem(mouseOverSlot.ItemSlot.currentItem));
+                mouseOverSlot.ItemSlot.SetItem(null);
+
+                ServiceLocator.InventoryService.SetEquipment(mouseOverSlot.EquipmentType, null);
+            }
+
             // Stop dragging
-            if (draggingItem != null && mouseOverSlot != null && draggingItem.definition.inventoryEquipmentType == mouseOverSlot.EquipmentType) {
+            else if (draggingItem != null && mouseOverSlot != null && draggingItem.definition.inventoryEquipmentType == mouseOverSlot.EquipmentType) {
                 mouseOverSlot.SetItem(draggingItem.definition);
                 DragAndDrop.Instance.StopDragging();
+
+                ServiceLocator.InventoryService.SetEquipment(mouseOverSlot.EquipmentType, draggingItem.definition);
             }
         }
     }
@@ -68,10 +79,10 @@ public partial class EquipmentUI : Control
         };
     }
 
-    private void CreateStatRow(Texture2D icon, string statDisplayName, string statValue)
+    private void CreateStatRow(Texture2D icon, NumberType numberType)
     {
         StatRow row = statRowScene.Instantiate<StatRow>();
-        row.SetData(icon, statDisplayName, statValue);
+        row.SetData(icon, numberType);
         statRowParent.AddChild(row);
     }
 }

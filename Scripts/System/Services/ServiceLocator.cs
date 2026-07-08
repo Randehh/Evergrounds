@@ -12,6 +12,7 @@ public partial class ServiceLocator : Node
     public static TimeService TimeService => Instance.GetService<TimeService>(true);
     public static InputStateService InputStateService => Instance.GetService<InputStateService>(true);
     public static ExperienceService ExperienceService => Instance.GetService<ExperienceService>(true);
+    public static NumberService NumberService => Instance.GetService<NumberService>(true);
 
     private Dictionary<Type, IService> services = new ();
 

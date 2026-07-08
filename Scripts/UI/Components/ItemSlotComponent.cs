@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 [GlobalClass]
 public partial class ItemSlotComponent : TextureRect
@@ -23,6 +24,8 @@ public partial class ItemSlotComponent : TextureRect
 
     [Export]
     private Texture2D slotBackgroundSelected;
+
+    public InventoryItemDefinition currentItem;
 
     public override void _Ready()
     {
@@ -50,6 +53,8 @@ public partial class ItemSlotComponent : TextureRect
 
         stackCountLabel.Text = stackSize.ToString();
         stackCountLabel.Visible = itemDefinition?.isStackable ?? false;
+
+        currentItem = itemDefinition;
     }
 
     public void SetBackgroundStateDefault() => SetBackgroundTexture(slotBackground);

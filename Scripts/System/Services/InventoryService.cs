@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class InventoryService : IService, IWorldSaveable
 {
@@ -273,7 +274,7 @@ public class InventoryService : IService, IWorldSaveable
 
     public bool SetEquipment(InventoryEquipmentType inventoryEquipmentType, InventoryItemDefinition itemDefinition)
     {
-        return SetEquipment((int)inventoryEquipmentType - 1, itemDefinition);
+        return SetEquipment((int)inventoryEquipmentType, itemDefinition);
     }
 
     public bool SetEquipment(int equipmentIndex, InventoryItemDefinition itemDefinition)
@@ -282,16 +283,28 @@ public class InventoryService : IService, IWorldSaveable
             return false;
         }
 
+        equipmentIndex--;
+
         InventoryItem currentItem = equippedItems[equipmentIndex];
-        if (currentItem != null && !AddItem(currentItem)) {
-            return false;
+        if (currentItem != null) {
+            if(!AddItem(currentItem)) {
+                return false;
+            }
+
+            ServiceLocator.NumberService.RemoveMods(currentItem.definition.equipMods.ToArray());
         }
 
-        InventoryItem item = new InventoryItem(itemDefinition, 1);
-        equippedItems[equipmentIndex] = item;
+        if (itemDefinition != null) {
+            InventoryItem item = new InventoryItem(itemDefinition, 1);
+            equippedItems[equipmentIndex] = item;
 
-        OnEquipmentSet.Invoke(item, (InventoryEquipmentType)(equipmentIndex + 1));
+            OnEquipmentSet.Invoke(item, (InventoryEquipmentType)(equipmentIndex + 1));
 
+            ServiceLocator.NumberService.AddMods(itemDefinition.equipMods.ToArray());
+        } else {
+            equippedItems[equipmentIndex] = null;
+            OnEquipmentSet.Invoke(null, (InventoryEquipmentType)(equipmentIndex + 1));
+        }
         return true;
     }
 
