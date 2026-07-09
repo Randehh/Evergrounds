@@ -9,6 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://cbspc4phk6w78" path="res://Art/UI/UI_Grid_Overlay.png" id="6_8im18"]
 [ext_resource type="Script" uid="uid://c61nel2uiqlct" path="res://Scripts/Player/PlayerDespawnableHandler.cs" id="6_47lku"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gdgf0"]
+size = Vector2(14, 4)
+
 [sub_resource type="Animation" id="Animation_cxq1k"]
 resource_name = "Highlight"
 loop_mode = 1
@@ -120,13 +123,16 @@ radius = 35.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_vfjf2"]
 radius = 400.0
 
-[node name="Player" type="Node2D" unique_id=2128806027 node_paths=PackedStringArray("character", "interactHandler", "vacuumArea")]
+[node name="Player" type="CharacterBody2D" unique_id=343706042 node_paths=PackedStringArray("character", "interactHandler", "vacuumArea")]
 script = ExtResource("1_ty55n")
 character = NodePath("CharacterBase")
 interactHandler = NodePath("PlayerInteractHandler")
 vacuumArea = NodePath("VacuumDetector")
 acceleration = 7.5
 decceleration = 0.75
+
+[node name="PlayerCollider" type="CollisionShape2D" parent="." unique_id=2073361921]
+shape = SubResource("RectangleShape2D_gdgf0")
 
 [node name="CharacterBase" parent="." unique_id=1797284262 instance=ExtResource("2_ah60g")]
 

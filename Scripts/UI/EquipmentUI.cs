@@ -47,10 +47,12 @@ public partial class EquipmentUI : Control
             var draggingItem = DragAndDrop.Instance.DraggingItem;
 
             if (draggingItem == null && mouseOverSlot != null) {
-                DragAndDrop.Instance.StartDragging(new InventoryItem(mouseOverSlot.ItemSlot.currentItem));
-                mouseOverSlot.ItemSlot.SetItem(null);
+                if (mouseOverSlot.ItemSlot.currentItem != null) {
+                    DragAndDrop.Instance.StartDragging(new InventoryItem(mouseOverSlot.ItemSlot.currentItem));
+                    mouseOverSlot.ItemSlot.SetItem(null);
 
-                ServiceLocator.InventoryService.SetEquipment(mouseOverSlot.EquipmentType, null);
+                    ServiceLocator.InventoryService.SetEquipment(mouseOverSlot.EquipmentType, null);
+                }
             }
 
             // Stop dragging

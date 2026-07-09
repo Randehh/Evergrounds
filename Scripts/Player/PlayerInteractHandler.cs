@@ -184,7 +184,6 @@ public partial class PlayerInteractHandler : Node2D
             WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial, itemInHand.definition.subTileSet, true);
             character.UseHoldable();
 
-
             if (!itemInHand.definition.hasInfiniteUses)
             {
                 ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ctkvevyma6uqu"]
+[gd_scene format=3 uid="uid://ctkvevyma6uqu"]
 
 [ext_resource type="Script" uid="uid://5wdh5bsds8fb" path="res://Scripts/Characters/CharacterBase.cs" id="1_dppcc"]
 [ext_resource type="Texture2D" uid="uid://jbp5g67jxlaa" path="res://Art/Characters/Player.png" id="1_gmury"]
@@ -197,27 +197,23 @@ _data = {
 &"SWING": SubResource("Animation_tgyr5")
 }
 
-[node name="CharacterBase" type="Node2D" node_paths=PackedStringArray("characterAnimator", "holdableAnimator", "holdableSprite")]
+[node name="CharacterBase" type="Node2D" unique_id=322906738 node_paths=PackedStringArray("characterAnimator", "holdableAnimator", "holdableSprite")]
 script = ExtResource("1_dppcc")
 characterAnimator = NodePath("MovementAnimator")
 holdableAnimator = NodePath("HoldableAnimator")
 holdableSprite = NodePath("CharacterSprites/Holdable/HoldableSprite")
 
-[node name="MovementAnimator" type="AnimationPlayer" parent="."]
+[node name="MovementAnimator" type="AnimationPlayer" parent="." unique_id=1945287173]
 root_node = NodePath("../CharacterSprites")
-libraries = {
-"": SubResource("AnimationLibrary_50ce0")
-}
+libraries/ = SubResource("AnimationLibrary_50ce0")
 speed_scale = 2.0
 
-[node name="HoldableAnimator" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_12kvp")
-}
+[node name="HoldableAnimator" type="AnimationPlayer" parent="." unique_id=1365464495]
+libraries/ = SubResource("AnimationLibrary_12kvp")
 
-[node name="CharacterSprites" type="Node2D" parent="."]
+[node name="CharacterSprites" type="Node2D" parent="." unique_id=1348350666]
 
-[node name="Backpack" type="Node2D" parent="CharacterSprites" node_paths=PackedStringArray("targetNode", "attachmentNode")]
+[node name="Backpack" type="Node2D" parent="CharacterSprites" unique_id=653594658 node_paths=PackedStringArray("targetNode", "attachmentNode")]
 position = Vector2(-4, -5)
 script = ExtResource("2_jybix")
 targetNode = NodePath("..")
@@ -226,15 +222,15 @@ followSpeed = 35.0
 rotationSpeed = 3.0
 rotationMultiplier = 5.0
 
-[node name="BackpackSprite" type="Sprite2D" parent="CharacterSprites/Backpack"]
+[node name="BackpackSprite" type="Sprite2D" parent="CharacterSprites/Backpack" unique_id=1099709956]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_1i5mm")
 
-[node name="CharacterSprite" type="Sprite2D" parent="CharacterSprites"]
+[node name="CharacterSprite" type="Sprite2D" parent="CharacterSprites" unique_id=1626407962]
 texture = ExtResource("1_gmury")
 offset = Vector2(0, -8)
 
-[node name="Holdable" type="Node2D" parent="CharacterSprites" node_paths=PackedStringArray("targetNode", "attachmentNode")]
+[node name="Holdable" type="Node2D" parent="CharacterSprites" unique_id=1023517876 node_paths=PackedStringArray("targetNode", "attachmentNode")]
 position = Vector2(7, -4)
 rotation = 0.702786
 script = ExtResource("2_jybix")
@@ -243,11 +239,11 @@ attachmentNode = NodePath("HoldableSprite")
 followSpeed = 50.0
 rotationSpeed = 8.0
 
-[node name="HoldableSprite" type="Sprite2D" parent="CharacterSprites/Holdable"]
+[node name="HoldableSprite" type="Sprite2D" parent="CharacterSprites/Holdable" unique_id=978298812]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_jejjs")
 
-[node name="WorldNodeShadow" parent="." node_paths=PackedStringArray("targetNode") instance=ExtResource("6_gcjf1")]
+[node name="WorldNodeShadow" parent="." unique_id=340470749 node_paths=PackedStringArray("targetNode") instance=ExtResource("6_gcjf1")]
 z_index = 0
 targetNode = NodePath("../CharacterSprites")
 baseScaleMultiplier = 0.75

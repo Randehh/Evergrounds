@@ -16,6 +16,9 @@ public partial class GameSetup : Node
     [Export]
     private Array<InventoryItemDefinition> itemsToGive = new();
 
+    [Export]
+    private bool giveItems = true;
+
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Hidden;
@@ -28,9 +31,10 @@ public partial class GameSetup : Node
 
         camera.toFollow = character;
 
-        foreach (InventoryItemDefinition item in itemsToGive)
-        {
-            ServiceLocator.InventoryService.AddItem(item, 1);
+        if (giveItems) {
+            foreach (InventoryItemDefinition item in itemsToGive) {
+                ServiceLocator.InventoryService.AddItem(item, 1);
+            }
         }
     }
 }
