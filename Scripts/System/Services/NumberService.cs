@@ -4,17 +4,18 @@ using System.Linq;
 
 public class NumberService : IService
 {
-    public Action<NumberType, float> onNumberUpdated = delegate { };
+    public Action<NumberType, float> OnNumberUpdated { get; set; } = delegate { };
 
-    private Dictionary<NumberType, float> baseNumbers = new();
+    private Dictionary<NumberType, float> baseNumbers = new() {
+        [NumberType.MOVE_SPEED] = 50
+    };
     private Dictionary<NumberType, float> calculatedValues = new();
     private Dictionary<NumberType, List<NumberMod>> numberMods = new();
 
     public void OnInit()
     {
         foreach (NumberType numberType in Enum.GetValues(typeof(NumberType))) {
-            baseNumbers[numberType] = 1;
-            calculatedValues[numberType] = 1;
+            baseNumbers.TryAdd(numberType, 1);
             numberMods[numberType] = new();
         }
     }
@@ -96,10 +97,16 @@ public class NumberService : IService
 
         calculatedValues[type] = value;
 
-        onNumberUpdated.Invoke(type, value);
+        OnNumberUpdated.Invoke(type, value);
     }
 
-    public float GetCalculatedValue(NumberType type) => calculatedValues[type];
+    public float GetCalculatedValue(NumberType type)
+    {
+        if (!calculatedValues.ContainsKey(type)) {
+            UpdateValue(type);
+        }
+        return calculatedValues[type];
+    }
 }
 
 public enum NumberType

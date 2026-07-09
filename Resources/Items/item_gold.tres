@@ -15,7 +15,8 @@ metadata/_custom_type_script = "uid://dhf5ijyjnp6d1"
 [sub_resource type="Resource" id="Resource_ix3no"]
 script = ExtResource("1_ddpox")
 id = "GOLD_MS"
-modValue = 0.2
+modType = 2
+modValue = 2.0
 metadata/_custom_type_script = "uid://dhf5ijyjnp6d1"
 
 [resource]

@@ -17,7 +17,7 @@ public partial class StatRow : Control
 
     public override void _ExitTree()
     {
-        ServiceLocator.NumberService.onNumberUpdated -= OnNumberUpdated;
+        ServiceLocator.NumberService.OnNumberUpdated -= OnNumberUpdated;
     }
 
     public void SetData(Texture2D iconTexture, NumberType numberType)
@@ -30,7 +30,7 @@ public partial class StatRow : Control
         typeLabel.Text = numberType.ToString().FirstCharToUpper().Replace('_', ' ');
         typeValueLabel.Text = currentValue.ToString();
 
-        ServiceLocator.NumberService.onNumberUpdated += OnNumberUpdated;
+        ServiceLocator.NumberService.OnNumberUpdated += OnNumberUpdated;
     }
 
     private void OnNumberUpdated(NumberType numberType, float value)

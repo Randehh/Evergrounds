@@ -18,15 +18,13 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 	private Area2D vacuumArea;
 
 	[Export]
-	private float maxSpeed = 1;
-
-	[Export]
 	private float acceleration = 10;
 
 	[Export]
 	private float decceleration = 0.01f;
 
-	private Vector2 currentSpeed = Vector2.Zero;
+    private float maxSpeed = 1;
+    private Vector2 currentSpeed = Vector2.Zero;
 
 	private List<WorldItem> vacuumItemsInRadius = new();
     private InputState inputState;
@@ -46,9 +44,20 @@ public partial class PlayerCharacter : Node2D, IWorldSaveable
 
         inputState = ServiceLocator.InputStateService.InputState;
         ServiceLocator.GameNotificationService.OnInputStateChanged.OnFire += OnInputStateChanged;
+		ServiceLocator.NumberService.OnNumberUpdated += OnNumberUpdated;
+
+		maxSpeed = ServiceLocator.NumberService.GetCalculatedValue(NumberType.MOVE_SPEED);
     }
 
-	private void OnInputStateChanged(InputState state) => inputState = state;
+    private void OnInputStateChanged(InputState state) => inputState = state;
+
+    private void OnNumberUpdated(NumberType type, float value)
+    {
+		if(type != NumberType.MOVE_SPEED) {
+			return;
+		}
+		maxSpeed = value;
+    }
 
     public override void _ExitTree()
     {

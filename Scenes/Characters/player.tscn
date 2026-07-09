@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cigl51myg13f6"]
+[gd_scene format=3 uid="uid://cigl51myg13f6"]
 
 [ext_resource type="Script" uid="uid://k7pix4e37ggf" path="res://Scripts/Player/PlayerCharacter.cs" id="1_ty55n"]
 [ext_resource type="PackedScene" uid="uid://ctkvevyma6uqu" path="res://Scenes/Characters/character_base.tscn" id="2_ah60g"]
@@ -120,18 +120,17 @@ radius = 35.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_vfjf2"]
 radius = 400.0
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("character", "interactHandler", "vacuumArea")]
+[node name="Player" type="Node2D" unique_id=2128806027 node_paths=PackedStringArray("character", "interactHandler", "vacuumArea")]
 script = ExtResource("1_ty55n")
 character = NodePath("CharacterBase")
 interactHandler = NodePath("PlayerInteractHandler")
 vacuumArea = NodePath("VacuumDetector")
-maxSpeed = 50.0
 acceleration = 7.5
 decceleration = 0.75
 
-[node name="CharacterBase" parent="." instance=ExtResource("2_ah60g")]
+[node name="CharacterBase" parent="." unique_id=1797284262 instance=ExtResource("2_ah60g")]
 
-[node name="PlayerInteractHandler" type="Node2D" parent="." node_paths=PackedStringArray("character", "interactDetector", "selectArrow", "selectArrowLabel", "previewSprite", "gridTileView")]
+[node name="PlayerInteractHandler" type="Node2D" parent="." unique_id=318777459 node_paths=PackedStringArray("character", "interactDetector", "selectArrow", "selectArrowLabel", "previewSprite", "gridTileView")]
 script = ExtResource("3_vywfg")
 character = NodePath("../CharacterBase")
 interactDetector = NodePath("../InteractableDetector")
@@ -140,9 +139,9 @@ selectArrowLabel = NodePath("../SelectArrow/ArrowLabel")
 previewSprite = NodePath("../ItemPlacePreviewSprite")
 gridTileView = NodePath("../GridPreviewSprite")
 
-[node name="SelectArrow" type="Node2D" parent="."]
+[node name="SelectArrow" type="Node2D" parent="." unique_id=1660602694]
 
-[node name="ArrowLabel" type="Label" parent="SelectArrow"]
+[node name="ArrowLabel" type="Label" parent="SelectArrow" unique_id=1746033898]
 z_index = 10
 anchors_preset = 7
 anchor_left = 0.5
@@ -161,46 +160,44 @@ label_settings = ExtResource("4_gdgf0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Offset" type="Node2D" parent="SelectArrow"]
+[node name="Offset" type="Node2D" parent="SelectArrow" unique_id=431845158]
 position = Vector2(0, -15)
 
-[node name="ArrowAnimator" type="AnimationPlayer" parent="SelectArrow/Offset"]
+[node name="ArrowAnimator" type="AnimationPlayer" parent="SelectArrow/Offset" unique_id=53082464]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_qnace")
-}
+libraries/ = SubResource("AnimationLibrary_qnace")
 speed_scale = 2.0
 
-[node name="Sprite" type="Sprite2D" parent="SelectArrow/Offset"]
+[node name="Sprite" type="Sprite2D" parent="SelectArrow/Offset" unique_id=1552957197]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_d6q47")
 
-[node name="InteractableDetector" type="Area2D" parent="."]
+[node name="InteractableDetector" type="Area2D" parent="." unique_id=1320879146]
 script = ExtResource("4_faxxo")
 
-[node name="CollisionShape" type="CollisionShape2D" parent="InteractableDetector"]
+[node name="CollisionShape" type="CollisionShape2D" parent="InteractableDetector" unique_id=372665112]
 shape = SubResource("CircleShape2D_kovjw")
 
-[node name="VacuumDetector" type="Area2D" parent="."]
+[node name="VacuumDetector" type="Area2D" parent="." unique_id=945823889]
 collision_layer = 0
 collision_mask = 2
 
-[node name="VacuumShape" type="CollisionShape2D" parent="VacuumDetector"]
+[node name="VacuumShape" type="CollisionShape2D" parent="VacuumDetector" unique_id=976495912]
 shape = SubResource("CircleShape2D_u6o11")
 
-[node name="DespawnableDetector" type="Area2D" parent="." node_paths=PackedStringArray("collisionShape")]
+[node name="DespawnableDetector" type="Area2D" parent="." unique_id=2018228293 node_paths=PackedStringArray("collisionShape")]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("6_47lku")
 collisionShape = NodePath("CollisionShape")
 
-[node name="CollisionShape" type="CollisionShape2D" parent="DespawnableDetector"]
+[node name="CollisionShape" type="CollisionShape2D" parent="DespawnableDetector" unique_id=1289952297]
 shape = SubResource("CircleShape2D_vfjf2")
 
-[node name="ItemPlacePreviewSprite" type="Sprite2D" parent="."]
+[node name="ItemPlacePreviewSprite" type="Sprite2D" parent="." unique_id=509084038]
 modulate = Color(1, 1, 1, 0.5)
 
-[node name="GridPreviewSprite" type="Sprite2D" parent="."]
+[node name="GridPreviewSprite" type="Sprite2D" parent="." unique_id=464986265]
 visible = false
 texture = ExtResource("6_8im18")
 
