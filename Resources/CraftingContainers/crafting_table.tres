@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CraftingRecipeContainer" format=3 uid="uid://cfwo577ko2ioj"]
+
+[ext_resource type="Script" uid="uid://sjq3rvl8dikb" path="res://Scripts/System/Crafting/CraftingRecipe.cs" id="1_3mav8"]
+[ext_resource type="Resource" uid="uid://b8odpgvy0oeqf" path="res://Resources/CraftingRecipes/recipe_bed.tres" id="2_sa82f"]
+[ext_resource type="Resource" uid="uid://b5d0ms7ajn1ne" path="res://Resources/CraftingRecipes/recipe_door_wood.tres" id="3_rlepu"]
+[ext_resource type="Resource" uid="uid://d2lc2oh6b8w86" path="res://Resources/CraftingRecipes/recipe_floor_stone.tres" id="4_56g2m"]
+[ext_resource type="Script" uid="uid://cjbfiq38t03tm" path="res://Scripts/System/Crafting/CraftingRecipeContainer.cs" id="4_dqykh"]
+[ext_resource type="Resource" uid="uid://dop3oh12nhycu" path="res://Resources/CraftingRecipes/recipe_floor_wood.tres" id="5_jpfho"]
+[ext_resource type="Resource" uid="uid://dxthhsxsllp6r" path="res://Resources/CraftingRecipes/recipe_wall_stone.tres" id="6_o0red"]
+[ext_resource type="Resource" uid="uid://cxynsf4yon2r" path="res://Resources/CraftingRecipes/recipe_wall_wood.tres" id="7_gkaxg"]
+
+[resource]
+script = ExtResource("4_dqykh")
+recipes = Array[ExtResource("1_3mav8")]([ExtResource("2_sa82f"), ExtResource("3_rlepu"), ExtResource("4_56g2m"), ExtResource("5_jpfho"), ExtResource("6_o0red"), ExtResource("7_gkaxg")])

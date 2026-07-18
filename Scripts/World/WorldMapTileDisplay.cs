@@ -6,6 +6,8 @@ using static WorldMapData;
 
 public class WorldMapTileDisplay : IWorldMapTileDisplay
 {
+    private static Vector2I EMPTY_TILE_COORD = new(2, 1);
+
     public TileMapLayer DisplayLayer { get; private set; }
     public AtlasMaterial SelectedTileData { get; private set; }
 
@@ -122,6 +124,11 @@ public class WorldMapTileDisplay : IWorldMapTileDisplay
 
     private Vector2I CalculateDisplayTile(Vector2I coords)
     {
+        Vector2I slotCoordinnte = (Vector2I)DisplayLayer.MapToLocal(coords);
+        if (ServiceLocator.MapService.IsEmptySlot(slotCoordinnte)) {
+            return EMPTY_TILE_COORD;
+        }
+
         // get 4 world tile neighbours
         AtlasMaterial botRight = GetWorldTile(coords - WorldMapConstants.GridNeighbours[0]);
         AtlasMaterial botLeft = GetWorldTile(coords - WorldMapConstants.GridNeighbours[1]);

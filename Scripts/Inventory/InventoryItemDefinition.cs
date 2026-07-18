@@ -51,6 +51,9 @@ public partial class InventoryItemDefinition : Resource
     [Export]
     public bool hasInfiniteUses = false;
 
+    [Export]
+    public bool setEmptySpot = false;
+
     [ExportGroup("Equipment")]
     [Export]
     public InventoryEquipmentType inventoryEquipmentType;

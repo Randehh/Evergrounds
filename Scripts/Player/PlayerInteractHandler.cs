@@ -162,13 +162,13 @@ public partial class PlayerInteractHandler : Node2D
     {
         bool canChangeMaterial = WorldMap.Instance.CanChangeToTileMaterial(itemInHand.definition.tileMaterial);
 
-        Vector2 gridPosition = WorldMap.Instance.GetMouseCoordinates(1, true);
+        Vector2I gridPosition = WorldMap.Instance.GetMouseCoordinates(1, true);
         gridTileView.GlobalPosition = gridPosition;
 
         Color previewColorBase = canChangeMaterial ? colorValid : colorInvalid;
         float alphaMin = 0.4f;
         float alphaMax = 0.75f;
-        if ((gridPosition).DistanceTo(PlayerCharacter.Instance.Position) >= INTERACT_RADIUS)
+        if (((Vector2)gridPosition).DistanceTo(PlayerCharacter.Instance.Position) >= INTERACT_RADIUS)
         {
             canChangeMaterial = false;
 
@@ -181,6 +181,10 @@ public partial class PlayerInteractHandler : Node2D
 
         if (canChangeMaterial && IsUseHoldablePressed())
         {
+            if (itemInHand.definition.setEmptySpot) {
+                ServiceLocator.MapService.SetEmptySlot(gridPosition, true);
+            }
+
             WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial, itemInHand.definition.subTileSet, true);
             character.UseHoldable();
 

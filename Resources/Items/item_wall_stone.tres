@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://c0t6l1cukeovf"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://c0t6l1cukeovf"]
 
 [ext_resource type="Texture2D" uid="uid://cydh2bien6hc7" path="res://Art/Items/Walls/Wall_Stone.png" id="1_2af5b"]
 [ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_acwwn"]
@@ -9,13 +9,9 @@ displayName = "Stone wall"
 description = "Stonewalled"
 itemSprite = ExtResource("1_2af5b")
 stackSize = 100
-useAnimation = 0
+rarity = 1
 interactType = 6
 interactLevel = 0
-rarity = 1
 worldShadowScale = 0.25
-gridPlacementScene = ""
 tileMaterial = 3
-subTileSet = Vector2i(0, 0)
-isSimpleTileMap = false
-hasInfiniteUses = false
+equipMods = null

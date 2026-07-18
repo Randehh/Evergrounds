@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bxy75fyynsjkl"]
+
+[ext_resource type="Script" uid="uid://cgxf5lvu2ugmx" path="res://Scripts/Interactions/Interactable.cs" id="1_q5gub"]
+[ext_resource type="Script" uid="uid://yybl1j6dn8li" path="res://Scripts/Interactions/InteractableRequirement.cs" id="2_s32js"]
+[ext_resource type="Texture2D" uid="uid://caewli5nm8aee" path="res://Art/World/Interactables/Interactable_CraftingTable.png" id="3_q5gub"]
+[ext_resource type="Script" uid="uid://c7djundet1dnn" path="res://Scripts/Interactions/InteractEvents/InteractEventOpenCrafting.cs" id="4_rh87e"]
+[ext_resource type="Resource" uid="uid://cfwo577ko2ioj" path="res://Resources/CraftingContainers/crafting_table.tres" id="5_q5gub"]
+
+[sub_resource type="Resource" id="Resource_cd1ki"]
+script = ExtResource("2_s32js")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l4y4r"]
+size = Vector2(16, 16)
+
+[node name="CraftingTable" type="Area2D" unique_id=252387571 node_paths=PackedStringArray("interactPoint", "interactShape", "selectArrowAnchor", "interactEvents", "interactCompleteEvents", "mainSprite")]
+y_sort_enabled = true
+collision_layer = 5
+script = ExtResource("1_q5gub")
+interactPoint = NodePath("Shape")
+interactShape = NodePath("Shape")
+selectArrowAnchor = NodePath("ArrowAnchor")
+selectArrowText = "General shop"
+interactRequirement = SubResource("Resource_cd1ki")
+interactEvents = []
+interactCompleteEvents = [NodePath("InteractEventOpenCrafting")]
+interactCount = -1
+mainSprite = NodePath("TableSprite")
+placementTiles = Array[Vector2i]([Vector2i(0, 0), Vector2i(0, -1)])
+validTilePlacementMaterials = Array[int]([0, 1])
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=1684168934]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_l4y4r")
+
+[node name="ArrowAnchor" type="Node2D" parent="." unique_id=1703606165]
+position = Vector2(0, -15)
+
+[node name="TableSprite" type="Sprite2D" parent="." unique_id=1234021938]
+texture = ExtResource("3_q5gub")
+offset = Vector2(0, -8)
+
+[node name="InteractEventOpenCrafting" type="Node2D" parent="." unique_id=1074104174]
+script = ExtResource("4_rh87e")
+recipeContainer = ExtResource("5_q5gub")
+metadata/_custom_type_script = "uid://c7djundet1dnn"

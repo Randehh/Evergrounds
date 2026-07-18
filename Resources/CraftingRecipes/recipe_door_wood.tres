@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CraftingRecipe" format=3 uid="uid://b5d0ms7ajn1ne"]
+
+[ext_resource type="Script" uid="uid://btdb56a3w2bss" path="res://Scripts/System/Crafting/CraftingRecipeItem.cs" id="1_6128v"]
+[ext_resource type="Resource" uid="uid://bkuersrsvb7ty" path="res://Resources/Items/item_wood.tres" id="2_jopqy"]
+[ext_resource type="Resource" uid="uid://baalbirdpfuha" path="res://Resources/Items/item_door_wood.tres" id="3_6128v"]
+[ext_resource type="Script" uid="uid://sjq3rvl8dikb" path="res://Scripts/System/Crafting/CraftingRecipe.cs" id="4_2lq2m"]
+
+[sub_resource type="Resource" id="Resource_kffyo"]
+script = ExtResource("1_6128v")
+item = ExtResource("2_jopqy")
+count = 2
+
+[sub_resource type="Resource" id="Resource_gbmtc"]
+script = ExtResource("1_6128v")
+item = ExtResource("3_6128v")
+
+[resource]
+script = ExtResource("4_2lq2m")
+result = SubResource("Resource_gbmtc")
+requiredItems = Array[ExtResource("1_6128v")]([SubResource("Resource_kffyo")])
+recipeType = 1
+experience = 2

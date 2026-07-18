@@ -27,7 +27,7 @@ public partial class PlayerAttachment : Node2D
         startRotation = targetNode.Rotation;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
 	{
         lagPosition = lagPosition.Lerp(GlobalPosition, followSpeed * (float)delta);
         lagRotation = Mathf.Lerp(lagRotation, (startRotation * 0.5f) + ((targetNode.Rotation - startRotation) * rotationMultiplier), rotationSpeed * (float)delta);

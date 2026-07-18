@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://bqpn141adq37a"]
+
+[ext_resource type="Texture2D" uid="uid://caewli5nm8aee" path="res://Art/World/Interactables/Interactable_CraftingTable.png" id="1_hrqyj"]
+[ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_wuncg"]
+
+[resource]
+script = ExtResource("2_wuncg")
+displayName = "Crafting table"
+description = "A crafting station to create more advanced items."
+itemSprite = ExtResource("1_hrqyj")
+rarity = 1
+interactType = 4
+interactLevel = 0
+worldShadowScale = 0.25
+gridPlacementScene = "res://Scenes/World/Interactables/interactable_craftingtable.tscn"
+tileMaterial = -1
+equipMods = null
