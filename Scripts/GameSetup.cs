@@ -14,6 +14,9 @@ public partial class GameSetup : Node
     private PackedScene characterScene;
 
     [Export]
+    private PackedScene petScene;
+
+    [Export]
     private Array<InventoryItemDefinition> itemsToGive = new();
 
     [Export]
@@ -25,11 +28,14 @@ public partial class GameSetup : Node
 
         PlayerCamera camera = cameraScene.Instantiate<PlayerCamera>();
         PlayerCharacter character = characterScene.Instantiate<PlayerCharacter>();
+        Pet pet = petScene.Instantiate<Pet>();
 
         AddChild(camera);
         map.AddWorldNode(character, true, Vector2.Zero);
+        map.AddWorldNode(pet, true, Vector2.Zero);
 
         camera.toFollow = character;
+        pet.SetFollowTarget(character);
 
         if (giveItems) {
             foreach (InventoryItemDefinition item in itemsToGive) {

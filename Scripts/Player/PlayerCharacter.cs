@@ -4,7 +4,6 @@ using System.Collections.Generic;
 [GlobalClass]
 public partial class PlayerCharacter : CharacterBody2D, IWorldSaveable
 {
-
 	public static PlayerCharacter Instance { get; private set; }
 
     [Export]
@@ -90,19 +89,7 @@ public partial class PlayerCharacter : CharacterBody2D, IWorldSaveable
                 ).Normalized();
         }
 
-        currentSpeed += input * acceleration;
-
-        if (input.X < 0.05f && input.X > -0.05f) {
-            currentSpeed.X *= decceleration;
-        }
-
-        if (input.Y < 0.05f && input.Y > -0.05f) {
-            currentSpeed.Y *= decceleration;
-        }
-
-        currentSpeed.X = Mathf.Clamp(currentSpeed.X, -maxSpeed, maxSpeed);
-        currentSpeed.Y = Mathf.Clamp(currentSpeed.Y, -maxSpeed, maxSpeed);
-
+        currentSpeed = VelocityUtility.GetUpdatedVelocity(currentSpeed, acceleration, decceleration, maxSpeed, input);
         Velocity = currentSpeed;
 
         MoveAndSlide();

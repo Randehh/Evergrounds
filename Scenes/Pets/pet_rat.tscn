@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b624ub0gujmlm"]
+
+[ext_resource type="Script" uid="uid://b7ake15kbb6pi" path="res://Scripts/Pets/Pet.cs" id="1_4hfwo"]
+[ext_resource type="Texture2D" uid="uid://carx4d7woo20t" path="res://Art/Pets/Pet_Rat.png" id="2_1stha"]
+
+[node name="Pet_Rat" type="Node2D" unique_id=1954036532]
+script = ExtResource("1_4hfwo")
+wanderRange = 50.0
+metadata/_custom_type_script = "uid://b7ake15kbb6pi"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=284262519]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_1stha")
