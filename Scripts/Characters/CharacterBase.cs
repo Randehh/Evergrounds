@@ -31,12 +31,12 @@ public partial class CharacterBase : Node2D
 		SWING,
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 
 		Vector2 movementDelta = GlobalPosition - lastPosition;
 
-		float moveSpeed = movementDelta.Length();
+        float moveSpeed = movementDelta.Length();
 		if (moveSpeed > 0.01f)
 		{
             characterAnimator.Play("Walk");
@@ -57,7 +57,8 @@ public partial class CharacterBase : Node2D
 		Scale = new Vector2(lookRight ? 1 : -1, 1);
 	}
 
-	public void SetHoldable(InventoryItem item)
+
+    public void SetHoldable(InventoryItem item)
 	{
 		holdableSprite.Texture = item != null ? item.definition.itemSprite : null;
 		currentlyHolding = item;
