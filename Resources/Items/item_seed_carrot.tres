@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryItemDefinition" load_steps=3 format=3 uid="uid://crmrvkfikd4f6"]
+[gd_resource type="Resource" script_class="InventoryItemDefinition" format=3 uid="uid://crmrvkfikd4f6"]
 
 [ext_resource type="Texture2D" uid="uid://wjdbvryvk3vf" path="res://Art/Items/Holdables/Holdable_Seed_Carrot.png" id="1_ejlg2"]
 [ext_resource type="Script" uid="uid://dk8fs84eburvn" path="res://Scripts/Inventory/InventoryItemDefinition.cs" id="2_k0gam"]
@@ -9,13 +9,10 @@ displayName = "Carrot seed"
 description = "Plant to grow crunchy carrots!"
 itemSprite = ExtResource("1_ejlg2")
 stackSize = 100
-useAnimation = 0
+rarity = 1
+useAnimation = 2
 interactType = 4
 interactLevel = 0
-rarity = 1
 worldShadowScale = 0.25
 gridPlacementScene = "res://Scenes/World/Growables/growable_seeds.tscn"
-tileMaterial = 0
-subTileSet = Vector2i(0, 0)
-isSimpleTileMap = false
-hasInfiniteUses = false
+equipMods = null

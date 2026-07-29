@@ -1,10 +1,12 @@
 using Godot;
+using System;
 
 [GlobalClass]
 public partial class CharacterBase : Node2D
 {
 
 	public InventoryItem CurrentlyHolding => currentlyHolding;
+	public bool IsUsingHoldable => isUsingHoldable;
 
 	[Export]
 	private AnimationPlayer characterAnimator;
@@ -17,6 +19,8 @@ public partial class CharacterBase : Node2D
 
 	private Vector2 lastPosition;
 	private bool lookRight = true;
+	private bool isUsingHoldable = false;
+	private Action useCallback;
 
 	private InventoryItem currentlyHolding;
 
@@ -29,6 +33,8 @@ public partial class CharacterBase : Node2D
 	public enum HoldableAnimations
 	{
 		SWING,
+		SHOVEL,
+		SHAKE_OUT
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -64,13 +70,19 @@ public partial class CharacterBase : Node2D
 		currentlyHolding = item;
     }
 
-	public void UseHoldable()
+	public void UseHoldable(Action useCallback)
 	{
 		if(currentlyHolding == null)
 		{
 			return;
 		}
 
-		holdableAnimator.Play(currentlyHolding.definition.useAnimation.ToString());
+		this.useCallback = useCallback;
+
+		holdableAnimator.Stop();
+        holdableAnimator.Play(currentlyHolding.definition.useAnimation.ToString(), 0.2f);
     }
+
+	public void SetIsUsingHoldable(bool isUsing) => isUsingHoldable = isUsing;
+	public void ExecuteHoldableAction() => useCallback?.Invoke();
 }

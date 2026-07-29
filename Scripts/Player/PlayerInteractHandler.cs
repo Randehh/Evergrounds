@@ -148,12 +148,12 @@ public partial class PlayerInteractHandler : Node2D
         {
             if (currentInteractResult == InteractResult.OK)
             {
-                character.UseHoldable();
-                interactDetector.SelectedInteractable.Interact();
+                character.UseHoldable(interactDetector.SelectedInteractable.Interact);
+                character.ExecuteHoldableAction();
             }
             else if (currentInteractResult == InteractResult.NO_INTERACTABLE)
             {
-                character.UseHoldable();
+                character.UseHoldable(null);
             }
         }
     }
@@ -181,17 +181,20 @@ public partial class PlayerInteractHandler : Node2D
 
         if (canChangeMaterial && IsUseHoldablePressed())
         {
-            if (itemInHand.definition.setEmptySpot) {
-                ServiceLocator.MapService.SetEmptySlot(gridPosition, true);
-            }
-
-            WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial, itemInHand.definition.subTileSet, true);
-            character.UseHoldable();
-
-            if (!itemInHand.definition.hasInfiniteUses)
+            character.UseHoldable(() =>
             {
-                ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
-            }
+                if (itemInHand.definition.setEmptySpot)
+                {
+                    ServiceLocator.MapService.SetEmptySlot(gridPosition, true);
+                }
+
+                WorldMap.Instance.SetSelectedTile(itemInHand.definition.tileMaterial, itemInHand.definition.subTileSet, true);
+
+                if (!itemInHand.definition.hasInfiniteUses)
+                {
+                    ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
+                }
+            });
         }
     }
 
@@ -255,13 +258,16 @@ public partial class PlayerInteractHandler : Node2D
 
         if (IsUseHoldablePressed() && canPlace)
         {
-            Node2D placedNode = currentlyLoadedPackedScene.Instantiate<Node2D>();
-            WorldMap.Instance.AddWorldNode(placedNode, true, currentGridPosition);
-
-            if (!itemInHand.definition.hasInfiniteUses)
+            character.UseHoldable(() =>
             {
-                ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
-            }
+                Node2D placedNode = currentlyLoadedPackedScene.Instantiate<Node2D>();
+                WorldMap.Instance.AddWorldNode(placedNode, true, currentGridPosition);
+
+                if (!itemInHand.definition.hasInfiniteUses)
+                {
+                    ServiceLocator.InventoryService.RemoveItem(itemInHand, 1);
+                }
+            });
         }
     }
 

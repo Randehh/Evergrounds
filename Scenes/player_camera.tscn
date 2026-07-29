@@ -1,9 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://emajq5067js6"]
+[gd_scene format=3 uid="uid://emajq5067js6"]
 
 [ext_resource type="Script" uid="uid://dujmqhrdtjxlx" path="res://Scripts/Player/PlayerCamera.cs" id="1_s600e"]
 
-[node name="PlayerCamera" type="Camera2D"]
-zoom = Vector2(2, 2)
+[node name="PlayerCamera" type="Camera2D" unique_id=759322734]
 script = ExtResource("1_s600e")
 followSpeed = 4.0
 mousePullPower = 15.0

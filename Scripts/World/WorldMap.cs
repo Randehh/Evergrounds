@@ -66,10 +66,13 @@ public partial class WorldMap : Node2D, IWorldSaveable
 
     public override void _Process(double delta)
     {
-        Vector2I mouseGridPosition = GetMouseCoordinates(1, true);
-        worldMapDisplay.UpdateSelectedMaterial(mouseGridPosition);
+        if (!PlayerCharacter.Instance.Character.IsUsingHoldable)
+        {
+            Vector2I mouseGridPosition = GetMouseCoordinates(1, true);
+            worldMapDisplay.UpdateSelectedMaterial(mouseGridPosition);
 
-        selectedMaterial = GetSelectedMaterial();
+            selectedMaterial = GetSelectedMaterial();
+        }
 
         Vector2I nextMapCenter = GetGridChunkPosition(PlayerCharacter.Instance.Position);
         if(currentMapCenter != nextMapCenter || !initialChunksSet)

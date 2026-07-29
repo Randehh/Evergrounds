@@ -10,6 +10,7 @@ description = "Stonewalled"
 itemSprite = ExtResource("1_tpd51")
 stackSize = 100
 rarity = 1
+useAnimation = 2
 interactType = 6
 interactLevel = 0
 worldShadowScale = 0.25

@@ -6,6 +6,8 @@ public partial class PlayerCharacter : CharacterBody2D, IWorldSaveable
 {
 	public static PlayerCharacter Instance { get; private set; }
 
+    public CharacterBase Character => character;
+
     [Export]
 	private CharacterBase character;
 
@@ -68,6 +70,11 @@ public partial class PlayerCharacter : CharacterBody2D, IWorldSaveable
 	{
 		if (inputState == InputState.WORLD)
 		{
+            if(character.IsUsingHoldable)
+            {
+                return;
+            }
+
 			interactHandler.ProcessInteraction(character.CurrentlyHolding, delta);
 
 			if (Input.IsActionJustPressed("next_day"))
@@ -82,7 +89,7 @@ public partial class PlayerCharacter : CharacterBody2D, IWorldSaveable
         // Moving
         Vector2 input = Vector2.Zero;
 
-        if (inputState == InputState.WORLD) {
+        if (inputState == InputState.WORLD && !character.IsUsingHoldable) {
             input = new Vector2(
                 Input.GetAxis("move_left", "move_right"),
                 Input.GetAxis("move_up", "move_down")
